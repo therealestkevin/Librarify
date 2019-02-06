@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Librarify</string>
+    <string name="recognizeButtonText">Recognize</string>
+</resources>
