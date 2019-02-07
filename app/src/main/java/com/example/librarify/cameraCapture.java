@@ -100,8 +100,20 @@ public class cameraCapture extends Activity  {
                 .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionBarcode>>() {
                     @Override
                     public void onSuccess(List<FirebaseVisionBarcode> firebaseVisionBarcodes) {
-                        processResult(firebaseVisionBarcodes);
+                       int i= processResult(firebaseVisionBarcodes);
                         bob.hide();
+                        if(i!=1){
+                            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(cameraCapture.this);
+                            builder.setMessage("No Barcode Detected, Try Again");
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                            android.support.v7.app.AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -113,7 +125,7 @@ public class cameraCapture extends Activity  {
         });
     }
 
-    private void processResult(List<FirebaseVisionBarcode> firebaseVisionBarcodes)  {
+    private int processResult(List<FirebaseVisionBarcode> firebaseVisionBarcodes)  {
 
         for(FirebaseVisionBarcode item : firebaseVisionBarcodes){
             int val_type = item.getValueType();
@@ -150,6 +162,7 @@ public class cameraCapture extends Activity  {
                         });
                         android.support.v7.app.AlertDialog dialog = builder.create();
                         dialog.show();
+                        return 1;
                     }catch(Exception e){
                             System.out.println("Parsing Failed");
                     }
@@ -171,6 +184,7 @@ public class cameraCapture extends Activity  {
             }
 
         }
+        return 0;
     }
 
 
