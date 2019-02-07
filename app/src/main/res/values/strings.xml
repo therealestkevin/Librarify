@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Librarify</string>
     <string name="recognizeButtonText">Recognize</string>
+
+    <string name="title_activity_camera_capture">cameraCapture</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="welcomeText">Welcome To Your Library</string>
+    <string name="takePicture">Scan Book</string>
+    <string name="viewBook">View Books</string>
+    <string name="coverPicture">Cover Picture</string>
 </resources>
