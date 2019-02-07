@@ -174,7 +174,7 @@ public class cameraCapture extends Activity  {
     }
 
 
-    class RetrieveJSONTask extends AsyncTask<String, Void, String> {
+   static class RetrieveJSONTask extends AsyncTask<String, Void, String> {
         String urlString;
 
         public RetrieveJSONTask(String urlString) {
@@ -189,7 +189,7 @@ public class cameraCapture extends Activity  {
                 try {
                     URL url = new URL(urlString);
                     reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                    StringBuffer buffer = new StringBuffer();
+                    StringBuilder buffer = new StringBuilder();
                     int read;
                     char[] chars = new char[1024];
                     while ((read = reader.read(chars)) != -1)
@@ -203,7 +203,7 @@ public class cameraCapture extends Activity  {
 
 
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
     return null;
         }
