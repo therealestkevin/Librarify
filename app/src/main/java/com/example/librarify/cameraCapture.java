@@ -177,7 +177,7 @@ public class cameraCapture extends Activity  {
    static class RetrieveJSONTask extends AsyncTask<String, Void, String> {
         String urlString;
 
-        public RetrieveJSONTask(String urlString) {
+        private RetrieveJSONTask(String urlString) {
             super();
             this.urlString = urlString;
         }
