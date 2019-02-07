@@ -9,14 +9,17 @@ import android.content.pm.ActivityInfo;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -24,6 +27,7 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.gson.Gson;
 import com.wonderkiln.camerakit.CameraKitError;
 import com.wonderkiln.camerakit.CameraKitEvent;
 import com.wonderkiln.camerakit.CameraKitEventListener;
@@ -31,15 +35,28 @@ import com.wonderkiln.camerakit.CameraKitImage;
 import com.wonderkiln.camerakit.CameraKitVideo;
 import com.wonderkiln.camerakit.CameraView;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.List;
+import java.io.Reader;
+
 
 import dmax.dialog.SpotsDialog;
 
 
-public class cameraCapture extends Activity {
-    CameraView cameraView;
-    Button btnDetect;
-    AlertDialog waitingDialog;
+public class cameraCapture extends Activity  {
+    private CameraView cameraView;
+    private Button btnDetect;
+    private AlertDialog waitingDialog;
+    private String browserKey = "AIzaSyB4FziQm9LM2Nahb3SsKbME7_cTq60x2_Q";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +103,7 @@ public class cameraCapture extends Activity {
         });
     }
 
-    private void runDetector(Bitmap bitmap,final AlertDialog bob) {
+    private void runDetector(Bitmap bitmap,final AlertDialog bob)  {
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
         FirebaseVisionBarcodeDetectorOptions options =new FirebaseVisionBarcodeDetectorOptions.Builder()
                 .setBarcodeFormats(
@@ -112,24 +129,46 @@ public class cameraCapture extends Activity {
         });
     }
 
-    private void processResult(List<FirebaseVisionBarcode> firebaseVisionBarcodes) {
+    private void processResult(List<FirebaseVisionBarcode> firebaseVisionBarcodes)  {
+
         for(FirebaseVisionBarcode item : firebaseVisionBarcodes){
             int val_type = item.getValueType();
             switch(val_type){
 
                 case FirebaseVisionBarcode.TYPE_ISBN:{
 
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(cameraCapture.this);
-                    builder.setMessage("ISBN: "+item.getRawValue()+"\n FORMAT: "+ getType(item.getFormat()) );
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    android.support.v7.app.AlertDialog dialog = builder.create();
-                    dialog.show();
+                    try {
 
+
+                        String bookSearchString = "https://www.googleapis.com/books/v1/volumes?" +
+                                "q=isbn:" + item.getRawValue() + "&key=" + browserKey;
+                        System.out.println(bookSearchString);
+                        RetrieveJSONTask bob = new RetrieveJSONTask(bookSearchString);
+
+                        String jsonReqText = bob.execute().get();
+
+                        System.out.println(jsonReqText);
+                        Gson gson = new Gson();
+                        OuterURL temp = gson.fromJson(jsonReqText, OuterURL.class);
+                        Log.i("author", temp.items.get(0)
+                                .volumeInfo.authors.toString());
+                       String authors= temp.items.get(0).volumeInfo.authors
+                                .toString().replace("[","").replace("]","");
+
+                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(cameraCapture.this);
+                        builder.setMessage("ISBN: " + item.getRawValue() + "\nFORMAT: " + getType(item.getFormat()) + "\nTITLE: " + temp.items.get(0)
+                                .volumeInfo.title +"\nAUTHOR(S): " +authors);
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        android.support.v7.app.AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }catch(Exception e){
+                            System.out.println("Parsing Failed");
+                    }
 
                 }
                 break;
@@ -149,6 +188,43 @@ public class cameraCapture extends Activity {
 
         }
     }
+
+
+    class RetrieveJSONTask extends AsyncTask<String, Void, String> {
+        String urlString;
+
+        public RetrieveJSONTask(String urlString) {
+            super();
+            this.urlString = urlString;
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                BufferedReader reader = null;
+                try {
+                    URL url = new URL(urlString);
+                    reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                    StringBuffer buffer = new StringBuffer();
+                    int read;
+                    char[] chars = new char[1024];
+                    while ((read = reader.read(chars)) != -1)
+                        buffer.append(chars, 0, read);
+
+                    return buffer.toString();
+                } finally {
+                    if (reader != null)
+                        reader.close();
+                }
+
+
+            } catch (Exception e) {
+
+            }
+    return null;
+        }
+    }
+
 
     @Override
     protected void onResume(){
