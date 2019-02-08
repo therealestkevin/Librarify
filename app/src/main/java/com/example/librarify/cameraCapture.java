@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,7 +33,10 @@ import com.wonderkiln.camerakit.CameraKitImage;
 import com.wonderkiln.camerakit.CameraKitVideo;
 import com.wonderkiln.camerakit.CameraView;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import dmax.dialog.SpotsDialog;
@@ -41,6 +47,8 @@ public class cameraCapture extends Activity  {
     private Button btnDetect;
     private AlertDialog waitingDialog;
     private String browserKey = "AIzaSyB4FziQm9LM2Nahb3SsKbME7_cTq60x2_Q";
+    private String imageURLPassed = "";
+    private String bookDescriptionPassed = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +113,7 @@ public class cameraCapture extends Activity  {
                         if(i!=1){
                             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(cameraCapture.this);
                             builder.setMessage("No Barcode Detected, Try Again");
-                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
@@ -146,6 +154,8 @@ public class cameraCapture extends Activity  {
                         System.out.println(jsonReqText);
                         Gson gson = new Gson();
                         OuterURL temp = gson.fromJson(jsonReqText, OuterURL.class);
+                        imageURLPassed = temp.items.get(0).volumeInfo.imageLinks.thumbnail;
+                        bookDescriptionPassed = temp.items.get(0).volumeInfo.description;
                         Log.i("author", temp.items.get(0)
                                 .volumeInfo.authors.toString());
                        String authors= temp.items.get(0).volumeInfo.authors
@@ -154,7 +164,15 @@ public class cameraCapture extends Activity  {
                         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(cameraCapture.this);
                         builder.setMessage("ISBN: " + item.getRawValue() + "\nFORMAT: " + getType(item.getFormat()) + "\nTITLE: " + temp.items.get(0)
                                 .volumeInfo.title +"\nAUTHOR(S): " +authors);
-                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton("Info", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent viewBook = new Intent(getApplicationContext(),BookViewActivity.class);
+                                viewBook.putExtra("imageURLPassed",imageURLPassed);
+                                viewBook.putExtra("bookDescriptionPassed",bookDescriptionPassed);
+                                startActivity(viewBook);
+                            }
+                        }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
@@ -186,7 +204,6 @@ public class cameraCapture extends Activity  {
         }
         return 0;
     }
-
 
    static class RetrieveJSONTask extends AsyncTask<String, Void, String> {
         String urlString;
