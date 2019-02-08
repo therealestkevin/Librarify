@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -17,12 +18,18 @@ import java.util.concurrent.ExecutionException;
 public class BookViewActivity extends AppCompatActivity {
     private ImageView bookImg;
     private TextView bookDescription;
+    private RatingBar bookRatingBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view);
         bookImg = (ImageView) findViewById(R.id.bookImage);
         bookDescription = (TextView) findViewById(R.id.bookDescription);
+        bookRatingBar = (RatingBar) findViewById(R.id.bookRatingBar);
+        bookRatingBar.setMax(5);
+        bookRatingBar.setStepSize(.1f);
+
+        bookRatingBar.setRating(3.5f);
 
         if(getIntent()!=null && getIntent().getExtras()!=null){
             Bundle bundle = getIntent().getExtras();
