@@ -9,16 +9,25 @@ public class Book {
     @PrimaryKey
     private int Id;
     private OuterURL bookList;
-
+    private String dateTime;
     public Book(){
 
     }
 
-    public Book(int Id, OuterURL bookOne){
+
+
+    public Book(int Id, OuterURL bookOne, String dateTime){
         this.Id=Id;
         this.bookList=bookOne;
+        this.dateTime = dateTime;
+    }
+    public String getDateTime() {
+        return dateTime;
     }
 
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
 
     public int getId() {
         return Id;

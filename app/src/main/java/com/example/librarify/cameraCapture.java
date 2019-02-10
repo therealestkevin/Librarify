@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -29,12 +28,10 @@ import com.wonderkiln.camerakit.CameraKitEventListener;
 import com.wonderkiln.camerakit.CameraKitImage;
 import com.wonderkiln.camerakit.CameraKitVideo;
 import com.wonderkiln.camerakit.CameraView;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import dmax.dialog.SpotsDialog;
@@ -173,9 +170,7 @@ public class cameraCapture extends AppCompatActivity {
                          builder = new androidx.appcompat.app.AlertDialog.Builder(cameraCapture.this);
                         builder.setMessage("ISBN: " + item.getRawValue() + "\nFORMAT: " + getType(item.getFormat()) + "\nTITLE: " + temp.items.get(0)
                                 .volumeInfo.title +"\nAUTHOR(S): " +authors);
-                        builder.setNegativeButton("Info", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                                /*
                                 Intent viewBook = new Intent(getApplicationContext(),BookViewActivity.class);
                                 viewBook.putExtra("imageURLPassed",imageURLPassed);
                                 viewBook.putExtra("bookDescriptionPassed",bookDescriptionPassed);
@@ -183,8 +178,8 @@ public class cameraCapture extends AppCompatActivity {
                                 viewBook.putExtra("numberRatings",numRatings);
                                 viewBook.putExtra("jsonString",jsonString);
                                 startActivity(viewBook);
-                            }
-                        }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            */
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();

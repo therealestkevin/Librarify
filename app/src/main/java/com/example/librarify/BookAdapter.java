@@ -1,12 +1,18 @@
 package com.example.librarify;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +23,9 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
     private List<Book> mBook;
     private LayoutInflater inflate1;
-
+    private Context context;
     BookAdapter(Context context){
+        this.context=context;
         inflate1 = LayoutInflater.from(context);
     }
 
@@ -32,8 +39,25 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull BookAdapter.ViewHolder holder, int position) {
        if(mBook!=null){
-           Book cur = mBook.get(position);
+           final Book cur = mBook.get(position);
            holder.bookName.setText(cur.getBookList().getItems().get(0).getVolumeInfo().getTitle());
+           try {
+               holder.bookViewImg.setImageDrawable(new BookViewActivity.RetrieveDrawableTask(cur.getBookList()
+               .getItems().get(0).getVolumeInfo().getImageLinks().getThumbnail()).execute().get());
+           } catch (ExecutionException e) {
+               e.printStackTrace();
+           } catch (InterruptedException e) {
+               e.printStackTrace();
+           }
+        holder.timeAdded.setText("Added "+cur.getDateTime());
+           holder.bookInfoBtn.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   Intent bookInfoIntent = new Intent(context,BookViewActivity.class);
+                   bookInfoIntent.putExtra("jsonStuff", new Gson().toJson(cur.getBookList()));
+                   context.startActivity(bookInfoIntent);
+               }
+           });
        }
 
        // holder.bookName.setText(books.get(position));
@@ -56,9 +80,16 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView bookName;
+        public ImageView bookViewImg;
+        public TextView timeAdded;
+        public Button bookInfoBtn;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             bookName = itemView.findViewById(R.id.book_name);
+            bookViewImg = itemView.findViewById(R.id.bookViewImg);
+            timeAdded = itemView.findViewById(R.id.timeAdded);
+            bookInfoBtn = itemView.findViewById(R.id.bookInfoBtn);
+
         }
     }
 }

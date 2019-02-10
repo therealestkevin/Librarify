@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +17,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 public class bookList extends AppCompatActivity {
-    public ArrayList<String> books;
     private FloatingActionButton addBookButton;
     private Toolbar topToolBarBook;
     private RecyclerView bookListView;
@@ -29,6 +27,7 @@ public class bookList extends AppCompatActivity {
     public static final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
         topToolBarBook = (Toolbar) findViewById(R.id.topToolBarBook);
@@ -64,7 +63,7 @@ public class bookList extends AppCompatActivity {
         if(requestCode== NEW_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
 
 
-            Book book = new Book(intID++,new Gson().fromJson(dat.getStringExtra(cameraCapture.EXTRA_REPLY),OuterURL.class));
+            Book book = new Book(intID++,new Gson().fromJson(dat.getStringExtra(cameraCapture.EXTRA_REPLY),OuterURL.class), java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()));
             bookModel.insert(book);
 
 
