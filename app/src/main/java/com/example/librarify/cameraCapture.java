@@ -10,7 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +43,8 @@ public class cameraCapture extends Activity  {
     private String browserKey = "AIzaSyB4FziQm9LM2Nahb3SsKbME7_cTq60x2_Q";
     private String imageURLPassed = "";
     private String bookDescriptionPassed = "";
+    private double ratingStar;
+    private int numRatings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +107,7 @@ public class cameraCapture extends Activity  {
                        int i= processResult(firebaseVisionBarcodes);
                         bob.hide();
                         if(i!=1){
-                            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(cameraCapture.this);
+                            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(cameraCapture.this);
                             builder.setMessage("No Barcode Detected, Try Again");
                             builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
@@ -113,7 +115,7 @@ public class cameraCapture extends Activity  {
                                     dialogInterface.dismiss();
                                 }
                             });
-                            android.support.v7.app.AlertDialog dialog = builder.create();
+                            androidx.appcompat.app.AlertDialog dialog = builder.create();
                             dialog.show();
                         }
                     }
@@ -150,12 +152,14 @@ public class cameraCapture extends Activity  {
                         OuterURL temp = gson.fromJson(jsonReqText, OuterURL.class);
                         imageURLPassed = temp.items.get(0).volumeInfo.imageLinks.thumbnail;
                         bookDescriptionPassed = temp.items.get(0).volumeInfo.description;
+                        ratingStar = temp.getItems().get(0).getVolumeInfo().averageRating;
+                        numRatings = temp.getItems().get(0).getVolumeInfo().ratingsCount;
                         Log.i("author", temp.items.get(0)
                                 .volumeInfo.authors.toString());
                        String authors= temp.items.get(0).volumeInfo.authors
                                 .toString().replace("[","").replace("]","");
 
-                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(cameraCapture.this);
+                        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(cameraCapture.this);
                         builder.setMessage("ISBN: " + item.getRawValue() + "\nFORMAT: " + getType(item.getFormat()) + "\nTITLE: " + temp.items.get(0)
                                 .volumeInfo.title +"\nAUTHOR(S): " +authors);
                         builder.setNegativeButton("Info", new DialogInterface.OnClickListener() {
@@ -164,6 +168,8 @@ public class cameraCapture extends Activity  {
                                 Intent viewBook = new Intent(getApplicationContext(),BookViewActivity.class);
                                 viewBook.putExtra("imageURLPassed",imageURLPassed);
                                 viewBook.putExtra("bookDescriptionPassed",bookDescriptionPassed);
+                                viewBook.putExtra("ratingStars", ratingStar);
+                                viewBook.putExtra("numberRatings",numRatings);
                                 startActivity(viewBook);
                             }
                         }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -172,7 +178,7 @@ public class cameraCapture extends Activity  {
                                 dialogInterface.dismiss();
                             }
                         });
-                        android.support.v7.app.AlertDialog dialog = builder.create();
+                        androidx.appcompat.app.AlertDialog dialog = builder.create();
                         dialog.show();
                         return 1;
                     }catch(Exception e){

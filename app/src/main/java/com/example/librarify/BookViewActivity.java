@@ -3,7 +3,7 @@ package com.example.librarify;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
@@ -19,6 +18,8 @@ public class BookViewActivity extends AppCompatActivity {
     private ImageView bookImg;
     private TextView bookDescription;
     private RatingBar bookRatingBar;
+    private TextView starText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,10 +27,12 @@ public class BookViewActivity extends AppCompatActivity {
         bookImg = (ImageView) findViewById(R.id.bookImage);
         bookDescription = (TextView) findViewById(R.id.bookDescription);
         bookRatingBar = (RatingBar) findViewById(R.id.bookRatingBar);
+        starText = (TextView) findViewById(R.id.starDisplayText);
+
         bookRatingBar.setMax(5);
         bookRatingBar.setStepSize(.1f);
 
-        bookRatingBar.setRating(3.5f);
+
 
         if(getIntent()!=null && getIntent().getExtras()!=null){
             Bundle bundle = getIntent().getExtras();
@@ -52,6 +55,18 @@ public class BookViewActivity extends AppCompatActivity {
                 bookDescription.setText(summary);
                 Log.i("setText",summary);
             }
+            if(bundle.getDouble("ratingStars")>-1&&bundle.getInt("numberRatings")>-1){
+                double rating = bundle.getDouble("ratingStars");
+                int ratingNum = bundle.getInt("numberRatings");
+                Log.i("ratingDouble",""+rating);
+                Log.i("ratingFloat","" +(float)rating);
+                bookRatingBar.setRating((float)rating);
+                starText.setText(""+rating+" / 5.0 with "+ratingNum+" Ratings");
+            }
+
+
+
+
         }
     }
     static class RetrieveDrawableTask extends AsyncTask<String,Void,Drawable>{
