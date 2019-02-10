@@ -1,7 +1,6 @@
 package com.example.librarify;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,11 +9,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -29,14 +29,18 @@ import com.wonderkiln.camerakit.CameraKitEventListener;
 import com.wonderkiln.camerakit.CameraKitImage;
 import com.wonderkiln.camerakit.CameraKitVideo;
 import com.wonderkiln.camerakit.CameraView;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import dmax.dialog.SpotsDialog;
 
 
-public class cameraCapture extends Activity  {
+public class cameraCapture extends AppCompatActivity {
     private CameraView cameraView;
     private Button btnDetect;
     private AlertDialog waitingDialog;
@@ -45,6 +49,9 @@ public class cameraCapture extends Activity  {
     private String bookDescriptionPassed = "";
     private double ratingStar;
     private int numRatings;
+    private String jsonString;
+    public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
+    private androidx.appcompat.app.AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +61,8 @@ public class cameraCapture extends Activity  {
         cameraView = (CameraView) findViewById(R.id.cameraview);
         btnDetect = (Button)findViewById(R.id.button5);
         waitingDialog = new SpotsDialog.Builder().setContext(this).setMessage("Please wait").setCancelable(false).build();
+
+
 
         btnDetect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +91,7 @@ public class cameraCapture extends Activity  {
                 runDetector(bitmap,waitingDialog);
 
                 cameraView.start();
+
             }
 
             @Override
@@ -150,6 +160,7 @@ public class cameraCapture extends Activity  {
                         System.out.println(jsonReqText);
                         Gson gson = new Gson();
                         OuterURL temp = gson.fromJson(jsonReqText, OuterURL.class);
+                        jsonString = gson.toJson(temp);
                         imageURLPassed = temp.items.get(0).volumeInfo.imageLinks.thumbnail;
                         bookDescriptionPassed = temp.items.get(0).volumeInfo.description;
                         ratingStar = temp.getItems().get(0).getVolumeInfo().averageRating;
@@ -159,7 +170,7 @@ public class cameraCapture extends Activity  {
                        String authors= temp.items.get(0).volumeInfo.authors
                                 .toString().replace("[","").replace("]","");
 
-                        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(cameraCapture.this);
+                         builder = new androidx.appcompat.app.AlertDialog.Builder(cameraCapture.this);
                         builder.setMessage("ISBN: " + item.getRawValue() + "\nFORMAT: " + getType(item.getFormat()) + "\nTITLE: " + temp.items.get(0)
                                 .volumeInfo.title +"\nAUTHOR(S): " +authors);
                         builder.setNegativeButton("Info", new DialogInterface.OnClickListener() {
@@ -170,12 +181,26 @@ public class cameraCapture extends Activity  {
                                 viewBook.putExtra("bookDescriptionPassed",bookDescriptionPassed);
                                 viewBook.putExtra("ratingStars", ratingStar);
                                 viewBook.putExtra("numberRatings",numRatings);
+                                viewBook.putExtra("jsonString",jsonString);
                                 startActivity(viewBook);
                             }
                         }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
+                            }
+                        }).setNeutralButton("Add Book", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent replyIntent = new Intent();
+                                if(TextUtils.isEmpty(jsonString)){
+                                    setResult(RESULT_CANCELED,replyIntent);
+                                }else{
+                                    replyIntent.putExtra(EXTRA_REPLY,jsonString);
+                                    setResult(RESULT_OK,replyIntent);
+                                    Toast.makeText(getApplicationContext(),"Entry Success",Toast.LENGTH_LONG).show();
+                                }
+                                finish();
                             }
                         });
                         androidx.appcompat.app.AlertDialog dialog = builder.create();
@@ -250,6 +275,8 @@ public class cameraCapture extends Activity  {
     protected void onPause(){
         super.onPause();
         cameraView.stop();
+        waitingDialog.dismiss();
+
     }
     private String getType(int n){
         switch(n){
