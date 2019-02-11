@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,8 +26,10 @@ public class bookList extends AppCompatActivity {
     private RecyclerView bookListView;
     private BookAdapter adapter;
     private BookViewModel bookModel;
+    private Menu menu;
     private static int intID=0;
     public static final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
+    public static int sortMethod=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,19 @@ public class bookList extends AppCompatActivity {
             @Override
             public void onChanged(List<Book> books) {
                 adapter.setBooks(books);
+                switch(bookList.sortMethod){
+                    case -1:{
+                        break;
+                    }
+                    case 0:{
+                        adapter.filterByAlpha(true);
+                        break;
+                    }
+                    case 1:{
+                        adapter.filterByAlpha(false);
+                        break;
+                    }
+                }
             }
         });
 
@@ -74,7 +90,9 @@ public class bookList extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
+
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        this.menu=menu;
        android.widget.SearchView sview = (android.widget.SearchView) menu.findItem(R.id.action_search).getActionView();
         sview.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
             @Override
@@ -92,6 +110,42 @@ public class bookList extends AppCompatActivity {
         return true;
     }
     @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch(item.getItemId()){
+            case R.id.titleasc:
+
+                adapter.filterByAlpha(true);
+                sortMethod=0;
+                unCheckAll(topToolBarBook.getMenu());
+                if(!item.isChecked()){
+                    item.setChecked(true);
+                }
+                return true;
+            case R.id.titledesc:
+                sortMethod=1;
+                adapter.filterByAlpha(false);
+                unCheckAll(topToolBarBook.getMenu());
+                if(!item.isChecked()){
+                    item.setChecked(true);
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    private void unCheckAll(Menu menu){
+        for(int i=0; i<menu.size();i++){
+            MenuItem b = menu.getItem(i);
+
+            if(b.hasSubMenu()){
+                unCheckAll(b.getSubMenu());
+            }else{
+                b.setChecked(false);
+            }
+        }
+    }
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent dat){
         super.onActivityResult(requestCode,resultCode,dat);
 
@@ -101,10 +155,25 @@ public class bookList extends AppCompatActivity {
 
             Book book = new Book(intID++,new Gson().fromJson(dat.getStringExtra(cameraCapture.EXTRA_REPLY),OuterURL.class),
                     java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),isbnResult);
+
             bookModel.insert(book);
 
         }else{
             Toast.makeText(getApplicationContext(),"Entry Failed",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onEntrySort(int code){
+        switch(code){
+            case -1:{
+                break;
+            }
+            case 0:{
+                adapter.filterByAlpha(true);
+            }
+            case 1:{
+                adapter.filterByAlpha(false);
+            }
         }
     }
 }

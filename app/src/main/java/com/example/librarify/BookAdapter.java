@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -101,6 +103,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
 
     void setBooks(List<Book> books){
         mBook = books;
+
         copyBook = books;
         notifyDataSetChanged();
     }
@@ -123,6 +126,28 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
         }
         mBook = temp;
         notifyDataSetChanged();
+
+    }
+    void filterByAlpha(boolean direction){
+        if(direction==true){
+            Collections.sort(mBook, new Comparator<Book>() {
+                @Override
+                public int compare(Book book, Book t1) {
+                    return book.getTitle().toLowerCase().compareTo(t1.getTitle().toLowerCase());
+                }
+            });
+            notifyDataSetChanged();
+        }else if(direction==false){
+            Collections.sort(mBook,new Comparator<Book>() {
+                @Override
+                public int compare(Book book, Book t1) {
+                    return t1.getTitle().toLowerCase().compareTo(book.getTitle().toLowerCase());
+                }
+            });
+            notifyDataSetChanged();
+
+        }
+
 
     }
 

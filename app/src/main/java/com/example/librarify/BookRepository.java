@@ -24,6 +24,7 @@ public class BookRepository {
     }
 
     public void insert(Book book){
+
         new insertBookTask(bookDAO).execute(book);
     }
 
