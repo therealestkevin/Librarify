@@ -26,6 +26,9 @@ public interface BookDAO {
     @Query("DELETE FROM book_table")
     void deleteAll();
 
+    @Query("SELECT ISBN FROM book_table")
+    List<String> getISBN();
+
     public class Converters{
         @TypeConverter
         public static OuterURL toOuterURL(String value){

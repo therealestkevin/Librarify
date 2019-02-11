@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -28,10 +29,12 @@ import com.wonderkiln.camerakit.CameraKitEventListener;
 import com.wonderkiln.camerakit.CameraKitImage;
 import com.wonderkiln.camerakit.CameraKitVideo;
 import com.wonderkiln.camerakit.CameraView;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import dmax.dialog.SpotsDialog;
@@ -47,8 +50,11 @@ public class cameraCapture extends AppCompatActivity {
     private double ratingStar;
     private int numRatings;
     private String jsonString;
-    public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
+    public static final String EXTRA_REPLY = "REPLY";
+    public static final String EXTRA_REPLY2 = "ISBN";
+    private String ISBN;
     private androidx.appcompat.app.AlertDialog.Builder builder;
+    private boolean execute;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +151,7 @@ public class cameraCapture extends AppCompatActivity {
                 case FirebaseVisionBarcode.TYPE_ISBN:{
 
                     try {
-
+                        ISBN = item.getRawValue();
 
                         String bookSearchString = "https://www.googleapis.com/books/v1/volumes?" +
                                 "q=isbn:" + item.getRawValue() + "&key=" + browserKey;
@@ -166,10 +172,23 @@ public class cameraCapture extends AppCompatActivity {
                                 .volumeInfo.authors.toString());
                        String authors= temp.items.get(0).volumeInfo.authors
                                 .toString().replace("[","").replace("]","");
+                        execute=true;
+                        for (int b = 0; b < BookAdapter.mBook.size(); b++) {
+                            if (BookAdapter.mBook.get(b).getISBN().equals(ISBN)) {
+                                execute = false;
 
+                            }
+                        }
                          builder = new androidx.appcompat.app.AlertDialog.Builder(cameraCapture.this);
-                        builder.setMessage("ISBN: " + item.getRawValue() + "\nFORMAT: " + getType(item.getFormat()) + "\nTITLE: " + temp.items.get(0)
-                                .volumeInfo.title +"\nAUTHOR(S): " +authors);
+                        if(execute==true){
+                            builder.setMessage("ISBN: " + item.getRawValue() + "\nFORMAT: " + getType(item.getFormat()) + "\nTITLE: " + temp.items.get(0)
+                                    .volumeInfo.title +"\nAUTHOR(S): " +authors);
+                        }else{
+
+                            builder.setMessage(   "\nTITLE: " + temp.items.get(0)
+                                    .volumeInfo.title + "\n\nAlready In Library. Are You Sure?");
+                        }
+
                                 /*
                                 Intent viewBook = new Intent(getApplicationContext(),BookViewActivity.class);
                                 viewBook.putExtra("imageURLPassed",imageURLPassed);
@@ -184,22 +203,28 @@ public class cameraCapture extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
                             }
-                        }).setNeutralButton("Add Book", new DialogInterface.OnClickListener() {
+                        });
+                        builder.setNeutralButton("Add Book", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent replyIntent = new Intent();
-                                if(TextUtils.isEmpty(jsonString)){
-                                    setResult(RESULT_CANCELED,replyIntent);
-                                }else{
-                                    replyIntent.putExtra(EXTRA_REPLY,jsonString);
-                                    setResult(RESULT_OK,replyIntent);
-                                    Toast.makeText(getApplicationContext(),"Entry Success",Toast.LENGTH_LONG).show();
+                                    Intent replyIntent = new Intent();
+                                    if (TextUtils.isEmpty(jsonString)) {
+                                        setResult(RESULT_CANCELED, replyIntent);
+                                    } else {
+                                        replyIntent.putExtra(EXTRA_REPLY, jsonString);
+                                        replyIntent.putExtra(EXTRA_REPLY2, ISBN);
+                                        setResult(RESULT_OK, replyIntent);
+                                        Toast.makeText(getApplicationContext(), "Entry Success", Toast.LENGTH_LONG).show();
+                                        finish();
+                                    }
+
                                 }
-                                finish();
-                            }
+
+
                         });
                         androidx.appcompat.app.AlertDialog dialog = builder.create();
                         dialog.show();
+
                         return 1;
                     }catch(Exception e){
                             System.out.println("Parsing Failed");

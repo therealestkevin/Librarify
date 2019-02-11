@@ -2,6 +2,7 @@ package com.example.librarify;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class bookList extends AppCompatActivity {
     private BookViewModel bookModel;
     private static int intID=0;
     public static final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -63,11 +65,12 @@ public class bookList extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,dat);
 
         if(requestCode== NEW_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+            String isbnResult = dat.getStringExtra(cameraCapture.EXTRA_REPLY2);
+            Log.i("isbn",isbnResult);
 
-
-            Book book = new Book(intID++,new Gson().fromJson(dat.getStringExtra(cameraCapture.EXTRA_REPLY),OuterURL.class), java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()));
+            Book book = new Book(intID++,new Gson().fromJson(dat.getStringExtra(cameraCapture.EXTRA_REPLY),OuterURL.class),
+                    java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),isbnResult);
             bookModel.insert(book);
-
 
         }else{
             Toast.makeText(getApplicationContext(),"Entry Failed",Toast.LENGTH_LONG).show();
