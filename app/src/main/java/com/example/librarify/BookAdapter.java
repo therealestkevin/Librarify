@@ -11,21 +11,25 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
+class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
 
    // ArrayList<String> books;
 
     public static List<Book> mBook;
+    public static List<Book> copyBook;
     private LayoutInflater inflate1;
     private Context context;
     BookAdapter(Context context){
         this.context=context;
+
         inflate1 = LayoutInflater.from(context);
     }
 
@@ -62,7 +66,29 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
        // holder.bookName.setText(books.get(position));
     }
+    /*public void filter(String search){
+        List<Book> tempBook = new ArrayList<>();
 
+        tempBook=copyBook;
+        mBook.clear();
+        if(search.isEmpty()){
+            mBook.addAll(tempBook);
+        }else{
+            search = search.toLowerCase();
+            for(Book book : tempBook){
+                boolean isAuthor = false;
+                for(String author : book.getAuthor()){
+                    if(author.toLowerCase().contains(search)){
+                        isAuthor=true;
+                    }
+                }
+                if(book.getTitle().toLowerCase().contains(search)||isAuthor){
+                    mBook.add(book);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }*/
     @Override
     public int getItemCount() {
         //return books.size();
@@ -75,8 +101,47 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
     void setBooks(List<Book> books){
         mBook = books;
+        copyBook = books;
         notifyDataSetChanged();
     }
+
+    void filter(String text){
+
+
+        List<Book> temp = new ArrayList<>();
+        for(Book b : copyBook){
+            boolean author = false;
+            for(String authors : b.getAuthor()){
+                if(authors.toLowerCase().contains(text)){
+                    author=true;
+                }
+            }
+
+            if(b.getTitle().toLowerCase().contains(text)||author){
+                temp.add(b);
+            }
+        }
+        mBook = temp;
+        notifyDataSetChanged();
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookAdapter that = (BookAdapter) o;
+        return Objects.equals(inflate1, that.inflate1) &&
+                Objects.equals(context, that.context);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(inflate1, context);
+    }
+
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView bookName;

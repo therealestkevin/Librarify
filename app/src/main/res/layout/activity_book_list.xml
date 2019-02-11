@@ -10,17 +10,17 @@
         android:id="@+id/addBookButton"
         android:layout_width="56dp"
         android:layout_height="55dp"
-        android:layout_marginTop="72dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/topToolBarBook"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/topToolBarBook"
         android:layout_width="0dp"
-        android:layout_height="99dp"
+        android:layout_height="56dp"
         android:background="@color/colorAccent"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -30,8 +30,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookListView"
-        android:layout_width="395dp"
-        android:layout_height="606dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"

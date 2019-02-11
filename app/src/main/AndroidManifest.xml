@@ -23,6 +23,7 @@
         <activity
             android:name=".BookViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".cameraCapture"

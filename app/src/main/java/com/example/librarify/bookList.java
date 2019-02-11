@@ -3,6 +3,7 @@ package com.example.librarify;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -36,6 +37,17 @@ public class bookList extends AppCompatActivity {
 
         setSupportActionBar(topToolBarBook);
         topToolBarBook.setTitle("Your Library");
+
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        topToolBarBook.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         bookListView = findViewById(R.id.bookListView);
 
         bookListView.setLayoutManager(new LinearLayoutManager(this));
@@ -59,6 +71,25 @@ public class bookList extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+       android.widget.SearchView sview = (android.widget.SearchView) menu.findItem(R.id.action_search).getActionView();
+        sview.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                    adapter.filter(s);
+                return true;
+            }
+        });
+
+        return true;
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent dat){

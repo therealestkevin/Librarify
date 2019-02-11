@@ -1,5 +1,7 @@
 package com.example.librarify;
 
+import java.util.ArrayList;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -11,6 +13,8 @@ public class Book {
     private OuterURL bookList;
     private String dateTime;
     private String ISBN;
+    private String title;
+    private ArrayList<String> author;
     public Book(){
 
     }
@@ -22,8 +26,11 @@ public class Book {
         this.bookList=bookOne;
         this.dateTime = dateTime;
         this.ISBN = ISBN;
+        this.title = bookOne.getItems().get(0).getVolumeInfo().getTitle();
+        this.author = bookOne.getItems().get(0).getVolumeInfo().getAuthors();
     }
     public String getDateTime() {
+
         return dateTime;
     }
 
@@ -53,10 +60,28 @@ public class Book {
     }
 
     public String getISBN() {
+
         return ISBN;
     }
 
     public void setISBN(String ISBN) {
+
         this.ISBN = ISBN;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public ArrayList<String> getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(ArrayList<String> author) {
+        this.author = author;
     }
 }
