@@ -31,7 +31,9 @@ public class bookList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
         topToolBarBook = (Toolbar) findViewById(R.id.topToolBarBook);
+
         setSupportActionBar(topToolBarBook);
+        topToolBarBook.setTitle("Your Library");
         bookListView = findViewById(R.id.bookListView);
 
         bookListView.setLayoutManager(new LinearLayoutManager(this));

@@ -9,4 +9,5 @@
     <string name="takePicture">Scan Book</string>
     <string name="viewBook">View Books</string>
     <string name="coverPicture">Cover Picture</string>
+    <string name="startString">GET STARTED</string>
 </resources>
