@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.camerakit.CameraKitView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -23,12 +25,6 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.gson.Gson;
-import com.wonderkiln.camerakit.CameraKitError;
-import com.wonderkiln.camerakit.CameraKitEvent;
-import com.wonderkiln.camerakit.CameraKitEventListener;
-import com.wonderkiln.camerakit.CameraKitImage;
-import com.wonderkiln.camerakit.CameraKitVideo;
-import com.wonderkiln.camerakit.CameraView;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -41,7 +37,7 @@ import dmax.dialog.SpotsDialog;
 
 
 public class cameraCapture extends AppCompatActivity {
-    private CameraView cameraView;
+    private CameraKitView cameraView;
     private Button btnDetect;
     private AlertDialog waitingDialog;
     private String browserKey = "AIzaSyB4FziQm9LM2Nahb3SsKbME7_cTq60x2_Q";
@@ -61,7 +57,7 @@ public class cameraCapture extends AppCompatActivity {
         setContentView(R.layout.activity_camera_capture);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        cameraView = (CameraView) findViewById(R.id.cameraview);
+        cameraView = (CameraKitView) findViewById(R.id.camera);
         btnDetect = (Button)findViewById(R.id.button5);
         waitingDialog = new SpotsDialog.Builder().setContext(this).setMessage("Please wait").setCancelable(false).build();
 
@@ -70,38 +66,35 @@ public class cameraCapture extends AppCompatActivity {
         btnDetect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cameraView.start();
-                cameraView.captureImage();
+
+                cameraView.captureImage(new  CameraKitView.ImageCallback() {
+                    @Override
+                    public void onImage(CameraKitView cameraKitView, final byte[] capturedImage) {
+
+                        waitingDialog.show();
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inMutable = true;
+                        Bitmap bmp = BitmapFactory.decodeByteArray(capturedImage, 0, capturedImage.length, options);
+                        bmp = Bitmap.createScaledBitmap(bmp,cameraView.getWidth(), cameraView.getHeight(),false);
+                        runDetector(bmp,waitingDialog);
+
+                    }
+                });
+
             }
+
+
         });
-        cameraView.addCameraKitListener(new CameraKitEventListener() {
-            @Override
-            public void onEvent(CameraKitEvent cameraKitEvent) {
 
-            }
 
-            @Override
-            public void onError(CameraKitError cameraKitError) {
 
-            }
 
-            @Override
-            public void onImage(CameraKitImage cameraKitImage) {
-                waitingDialog.show();
-                Bitmap bitmap = cameraKitImage.getBitmap();
-                bitmap = Bitmap.createScaledBitmap(bitmap,cameraView.getWidth(), cameraView.getHeight(),false);
-                cameraView.stop();
-                runDetector(bitmap,waitingDialog);
 
-                cameraView.start();
 
-            }
 
-            @Override
-            public void onVideo(CameraKitVideo cameraKitVideo) {
 
-            }
-        });
+
+
     }
 
     private void runDetector(Bitmap bitmap,final AlertDialog bob)  {
@@ -289,14 +282,31 @@ public class cameraCapture extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        cameraView.start();
+        cameraView.onResume();
     }
     @Override
     protected void onPause(){
-        super.onPause();
-        cameraView.stop();
+        cameraView.onPause();
         waitingDialog.dismiss();
+        super.onPause();
 
+
+
+    }
+    @Override
+    protected void onStop() {
+        cameraView.onStop();
+        super.onStop();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        cameraView.onStart();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        cameraView.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
     private String getType(int n){
         switch(n){
