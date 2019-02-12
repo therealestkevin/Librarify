@@ -2,6 +2,7 @@ package com.example.librarify;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,6 +33,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     public static List<Book> copyBook;
     private LayoutInflater inflate1;
     private Context context;
+    private final DateFormat generalFormat =new SimpleDateFormat("MMM d,yyyy HH:mm:ss aa");
     BookAdapter(Context context){
         this.context=context;
 
@@ -47,6 +52,11 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
        if(mBook!=null){
            final Book cur = mBook.get(position);
            holder.bookName.setText(cur.getBookList().getItems().get(0).getVolumeInfo().getTitle());
+
+           holder.authorView.setText(cur.getAuthor().toString().replace(",", "")
+                   .replace("[", "")
+                   .replace("]", "")
+                   .trim());
            try {
                holder.bookViewImg.setImageDrawable(new BookViewActivity.RetrieveDrawableTask(cur.getBookList()
                .getItems().get(0).getVolumeInfo().getImageLinks().getThumbnail()).execute().get());
@@ -128,7 +138,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
         notifyDataSetChanged();
 
     }
-    void filterByAlpha(boolean direction){
+    public void filterByAlpha(boolean direction){
         if(direction==true){
             Collections.sort(mBook, new Comparator<Book>() {
                 @Override
@@ -150,7 +160,55 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
 
 
     }
-
+    public void filterByAuthor(boolean direction){
+        if(direction==true){
+            Collections.sort(mBook, new Comparator<Book>() {
+                @Override
+                public int compare(Book book, Book t1) {
+                    Log.i("last Names",book.getLastName()+t1.getLastName());
+                    return book.getLastName().toLowerCase().compareTo(t1.getLastName().toLowerCase());
+                }
+            });
+            notifyDataSetChanged();
+        }else if(direction==false){
+            Collections.sort(mBook, new Comparator<Book>() {
+                @Override
+                public int compare(Book book, Book t1) {
+                    return t1.getLastName().toLowerCase().compareTo(book.getLastName().toLowerCase());
+                }
+            });
+            notifyDataSetChanged();
+        }
+    }
+    public void filterByDate(boolean direction){
+        if(direction==true){
+            Collections.sort(mBook, new Comparator<Book>() {
+                @Override
+                public int compare(Book book, Book t1) {
+                    try {
+                        return generalFormat.parse(t1.getDateTime()).compareTo(generalFormat.parse(book.getDateTime()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return 0;
+                }
+            });
+            notifyDataSetChanged();
+        }else if(direction==false){
+            Collections.sort(mBook, new Comparator<Book>() {
+                @Override
+                public int compare(Book book, Book t1) {
+                    try {
+                        return generalFormat.parse(book.getDateTime()).compareTo(generalFormat.parse(t1.getDateTime()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return 0;
+                }
+            });
+            notifyDataSetChanged();
+        }
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -173,13 +231,14 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
         public ImageView bookViewImg;
         public TextView timeAdded;
         public Button bookInfoBtn;
+        public TextView authorView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             bookName = itemView.findViewById(R.id.book_name);
             bookViewImg = itemView.findViewById(R.id.bookViewImg);
             timeAdded = itemView.findViewById(R.id.timeAdded);
             bookInfoBtn = itemView.findViewById(R.id.bookInfoBtn);
-
+            authorView = itemView.findViewById(R.id.authorView);
         }
     }
 }

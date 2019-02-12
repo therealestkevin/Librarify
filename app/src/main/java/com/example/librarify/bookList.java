@@ -73,6 +73,18 @@ public class bookList extends AppCompatActivity {
                         adapter.filterByAlpha(false);
                         break;
                     }
+                    case 2:{
+                        adapter.filterByAuthor(true);
+                    }
+                    case 3:{
+                        adapter.filterByAuthor(false);
+                    }
+                    case 4:{
+                        adapter.filterByDate(true);
+                    }
+                    case 5:{
+                        adapter.filterByDate(false);
+                    }
                 }
             }
         });
@@ -113,23 +125,61 @@ public class bookList extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
 
         switch(item.getItemId()){
-            case R.id.titleasc:
+            case R.id.titleasc: {
 
                 adapter.filterByAlpha(true);
-                sortMethod=0;
+                sortMethod = 0;
                 unCheckAll(topToolBarBook.getMenu());
-                if(!item.isChecked()){
+                if (!item.isChecked()) {
                     item.setChecked(true);
                 }
                 return true;
-            case R.id.titledesc:
-                sortMethod=1;
+            }
+            case R.id.titledesc: {
+                sortMethod = 1;
                 adapter.filterByAlpha(false);
                 unCheckAll(topToolBarBook.getMenu());
-                if(!item.isChecked()){
+                if (!item.isChecked()) {
                     item.setChecked(true);
                 }
                 return true;
+            }
+            case R.id.authorasc: {
+                sortMethod = 2;
+                adapter.filterByAuthor(true);
+                unCheckAll(topToolBarBook.getMenu());
+                if (!item.isChecked()) {
+                    item.setChecked(true);
+                }
+                return true;
+            }
+            case R.id.authordesc: {
+                sortMethod = 3;
+                adapter.filterByAuthor(false);
+                unCheckAll(topToolBarBook.getMenu());
+                if (!item.isChecked()) {
+                    item.setChecked(true);
+                }
+                return true;
+            }
+            case R.id.dateasc: {
+                sortMethod = 4;
+                adapter.filterByDate(true);
+                unCheckAll(topToolBarBook.getMenu());
+                if (!item.isChecked()) {
+                    item.setChecked(true);
+                }
+                return true;
+            }
+            case R.id.datedesc: {
+                sortMethod = 5;
+                adapter.filterByDate(false);
+                unCheckAll(topToolBarBook.getMenu());
+                if (!item.isChecked()) {
+                    item.setChecked(true);
+                }
+                return true;
+            }
             default:
                 return super.onOptionsItemSelected(item);
         }

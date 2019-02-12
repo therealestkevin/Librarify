@@ -11,11 +11,27 @@
     <menu>
         <item
         android:id="@+id/titleasc"
-        android:title="Title Ascending"
+        android:title="Titles A to Z"
         android:checkable="true"/>
         <item
             android:id="@+id/titledesc"
-            android:title="Title Descending"
+            android:title="Titles Z to A"
+            android:checkable="true"/>
+        <item
+            android:id="@+id/authorasc"
+            android:title="Authors A to Z"
+            android:checkable="true"/>
+        <item
+            android:id="@+id/authordesc"
+            android:title="Authors Z to A"
+            android:checkable = "true"/>
+        <item
+            android:id="@+id/dateasc"
+            android:title = "Most Recent"
+            android:checkable="true"/>
+        <item
+            android:id="@+id/datedesc"
+            android:title="Oldest"
             android:checkable="true"/>
     </menu>
 

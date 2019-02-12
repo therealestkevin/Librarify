@@ -10,8 +10,7 @@
         android:id="@+id/book_name"
         android:layout_width="210dp"
         android:layout_height="54dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="Title"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold|italic"
@@ -35,36 +34,50 @@
     <TextView
         android:id="@+id/timeAdded"
         android:layout_width="190dp"
-        android:layout_height="37dp"
+        android:layout_height="27dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
         android:text="Time"
         android:textAlignment="viewStart"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bookInfoBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toEndOf="@+id/bookViewImg"
-        app:layout_constraintTop_toBottomOf="@+id/book_name"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/authorView" />
 
     <Button
         android:id="@+id/bookInfoBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="28dp"
         android:text="INFO"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toEndOf="@+id/bookViewImg"
         app:layout_constraintTop_toBottomOf="@+id/timeAdded"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/authorView"
+        android:layout_width="206dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Authors"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/timeAdded"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bookViewImg"
+        app:layout_constraintTop_toBottomOf="@+id/book_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
