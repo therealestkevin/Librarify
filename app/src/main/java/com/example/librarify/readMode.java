@@ -1,8 +1,8 @@
 package com.example.librarify;
 
 public class readMode {
-    boolean text;
-    boolean image;
+    private boolean text;
+    private boolean image;
 
     public readMode(boolean text, boolean image) {
         this.text=text;

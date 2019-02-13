@@ -3,9 +3,9 @@ package com.example.librarify;
 import java.util.ArrayList;
 
 public class OuterURL {
-    String kind;
-    int totalItems;
-    ArrayList<InnerURL> items;
+    private String kind;
+    private int totalItems;
+    private ArrayList<InnerURL> items;
 
     public OuterURL(String kind, int totalItems, ArrayList<InnerURL> items) {
         this.kind=kind;

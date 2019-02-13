@@ -1,14 +1,14 @@
 package com.example.librarify;
 
 public class InnerURL {
-    String kind;
-    String id;
-    String etag;
-    String selfLink;
-    volInfo volumeInfo;
-    sellInfo saleInfo;
-    accInfo accessInfo;
-    SearchInfo searchInfo;
+    private String kind;
+    private String id;
+    private String etag;
+    private String selfLink;
+    private volInfo volumeInfo;
+    private sellInfo saleInfo;
+    private accInfo accessInfo;
+    private SearchInfo searchInfo;
     public InnerURL(String kind, String id, String etag, String selfLink, volInfo volumeInfo, sellInfo saleInfo,
                     accInfo accessInfo, SearchInfo searchInfo) {
         this.kind=kind;

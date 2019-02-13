@@ -1,7 +1,7 @@
 package com.example.librarify;
 
 public class ePub {
-    boolean isAvailable;
+    private boolean isAvailable;
 
     public ePub(boolean isAvailable) {
 

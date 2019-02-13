@@ -1,7 +1,7 @@
 package com.example.librarify;
 
 public class SearchInfo {
-    String textSnippet;
+    private String textSnippet;
 
     public SearchInfo(String textSnippet) {
 

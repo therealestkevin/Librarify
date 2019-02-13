@@ -1,8 +1,8 @@
 package com.example.librarify;
 
 public class indID {
-    String type;
-    String identifier;
+    private String type;
+    private String identifier;
 
     public indID(String type, String identifier) {
         this.type=type;

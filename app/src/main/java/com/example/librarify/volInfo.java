@@ -3,27 +3,27 @@ package com.example.librarify;
 import java.util.ArrayList;
 
 public class volInfo {
-    String title;
-    ArrayList<String> authors;
-    String publisher;
-    String publishedDate;
-    String description;
-    ArrayList<indID> industryIdentifiers;
-    readMode readingModes;
-    int pageCount;
-    String printType;
-    ArrayList<String> categories;
-    double averageRating;
-    int ratingsCount;
-    String maturityRating;
-    boolean allowAnonLogging;
-    String contentVersion;
-    panelSum panelizationSummary;
-    imgLinks imageLinks;
-    String language;
-    String previewLink;
-    String infoLink;
-    String canonicalVolumeLink;
+    private String title;
+    private ArrayList<String> authors;
+    private String publisher;
+    private String publishedDate;
+    private String description;
+    private ArrayList<indID> industryIdentifiers;
+    private readMode readingModes;
+    private int pageCount;
+    private String printType;
+    private ArrayList<String> categories;
+    private double averageRating;
+    private int ratingsCount;
+    private String maturityRating;
+    private boolean allowAnonLogging;
+    private String contentVersion;
+    private panelSum panelizationSummary;
+    private imgLinks imageLinks;
+    private String language;
+    private String previewLink;
+    private String infoLink;
+    private String canonicalVolumeLink;
 
     public volInfo(String title, ArrayList<String> authors, String publisher, String publishedDate,
                    String description, ArrayList<indID> industryIdentifiers, readMode readingModes,

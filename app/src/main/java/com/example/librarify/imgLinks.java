@@ -1,8 +1,8 @@
 package com.example.librarify;
 
 public class imgLinks {
-    String smallThumbnail;
-    String thumbnail;
+    private String smallThumbnail;
+    private String thumbnail;
 
     public imgLinks (String smallThumbnail, String thumbnail) {
         this.smallThumbnail=smallThumbnail;

@@ -2,16 +2,16 @@ package com.example.librarify;
 
 
 public class accInfo {
-    String country;
-    String viewability;
-    boolean embeddable;
-    boolean publicDomain;
-    String textToSpeechPermission;
-    ePub epub;
-    PDF pdf;
-    String webReaderLink;
-    String accessViewStatus;
-    boolean quoteSharingAllowed;
+    private String country;
+    private String viewability;
+    private boolean embeddable;
+    private boolean publicDomain;
+    private String textToSpeechPermission;
+    private ePub epub;
+    private PDF pdf;
+    private String webReaderLink;
+    private String accessViewStatus;
+    private boolean quoteSharingAllowed;
 
     public accInfo(String country, String viewability, boolean embeddable, boolean publicDomain,
                    String textToSpeechPermission, ePub epub, PDF pdf, String webReaderLink, String accessViewStatus,

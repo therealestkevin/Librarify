@@ -41,10 +41,6 @@ public class cameraCapture extends AppCompatActivity {
     private Button btnDetect;
     private AlertDialog waitingDialog;
     private String browserKey = "AIzaSyB4FziQm9LM2Nahb3SsKbME7_cTq60x2_Q";
-    private String imageURLPassed = "";
-    private String bookDescriptionPassed = "";
-    private double ratingStar;
-    private int numRatings;
     private String jsonString;
     public static final String EXTRA_REPLY = "REPLY";
     public static final String EXTRA_REPLY2 = "ISBN";
@@ -157,13 +153,9 @@ public class cameraCapture extends AppCompatActivity {
                         Gson gson = new Gson();
                         OuterURL temp = gson.fromJson(jsonReqText, OuterURL.class);
                         jsonString = gson.toJson(temp);
-                        imageURLPassed = temp.items.get(0).volumeInfo.imageLinks.thumbnail;
-                        bookDescriptionPassed = temp.items.get(0).volumeInfo.description;
-                        ratingStar = temp.getItems().get(0).getVolumeInfo().averageRating;
-                        numRatings = temp.getItems().get(0).getVolumeInfo().ratingsCount;
-                        Log.i("author", temp.items.get(0)
-                                .volumeInfo.authors.toString());
-                       String authors= temp.items.get(0).volumeInfo.authors
+                        Log.i("author", temp.getItems().get(0)
+                                .getVolumeInfo().getAuthors().toString());
+                       String authors= temp.getItems().get(0).getVolumeInfo().getAuthors()
                                 .toString().replace("[","").replace("]","");
                         execute=true;
                         for (int b = 0; b < BookAdapter.mBook.size(); b++) {
@@ -174,12 +166,12 @@ public class cameraCapture extends AppCompatActivity {
                         }
                          builder = new androidx.appcompat.app.AlertDialog.Builder(cameraCapture.this);
                         if(execute==true){
-                            builder.setMessage("ISBN: " + item.getRawValue() + "\nFORMAT: " + getType(item.getFormat()) + "\nTITLE: " + temp.items.get(0)
-                                    .volumeInfo.title +"\nAUTHOR(S): " +authors);
+                            builder.setMessage("ISBN: " + item.getRawValue() + "\nFORMAT: " + getType(item.getFormat()) + "\nTITLE: " + temp.getItems().get(0)
+                                    .getVolumeInfo().getTitle() +"\nAUTHOR(S): " +authors);
                         }else{
 
-                            builder.setMessage(   "\nTITLE: " + temp.items.get(0)
-                                    .volumeInfo.title + "\n\nAlready In Library. Are You Sure?");
+                            builder.setMessage(   "\nTITLE: " + temp.getItems().get(0)
+                                    .getVolumeInfo().getTitle() + "\n\nAlready In Library. Are You Sure?");
                         }
 
                                 /*
