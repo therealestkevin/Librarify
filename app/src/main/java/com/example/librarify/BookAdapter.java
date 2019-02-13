@@ -52,7 +52,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
            final Book cur = mBook.get(position);
            holder.bookName.setText(cur.getBookList().getItems().get(0).getVolumeInfo().getTitle());
 
-           holder.authorView.setText(cur.getAuthor().toString().replace(",", "")
+           holder.authorView.setText(cur.getAuthor().toString()
                    .replace("[", "")
                    .replace("]", "")
                    .trim());
