@@ -15,7 +15,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="ExtraText">
-        <activity android:name=".bookSchedule"></activity>
+        <activity android:name=".bookSchedule"
+                  android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:parentActivityName=".bookList"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name=".bookList"
             android:configChanges="keyboardHidden|orientation|screenSize"
