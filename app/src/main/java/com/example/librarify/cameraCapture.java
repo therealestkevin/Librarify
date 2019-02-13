@@ -34,6 +34,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import dmax.dialog.SpotsDialog;
+import gsonParsing.OuterURL;
 
 
 public class cameraCapture extends AppCompatActivity {

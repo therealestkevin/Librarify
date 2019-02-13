@@ -20,6 +20,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import gsonParsing.OuterURL;
+
 public class bookList extends AppCompatActivity implements RecycleListener{
     private FloatingActionButton addBookButton;
     private Toolbar topToolBarBook;
@@ -206,7 +208,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
             String isbnResult = dat.getStringExtra(cameraCapture.EXTRA_REPLY2);
             Log.i("isbn",isbnResult);
 
-            Book book = new Book(intID++,new Gson().fromJson(dat.getStringExtra(cameraCapture.EXTRA_REPLY),OuterURL.class),
+            Book book = new Book(intID++,new Gson().fromJson(dat.getStringExtra(cameraCapture.EXTRA_REPLY), OuterURL.class),
                     java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),isbnResult);
 
             bookModel.insert(book);

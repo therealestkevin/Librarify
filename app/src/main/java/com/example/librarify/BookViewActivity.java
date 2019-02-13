@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import gsonParsing.OuterURL;
 
 public class BookViewActivity extends AppCompatActivity {
     private ImageView bookImg;
@@ -77,7 +78,7 @@ public class BookViewActivity extends AppCompatActivity {
             Bundle bundle = getIntent().getExtras();
             if(!bundle.getString("jsonStuff").equals(null)){
 
-                infoOutput = new Gson().fromJson(bundle.getString("jsonStuff"),OuterURL.class);
+                infoOutput = new Gson().fromJson(bundle.getString("jsonStuff"), OuterURL.class);
 
                 try {
                     bookImg.setImageDrawable(new RetrieveDrawableTask(infoOutput.getItems().get(0).getVolumeInfo()

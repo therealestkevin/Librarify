@@ -1,4 +1,4 @@
-package com.example.librarify;
+package gsonParsing;
 
 import java.util.ArrayList;
 

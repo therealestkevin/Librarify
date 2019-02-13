@@ -1,4 +1,4 @@
-package com.example.librarify;
+package gsonParsing;
 
 public class PDF {
     private boolean isAvailable;

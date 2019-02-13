@@ -1,4 +1,4 @@
-package com.example.librarify;
+package gsonParsing;
 
 public class sellInfo {
     private String country;
