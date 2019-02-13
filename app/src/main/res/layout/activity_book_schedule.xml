@@ -6,22 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".bookSchedule">
 
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/calendarView"
-        android:layout_width="315dp"
-        android:layout_height="344dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+    <com.applandeo.materialcalendarview.CalendarView
+        android:id="@+id/bookSchedule"
+        android:layout_width="0dp"
+        android:layout_height="470dp"
         android:layout_marginBottom="8dp"
+        app:pagesColor="@color/colorPrimaryDark"
+        app:abbreviationsBarColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scheduleToolBar"
-        app:layout_constraintVertical_bias="0.333"
-        app:mcv_selectionColor="#00F"
-        app:mcv_showOtherDates="all" />
-
+        app:layout_constraintVertical_bias="0.0" />
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/scheduleToolBar"
         android:layout_width="0dp"

@@ -3,19 +3,21 @@ package com.example.librarify;
 import android.os.Bundle;
 import android.view.View;
 
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.applandeo.materialcalendarview.CalendarView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class bookSchedule extends AppCompatActivity {
-    private MaterialCalendarView bookSchedule;
+    private CalendarView bookSchedule;
     private Toolbar scheduleToolBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_schedule);
-        bookSchedule = (MaterialCalendarView) findViewById(R.id.calendarView);
+        bookSchedule = (CalendarView) findViewById(R.id.bookSchedule);
+
+
         scheduleToolBar = (Toolbar) findViewById(R.id.scheduleToolBar);
         setSupportActionBar( scheduleToolBar);
         scheduleToolBar.setTitle("Book Schedule");
