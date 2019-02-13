@@ -18,16 +18,19 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class BookViewActivity extends AppCompatActivity {
     private ImageView bookImg;
     private TextView bookDescription;
     private RatingBar bookRatingBar;
     private TextView starText;
+    private Button scheduleButton;
     //private Button sendJson;
     private Button toList;
     //private String jsonString;
     private OuterURL infoOutput;
+    private Toolbar bookViewToolbar;
 
 
     @Override
@@ -40,9 +43,28 @@ public class BookViewActivity extends AppCompatActivity {
         starText = (TextView) findViewById(R.id.starDisplayText);
         //sendJson = (Button) findViewById(R.id.sendJson);
         toList = (Button) findViewById(R.id.goToList);
+        scheduleButton = (Button) findViewById(R.id.scheduleButton);
+        bookViewToolbar = (Toolbar) findViewById(R.id.BookViewToolbar);
+        setSupportActionBar(bookViewToolbar);
+       bookViewToolbar.setTitle("Book Info");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        bookViewToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         bookRatingBar.setMax(5);
         bookRatingBar.setStepSize(.1f);
 
+        scheduleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent scheduleIntent = new Intent(getApplicationContext(), bookSchedule.class);
+                startActivity(scheduleIntent);
+            }
+        });
 
         toList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +76,7 @@ public class BookViewActivity extends AppCompatActivity {
         if (getIntent() != null && getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
             if(!bundle.getString("jsonStuff").equals(null)){
+
                 infoOutput = new Gson().fromJson(bundle.getString("jsonStuff"),OuterURL.class);
 
                 try {

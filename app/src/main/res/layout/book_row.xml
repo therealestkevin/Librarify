@@ -38,32 +38,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="10dp"
         android:text="Time"
         android:textAlignment="viewStart"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/bookInfoBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toEndOf="@+id/bookViewImg"
         app:layout_constraintTop_toBottomOf="@+id/authorView" />
-
-    <Button
-        android:id="@+id/bookInfoBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
-        android:text="INFO"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toEndOf="@+id/bookViewImg"
-        app:layout_constraintTop_toBottomOf="@+id/timeAdded"
-        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/authorView"
@@ -79,5 +60,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bookViewImg"
         app:layout_constraintTop_toBottomOf="@+id/book_name" />
+
+    <Button
+        android:id="@+id/startSchedule"
+        android:layout_width="175dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Start Schedule"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bookViewImg"
+        app:layout_constraintTop_toBottomOf="@+id/timeAdded" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

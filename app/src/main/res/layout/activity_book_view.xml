@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".BookViewActivity">
 
+    <Button
+        android:id="@+id/scheduleButton"
+        android:layout_width="160dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Schedule"
+        app:layout_constraintBottom_toTopOf="@+id/bookRatingBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.854"
+        app:layout_constraintStart_toEndOf="@+id/goToList"
+        app:layout_constraintTop_toBottomOf="@+id/bookDescription"
+        app:layout_constraintVertical_bias="0.857" />
+
     <ImageView
         android:id="@+id/bookImage"
         android:layout_width="289dp"
@@ -72,8 +88,8 @@
 
     <Button
         android:id="@+id/goToList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -81,13 +97,14 @@
         android:text="Back To Library"
         app:layout_constraintBottom_toTopOf="@+id/bookRatingBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bookDescription"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="449dp"
+        android:id="@+id/BookViewToolbar"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="@color/colorAccent"
         android:minHeight="?attr/actionBarSize"

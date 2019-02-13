@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +31,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     public static List<Book> copyBook;
     private LayoutInflater inflate1;
     private Context context;
+    private RecycleListener itemClicked;
     private final DateFormat generalFormat =new SimpleDateFormat("MMM d,yyyy HH:mm:ss aa");
     BookAdapter(Context context){
         this.context=context;
@@ -66,14 +65,13 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
                e.printStackTrace();
            }
         holder.timeAdded.setText("Added "+cur.getDateTime());
-           holder.bookInfoBtn.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   Intent bookInfoIntent = new Intent(context,BookViewActivity.class);
-                   bookInfoIntent.putExtra("jsonStuff", new Gson().toJson(cur.getBookList()));
-                   context.startActivity(bookInfoIntent);
-               }
-           });
+        holder.bookSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent scheduleIntent = new Intent(context, bookSchedule.class);
+                context.startActivity(scheduleIntent);
+            }
+        });
        }
 
        // holder.bookName.setText(books.get(position));
@@ -209,6 +207,9 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
             notifyDataSetChanged();
         }
     }
+    public void setRecycleListener(RecycleListener onClick){
+        itemClicked = onClick;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -226,19 +227,30 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView bookName;
         public ImageView bookViewImg;
         public TextView timeAdded;
-        public Button bookInfoBtn;
+        public Button bookSchedule;
         public TextView authorView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             bookName = itemView.findViewById(R.id.book_name);
             bookViewImg = itemView.findViewById(R.id.bookViewImg);
             timeAdded = itemView.findViewById(R.id.timeAdded);
-            bookInfoBtn = itemView.findViewById(R.id.bookInfoBtn);
             authorView = itemView.findViewById(R.id.authorView);
+            bookSchedule = itemView.findViewById(R.id.startSchedule);
+            itemView.setTag(this);
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            if(itemClicked!=null){
+                itemClicked.onClick(view,getAdapterPosition());
+            }
         }
     }
 }

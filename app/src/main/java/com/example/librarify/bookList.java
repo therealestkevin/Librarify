@@ -20,13 +20,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-public class bookList extends AppCompatActivity {
+public class bookList extends AppCompatActivity implements RecycleListener{
     private FloatingActionButton addBookButton;
     private Toolbar topToolBarBook;
     private RecyclerView bookListView;
     private BookAdapter adapter;
     private BookViewModel bookModel;
     private Menu menu;
+
     private static int intID=0;
     public static final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
     public static int sortMethod=-1;
@@ -56,6 +57,7 @@ public class bookList extends AppCompatActivity {
         bookListView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BookAdapter(this);
         bookListView.setAdapter(adapter);
+        adapter.setRecycleListener(this);
         bookModel = ViewModelProviders.of(this).get(BookViewModel.class);
         bookModel.getAllBooks().observe(this, new Observer<List<Book>>() {
             @Override
@@ -184,6 +186,7 @@ public class bookList extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     private void unCheckAll(Menu menu){
         for(int i=0; i<menu.size();i++){
             MenuItem b = menu.getItem(i);
@@ -212,7 +215,16 @@ public class bookList extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Entry Failed",Toast.LENGTH_LONG).show();
         }
     }
+    @Override
+    public void onClick(View view, int position) {
+         OuterURL book= BookAdapter.mBook.get(position).getBookList();
 
+        Intent bookInfoIntent = new Intent(getApplicationContext(),BookViewActivity.class);
+        bookInfoIntent.putExtra("jsonStuff", new Gson().toJson(book));
+        startActivity(bookInfoIntent);
+
+
+    }
     public void onEntrySort(int code){
         switch(code){
             case -1:{
@@ -226,4 +238,6 @@ public class bookList extends AppCompatActivity {
             }
         }
     }
+
+
 }
