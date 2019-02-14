@@ -1,4 +1,4 @@
-package com.example.librarify;
+package kevin.xu.librarify;
 
 
 import android.app.AlertDialog;
@@ -25,6 +25,7 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.gson.Gson;
+import com.xu.librarify.R;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -34,7 +35,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import dmax.dialog.SpotsDialog;
-import gsonParsing.OuterURL;
+import kevin.xu.gsonParsing.OuterURL;
 
 
 public class cameraCapture extends AppCompatActivity {

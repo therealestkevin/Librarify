@@ -1,4 +1,4 @@
-package gsonParsing;
+package kevin.xu.gsonParsing;
 
 public class indID {
     private String type;

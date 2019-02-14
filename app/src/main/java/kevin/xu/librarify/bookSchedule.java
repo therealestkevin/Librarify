@@ -1,4 +1,4 @@
-package com.example.librarify;
+package kevin.xu.librarify;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +10,7 @@ import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
+import com.xu.librarify.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.example.librarify;
+package kevin.xu.librarify;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.xu.librarify.R;
 
 import java.util.Calendar;
 import java.util.List;
@@ -20,7 +21,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import gsonParsing.OuterURL;
+import kevin.xu.gsonParsing.OuterURL;
+import kevin.xu.roomDB.Book;
 
 public class bookList extends AppCompatActivity implements RecycleListener{
     private FloatingActionButton addBookButton;
