@@ -29,24 +29,18 @@ public class bookList extends AppCompatActivity implements RecycleListener{
     private BookAdapter adapter;
     private BookViewModel bookModel;
     private Menu menu;
-
     private static int intID=0;
     public static final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
     public static int sortMethod=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        setupMainWindowDisplayMode();
         topToolBarBook = (Toolbar) findViewById(R.id.topToolBarBook);
-
         setSupportActionBar(topToolBarBook);
         topToolBarBook.setTitle("Your Library");
-
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         topToolBarBook.setNavigationOnClickListener(new View.OnClickListener() {
@@ -228,6 +222,29 @@ public class bookList extends AppCompatActivity implements RecycleListener{
 
 
     }
+    private void setupMainWindowDisplayMode() {
+        View decorView = setSystemUiVisibilityMode();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                setSystemUiVisibilityMode(); // Needed to avoid exiting immersive_sticky when keyboard is displayed
+            }
+        });
+    }
+    private View setSystemUiVisibilityMode() {
+        View decorView = getWindow().getDecorView();
+        int options;
+        options =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        decorView.setSystemUiVisibility(options);
+        return decorView;
+    }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -240,6 +257,11 @@ public class bookList extends AppCompatActivity implements RecycleListener{
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
     }
     public void onEntrySort(int code){
         switch(code){

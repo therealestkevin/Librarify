@@ -38,7 +38,7 @@ public class BookViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        setupMainWindowDisplayMode();
         bookImg = (ImageView) findViewById(R.id.bookImage);
         bookDescription = (TextView) findViewById(R.id.bookDescription);
         bookRatingBar = (RatingBar) findViewById(R.id.bookRatingBar);
@@ -91,8 +91,9 @@ public class BookViewActivity extends AppCompatActivity {
                 }
                 bookDescription.setText(infoOutput.getItems().get(0).getVolumeInfo().getDescription());
                 bookRatingBar.setRating((float)infoOutput.getItems().get(0).getVolumeInfo().getAverageRating());
-                starText.setText("" + infoOutput.getItems().get(0).getVolumeInfo().getAverageRating()
-                        + " / 5.0 with " + infoOutput.getItems().get(0).getVolumeInfo().getRatingsCount() + " Ratings");
+                starText.setText(new StringBuilder("").append(infoOutput.getItems().get(0).getVolumeInfo().getAverageRating())
+                        .append(" / 5.0 with ").append( infoOutput.getItems().get(0).getVolumeInfo().getRatingsCount())
+                        .append(" Ratings").toString());
             }
 /*
         if (getIntent() != null && getIntent().getExtras() != null) {
@@ -150,6 +151,29 @@ public class BookViewActivity extends AppCompatActivity {
 
 
     }
+    private void setupMainWindowDisplayMode() {
+        View decorView = setSystemUiVisibilityMode();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                setSystemUiVisibilityMode(); // Needed to avoid exiting immersive_sticky when keyboard is displayed
+            }
+        });
+    }
+    private View setSystemUiVisibilityMode() {
+        View decorView = getWindow().getDecorView();
+        int options;
+        options =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        decorView.setSystemUiVisibility(options);
+        return decorView;
+    }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -163,7 +187,10 @@ public class BookViewActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
     }
-
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
     public static class RetrieveDrawableTask extends AsyncTask<String, Void, Drawable> {
         String urlString;
 
