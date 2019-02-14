@@ -1,6 +1,6 @@
 # Librarify
-Android app designed upon the Google Firebase platform. It keeps track of books you are reading by scanning ISBN barcodes through the utilization of Google Vision API. It then uses Google Books API in order to obtain information about scanned books and populates information into your library. All this data stored in a SQLite based Room Persistence Database which then populates a UI (Library). 
-
+Android app designed upon the Google Firebase platform. It keeps track of books you are reading by scanning ISBN barcodes through the utilization of Google Vision API. 
+Tools: Google Books API, Google ML, SQLite Room Persistence Library, Android Camerakit
 In Progress: Calender integrated Reading Scheduling
 
 ![screenshot_20190210-191659](https://user-images.githubusercontent.com/30887959/52603463-c1af5a00-2e1b-11e9-98c5-ddeb2a30581a.jpg)
