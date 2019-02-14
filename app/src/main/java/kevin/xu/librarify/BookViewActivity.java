@@ -1,4 +1,4 @@
-package com.example.librarify;
+package kevin.xu.librarify;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -11,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.xu.librarify.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import gsonParsing.OuterURL;
+import kevin.xu.gsonParsing.OuterURL;
 
 public class BookViewActivity extends AppCompatActivity {
     private ImageView bookImg;

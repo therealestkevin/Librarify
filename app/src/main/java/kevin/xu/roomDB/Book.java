@@ -1,11 +1,11 @@
-package com.example.librarify;
+package kevin.xu.roomDB;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import gsonParsing.OuterURL;
+import kevin.xu.gsonParsing.OuterURL;
 
 @Entity (tableName = "book_table")
 public class Book {

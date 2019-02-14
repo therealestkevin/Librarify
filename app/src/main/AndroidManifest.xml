@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.librarify">
+    package="com.xu.librarify">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,23 +15,23 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="ExtraText">
-        <activity android:name=".bookSchedule"
+        <activity android:name="kevin.xu.librarify.bookSchedule"
                   android:configChanges="keyboardHidden|orientation|screenSize"
-                  android:parentActivityName=".bookList"
+                  android:parentActivityName="kevin.xu.librarify.bookList"
                   android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
-            android:name=".bookList"
+            android:name="kevin.xu.librarify.bookList"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="kevin.xu.librarify.MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".BookViewActivity"
+            android:name="kevin.xu.librarify.BookViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="kevin.xu.librarify.MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".cameraCapture"
-            android:parentActivityName=".bookList"
+            android:name="kevin.xu.librarify.cameraCapture"
+            android:parentActivityName="kevin.xu.librarify.bookList"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
@@ -40,7 +40,7 @@
             android:value="barcode" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="kevin.xu.librarify.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>

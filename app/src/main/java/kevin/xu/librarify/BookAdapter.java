@@ -1,4 +1,4 @@
-package com.example.librarify;
+package kevin.xu.librarify;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.xu.librarify.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,6 +24,7 @@ import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import kevin.xu.roomDB.Book;
 
 class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
 

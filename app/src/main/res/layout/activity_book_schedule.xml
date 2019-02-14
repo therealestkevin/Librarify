@@ -4,24 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".bookSchedule">
+    tools:context="kevin.xu.librarify.bookSchedule">
 
     <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/bookSchedule"
         android:layout_width="0dp"
-        android:layout_height="470dp"
-        android:layout_marginBottom="8dp"
-        app:type="one_day_picker"
-        app:selectionColor="@color/colorAccent"
-        app:selectionLabelColor="@color/white"
-        app:pagesColor="@color/colorPrimaryDark"
+        android:layout_height="0dp"
         app:abbreviationsBarColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/readingButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scheduleToolBar"
-        app:layout_constraintVertical_bias="0.0" />
+        app:pagesColor="@color/colorPrimaryDark"
+        app:selectionColor="@color/colorAccent"
+        app:selectionLabelColor="@color/white"
+        app:type="one_day_picker" />
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/scheduleToolBar"
         android:layout_width="0dp"

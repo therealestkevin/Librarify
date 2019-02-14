@@ -1,10 +1,12 @@
-package com.example.librarify;
+package kevin.xu.librarify;
 
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.xu.librarify.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 

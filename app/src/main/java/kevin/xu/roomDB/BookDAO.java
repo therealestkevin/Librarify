@@ -1,4 +1,4 @@
-package com.example.librarify;
+package kevin.xu.roomDB;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,7 +12,8 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.TypeConverter;
-import gsonParsing.OuterURL;
+import kevin.xu.gsonParsing.OuterURL;
+import kevin.xu.roomDB.Book;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 

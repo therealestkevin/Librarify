@@ -1,4 +1,4 @@
-package gsonParsing;
+package kevin.xu.gsonParsing;
 
 import java.util.ArrayList;
 

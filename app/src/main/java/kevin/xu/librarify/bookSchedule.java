@@ -6,9 +6,12 @@ import android.widget.Button;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
+import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -19,14 +22,28 @@ public class bookSchedule extends AppCompatActivity {
     private CalendarView bookSchedule;
     private Toolbar scheduleToolBar;
     private Button readingButton;
-
+    private List<EventDay> events = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_schedule);
         setupMainWindowDisplayMode();
         readingButton = findViewById(R.id.readingButton);
+        
+
+
         bookSchedule = (CalendarView) findViewById(R.id.bookSchedule);
+        bookSchedule.setOnDayClickListener(new OnDayClickListener() {
+            @Override
+            public void onDayClick(EventDay eventDay) {
+                eventDay = new EventDay(eventDay.getCalendar(),R.drawable.ic_book);
+                events.add(eventDay);
+                bookSchedule.setEvents(events);
+            }
+        });
+
+
+
 
 
         scheduleToolBar = (Toolbar) findViewById(R.id.scheduleToolBar);

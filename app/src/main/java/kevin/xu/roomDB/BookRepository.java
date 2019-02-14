@@ -1,4 +1,4 @@
-package com.example.librarify;
+package kevin.xu.roomDB;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -12,14 +12,14 @@ public class BookRepository {
     private BookDAO bookDAO;
     private LiveData<List<Book>> allBooks;
     private ArrayList<String> allISBN;
-    BookRepository(Application app){
+    public BookRepository(Application app){
         BookDB db = BookDB.getDatabase(app);
         bookDAO=db.bookDAO();
         allBooks =bookDAO.getBooks();
 
     }
 
-    LiveData<List<Book>> getAllBooks(){
+    public LiveData<List<Book>> getAllBooks(){
         return allBooks;
     }
 
