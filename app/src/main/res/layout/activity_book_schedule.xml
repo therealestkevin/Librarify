@@ -6,20 +6,7 @@
     android:layout_height="match_parent"
     tools:context="kevin.xu.librarify.bookSchedule">
 
-    <com.applandeo.materialcalendarview.CalendarView
-        android:id="@+id/bookSchedule"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:abbreviationsBarColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toTopOf="@+id/readingButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleToolBar"
-        app:pagesColor="@color/colorPrimaryDark"
-        app:selectionColor="@color/colorAccent"
-        app:selectionLabelColor="@color/white"
-        app:type="one_day_picker" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/scheduleToolBar"
         android:layout_width="0dp"
@@ -32,6 +19,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.github.tibolte.agendacalendarview.AgendaCalendarView
+        android:id="@+id/agenda_calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:agendaCurrentDayTextColor="@color/theme_primary"
+        app:calendarColor="@color/theme_primary"
+        app:calendarCurrentDayTextColor="@color/calendar_text_current_day"
+        app:calendarDayTextColor="@color/theme_text_icons"
+        app:calendarHeaderColor="@color/theme_primary_dark"
+        app:calendarPastDayTextColor="@color/theme_light_primary"
+       app:fabColor="@color/theme_accent" />
     <Button
         android:id="@+id/readingButton"
         android:layout_width="0dp"

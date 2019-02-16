@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database (entities = {Book.class},version=1)
+@Database (entities = {Book.class},version=1,exportSchema=false)
 @TypeConverters({BookDAO.Converters.class})
 public abstract class BookDB extends RoomDatabase {
 

@@ -4,26 +4,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.applandeo.materialcalendarview.CalendarView;
-import com.applandeo.materialcalendarview.DatePicker;
-import com.applandeo.materialcalendarview.EventDay;
-import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
-import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
-import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
+
+import com.github.tibolte.agendacalendarview.AgendaCalendarView;
+import com.github.tibolte.agendacalendarview.CalendarPickerController;
+import com.github.tibolte.agendacalendarview.models.CalendarEvent;
+import com.github.tibolte.agendacalendarview.models.DayItem;
 import com.xu.librarify.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class bookSchedule extends AppCompatActivity {
-    private CalendarView bookSchedule;
+    private AgendaCalendarView bookSchedule;
     private Toolbar scheduleToolBar;
     private Button readingButton;
-    private List<EventDay> events = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,18 +31,32 @@ public class bookSchedule extends AppCompatActivity {
         setupMainWindowDisplayMode();
         readingButton = findViewById(R.id.readingButton);
         
+        bookSchedule = findViewById(R.id.agenda_calendar_view);
+        Calendar minDate = Calendar.getInstance();
+        Calendar maxDate = Calendar.getInstance();
 
+        minDate.add(Calendar.MONTH, -2);
+        minDate.set(Calendar.DAY_OF_MONTH, 1);
+        maxDate.add(Calendar.YEAR, 1);
 
-        bookSchedule = (CalendarView) findViewById(R.id.bookSchedule);
-        bookSchedule.setOnDayClickListener(new OnDayClickListener() {
+        List<CalendarEvent> eventList = new ArrayList<>();
+        CalendarPickerController bob = new CalendarPickerController() {
             @Override
-            public void onDayClick(EventDay eventDay) {
-                eventDay = new EventDay(eventDay.getCalendar(),R.drawable.ic_book);
-                events.add(eventDay);
-                bookSchedule.setEvents(events);
-            }
-        });
+            public void onDaySelected(DayItem dayItem) {
 
+            }
+
+            @Override
+            public void onEventSelected(CalendarEvent event) {
+
+            }
+
+            @Override
+            public void onScrollToDate(Calendar calendar) {
+
+            }
+        };
+        bookSchedule.init(eventList,minDate,maxDate, Locale.getDefault(),bob);
 
 
 
@@ -58,20 +72,7 @@ public class bookSchedule extends AppCompatActivity {
                 onBackPressed();
             }
         });
-       final OnSelectDateListener listener = new OnSelectDateListener() {
-            @Override
-            public void onSelect(List<Calendar> calendar) {
 
-            }
-        };
-        readingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DatePickerBuilder scheduleBuilder = new DatePickerBuilder(v.getContext(), listener).pickerType(CalendarView.RANGE_PICKER);
-                DatePicker schedulePicker = scheduleBuilder.build().show();
-            }
-        });
     }
     @Override
     public void onResume(){
