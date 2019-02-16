@@ -1,9 +1,9 @@
 package kevin.xu.librarify;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.CalendarPickerController;
@@ -32,6 +32,13 @@ public class bookSchedule extends AppCompatActivity {
         setContentView(R.layout.activity_book_schedule);
         setupMainWindowDisplayMode();
         readingButton = findViewById(R.id.readingButton);
+        readingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startManage = new Intent(getApplicationContext(),scheduleManager.class);
+                startActivity(startManage);
+            }
+        });
         
         bookSchedule = findViewById(R.id.agenda_calendar_view);
         Calendar minDate = Calendar.getInstance();
@@ -85,7 +92,7 @@ public class bookSchedule extends AppCompatActivity {
         endTime1.add(Calendar.MONTH, 1);
         BaseCalendarEvent event1 = new BaseCalendarEvent("Notes From Underground", "", "Your Library",
                 ContextCompat.getColor(this, R.color.blue_selected), startTime1, endTime1, false);
-        
+
         eventList.add(event1);
 
         Calendar startTime2 = Calendar.getInstance();

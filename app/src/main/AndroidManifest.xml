@@ -15,19 +15,29 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="ExtraText">
-        <activity android:name="kevin.xu.librarify.bookSchedule"
-                  android:configChanges="keyboardHidden|orientation|screenSize"
-                  android:parentActivityName="kevin.xu.librarify.bookList"
-                  android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity android:name="kevin.xu.librarify.scheduleManager"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName="kevin.xu.librarify.bookSchedule"
+            android:screenOrientation="portrait"
+            ></activity>
+        <activity
+            android:name="kevin.xu.librarify.bookSchedule"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName="kevin.xu.librarify.bookList"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="kevin.xu.librarify.bookList"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName="kevin.xu.librarify.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="kevin.xu.librarify.BookViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName="kevin.xu.librarify.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="kevin.xu.librarify.cameraCapture"
@@ -42,6 +52,7 @@
         <activity
             android:name="kevin.xu.librarify.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
