@@ -6,8 +6,20 @@
     android:layout_height="match_parent"
     tools:context="kevin.xu.librarify.scheduleManager">
 
+    <Button
+        android:id="@+id/deleteBtnSchedule"
+        android:layout_width="117dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="8dp"
+        android:text="DELETE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentEvents" />
+
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/scheduleManagerToolBar"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="@color/colorAccent"
@@ -20,28 +32,41 @@
     <ListView
         android:id="@+id/currentEvents"
         android:layout_width="0dp"
-        android:layout_height="195dp"
+        android:layout_height="520dp"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="2dp"
+        android:background="@color/calendar_text_default"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/currentEventsText" />
 
     <TextView
         android:id="@+id/currentEventsText"
-        android:layout_width="251dp"
-        android:layout_height="28dp"
+        android:layout_width="326dp"
+        android:layout_height="58dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Scheduled Events:"
-        android:textAlignment="textStart"
-        app:layout_constraintBottom_toTopOf="@+id/currentEvents"
+        android:text="Scheduled Reading:"
+        android:textAlignment="center"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/scheduleManagerToolBar" />
+
+    <Button
+        android:id="@+id/addBtnSchedule"
+        android:layout_width="117dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="ADD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentEvents" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

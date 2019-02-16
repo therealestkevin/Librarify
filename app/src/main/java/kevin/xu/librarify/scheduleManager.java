@@ -2,19 +2,48 @@ package kevin.xu.librarify;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.xu.librarify.R;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class scheduleManager extends AppCompatActivity {
-
+    private Toolbar scheduleManagerToolbar;
+    private Button addBtnSchedule;
+    private Button deleteBtnSchedule;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_manager);
         setupMainWindowDisplayMode();
+        scheduleManagerToolbar = findViewById(R.id.scheduleManagerToolBar);
+        addBtnSchedule = findViewById(R.id.addBtnSchedule);
+        deleteBtnSchedule = findViewById(R.id.deleteBtnSchedule);
+        setSupportActionBar(scheduleManagerToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        scheduleManagerToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    addBtnSchedule.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    });
+    deleteBtnSchedule.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    });
     }
+
     private void setupMainWindowDisplayMode() {
         View decorView = setSystemUiVisibilityMode();
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
