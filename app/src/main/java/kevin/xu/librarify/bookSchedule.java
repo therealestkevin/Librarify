@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.CalendarPickerController;
+import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.DayItem;
 import com.xu.librarify.R;
@@ -18,6 +19,7 @@ import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 public class bookSchedule extends AppCompatActivity {
     private AgendaCalendarView bookSchedule;
@@ -56,6 +58,9 @@ public class bookSchedule extends AppCompatActivity {
 
             }
         };
+
+
+       mockList(eventList);
         bookSchedule.init(eventList,minDate,maxDate, Locale.getDefault(),bob);
 
 
@@ -72,6 +77,24 @@ public class bookSchedule extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+    }
+    private void mockList(List<CalendarEvent> eventList) {
+        Calendar startTime1 = Calendar.getInstance();
+        Calendar endTime1 = Calendar.getInstance();
+        endTime1.add(Calendar.MONTH, 1);
+        BaseCalendarEvent event1 = new BaseCalendarEvent("Notes From Underground", "", "Your Library",
+                ContextCompat.getColor(this, R.color.blue_selected), startTime1, endTime1, false);
+        
+        eventList.add(event1);
+
+        Calendar startTime2 = Calendar.getInstance();
+        startTime2.add(Calendar.DAY_OF_YEAR, 1);
+        Calendar endTime2 = Calendar.getInstance();
+        endTime2.add(Calendar.DAY_OF_YEAR, 3);
+        BaseCalendarEvent event2 = new BaseCalendarEvent("Crime and Punishment", "", "Your Library",
+                ContextCompat.getColor(this, R.color.black_overlay), startTime2, endTime2, false);
+        eventList.add(event2);
 
     }
     @Override
