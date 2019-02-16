@@ -220,6 +220,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
 
         Intent bookInfoIntent = new Intent(getApplicationContext(),BookViewActivity.class);
         bookInfoIntent.putExtra("jsonStuff", new Gson().toJson(book));
+        bookInfoIntent.putExtra("BookPosition2",position);
         startActivity(bookInfoIntent);
 
 

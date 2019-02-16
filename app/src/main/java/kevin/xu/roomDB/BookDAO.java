@@ -13,7 +13,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.TypeConverter;
 import kevin.xu.gsonParsing.OuterURL;
-import kevin.xu.roomDB.Book;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
@@ -31,6 +30,11 @@ public interface BookDAO {
 
     @Query("SELECT ISBN FROM book_table")
     List<String> getISBN();
+
+    @Query("SELECT author FROM book_table")
+    List<ArrayList<String>> getAuthors();
+
+
 
     public class Converters{
         @TypeConverter

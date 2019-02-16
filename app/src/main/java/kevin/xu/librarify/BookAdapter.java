@@ -72,6 +72,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 Intent scheduleIntent = new Intent(context, bookSchedule.class);
+                scheduleIntent.putExtra("BookPosition",position);
                 context.startActivity(scheduleIntent);
             }
         });
