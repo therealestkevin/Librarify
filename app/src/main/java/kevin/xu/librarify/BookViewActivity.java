@@ -30,6 +30,7 @@ public class BookViewActivity extends AppCompatActivity {
     private Button scheduleButton;
     //private Button sendJson;
     private Button toList;
+    private int BookPosition2;
     //private String jsonString;
     private OuterURL infoOutput;
     private Toolbar bookViewToolbar;
@@ -66,6 +67,9 @@ public class BookViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent scheduleIntent = new Intent(getApplicationContext(), bookSchedule.class);
+                if(BookPosition2>-1){
+                    scheduleIntent.putExtra("BookPosition3",BookPosition2);
+                }
                 startActivity(scheduleIntent);
             }
         });
@@ -79,6 +83,9 @@ public class BookViewActivity extends AppCompatActivity {
         });
         if (getIntent() != null && getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
+            if(bundle.getInt("BookPosition2")>-1){
+                BookPosition2 = bundle.getInt("BookPosition2");
+            }
             if(!bundle.getString("jsonStuff").equals(null)){
 
                 infoOutput = new Gson().fromJson(bundle.getString("jsonStuff"), OuterURL.class);

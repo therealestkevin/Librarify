@@ -25,17 +25,28 @@ public class bookSchedule extends AppCompatActivity {
     private AgendaCalendarView bookSchedule;
     private Toolbar scheduleToolBar;
     private Button readingButton;
-
+    private int BookPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_schedule);
         setupMainWindowDisplayMode();
         readingButton = findViewById(R.id.readingButton);
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            Bundle bundle = getIntent().getExtras();
+            if(bundle.getInt("BookPosition")>-1){
+                BookPosition= bundle.getInt("BookPosition");
+            }else if(bundle.getInt("BookPosition3")>-1){
+                BookPosition = bundle.getInt("BookPosition3");
+            }
+        }
         readingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startManage = new Intent(getApplicationContext(),scheduleManager.class);
+                startManage.putExtra("BookPositionFinal",BookPosition);
+
                 startActivity(startManage);
             }
         });
@@ -113,7 +124,7 @@ public class bookSchedule extends AppCompatActivity {
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
-                setSystemUiVisibilityMode(); // Needed to avoid exiting immersive_sticky when keyboard is displayed
+                setSystemUiVisibilityMode();
             }
         });
     }
@@ -124,8 +135,8 @@ public class bookSchedule extends AppCompatActivity {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
         decorView.setSystemUiVisibility(options);

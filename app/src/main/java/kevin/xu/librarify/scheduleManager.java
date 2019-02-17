@@ -37,22 +37,30 @@ public class scheduleManager extends AppCompatActivity {
         });
         if (getIntent() != null && getIntent().getExtras() != null){
             Bundle bundle = getIntent().getExtras();
-            if(bundle.getInt("BookPosition")>-1){
-                BookPosition = bundle.getInt("BookPosition");
-            }else if (bundle.getInt())
+            if(bundle.getInt("BookPositionFinal")>-1){
+                BookPosition = bundle.getInt("BookPositionFinal");
+            }
         }
     addBtnSchedule.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT);
+            LinearLayout layout = new LinearLayout(getApplicationContext());
                     EditText title = new EditText(getApplicationContext());
+                    title.setHint(BookAdapter.mBook.get(BookPosition).getTitle());
+                    layout.addView(title);
                     EditText pageNumberStart = new EditText(getApplicationContext());
-                    pageNumberStart.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    EditText pageNumberEnd = new EditText(getApplicationContext());
 
-            new AlertDialog.Builder(scheduleManager.this);
+                    pageNumberStart.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    pageNumberStart.setHint(""+1);
+                    layout.addView(pageNumberStart);
+                    EditText pageNumberEnd = new EditText(getApplicationContext());
+                    pageNumberEnd.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    pageNumberEnd.setHint(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0)
+                    .getVolumeInfo().getPageCount());
+                    layout.addView(pageNumberEnd);
+            new AlertDialog.Builder(scheduleManager.this).setView(layout)
+            .show();
+
 
 
         }

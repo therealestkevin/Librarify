@@ -31,8 +31,7 @@ public interface BookDAO {
     @Query("SELECT ISBN FROM book_table")
     List<String> getISBN();
 
-    @Query("SELECT author FROM book_table")
-    List<ArrayList<String>> getAuthors();
+
 
 
 
