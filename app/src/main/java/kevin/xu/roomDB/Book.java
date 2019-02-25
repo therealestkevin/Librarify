@@ -10,8 +10,11 @@ import kevin.xu.gsonParsing.OuterURL;
 @Entity (tableName = "book_table")
 public class Book {
 
+    @PrimaryKey(autoGenerate = true)
+    private static int Id=0;
+   
+
     @PrimaryKey
-    private int Id;
     private OuterURL bookList;
     private String dateTime;
     private String ISBN;
@@ -25,8 +28,8 @@ public class Book {
 
 
 
-    public Book(int Id, OuterURL bookOne, String dateTime, String ISBN){
-        this.Id=Id;
+    public Book(OuterURL bookOne, String dateTime, String ISBN){
+        this.Id++;
         this.bookList=bookOne;
         this.dateTime = dateTime;
         this.ISBN = ISBN;

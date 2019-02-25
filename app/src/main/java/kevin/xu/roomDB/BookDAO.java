@@ -31,11 +31,13 @@ public interface BookDAO {
     @Query("SELECT ISBN FROM book_table")
     List<String> getISBN();
 
+    @Query("SELECT author FROM book_table")
+    List<String> getAuthors();
 
+    @Query("SELECT title FROM book_table")
+    String getTitle();
 
-
-
-    public class Converters{
+     class Converters{
         @TypeConverter
         public static OuterURL toOuterURL(String value){
            if(value == null){

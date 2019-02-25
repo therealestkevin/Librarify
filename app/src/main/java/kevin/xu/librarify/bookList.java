@@ -31,7 +31,6 @@ public class bookList extends AppCompatActivity implements RecycleListener{
     private BookAdapter adapter;
     private BookViewModel bookModel;
     private Menu menu;
-    private static int intID=0;
     public static final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
     public static int sortMethod=-1;
 
@@ -40,7 +39,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
         setupMainWindowDisplayMode();
-        topToolBarBook = (Toolbar) findViewById(R.id.topToolBarBook);
+        topToolBarBook = findViewById(R.id.topToolBarBook);
         setSupportActionBar(topToolBarBook);
         topToolBarBook.setTitle("Your Library");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -205,10 +204,11 @@ public class bookList extends AppCompatActivity implements RecycleListener{
             String isbnResult = dat.getStringExtra(cameraCapture.EXTRA_REPLY2);
             Log.i("isbn",isbnResult);
 
-            Book book = new Book(intID++,new Gson().fromJson(dat.getStringExtra(cameraCapture.EXTRA_REPLY), OuterURL.class),
+            Book book = new Book(new Gson().fromJson(dat.getStringExtra(cameraCapture.EXTRA_REPLY), OuterURL.class),
                     java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),isbnResult);
 
             bookModel.insert(book);
+
 
         }else{
             Toast.makeText(getApplicationContext(),"Entry Failed",Toast.LENGTH_LONG).show();
