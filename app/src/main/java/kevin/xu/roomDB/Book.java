@@ -11,8 +11,8 @@ import kevin.xu.gsonParsing.OuterURL;
 public class Book {
 
     @PrimaryKey(autoGenerate = true)
-    private static int Id=0;
-   
+    private int Id;
+
 
     @PrimaryKey
     private OuterURL bookList;
@@ -29,7 +29,6 @@ public class Book {
 
 
     public Book(OuterURL bookOne, String dateTime, String ISBN){
-        this.Id++;
         this.bookList=bookOne;
         this.dateTime = dateTime;
         this.ISBN = ISBN;
