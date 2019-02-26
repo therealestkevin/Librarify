@@ -44,6 +44,31 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         topToolBarBook.setTitle("Your Library");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        switch(bookList.sortMethod){
+            case -1:{
+                break;
+            }
+            case 0:{
+                adapter.filterByAlpha(true);
+                break;
+            }
+            case 1:{
+                adapter.filterByAlpha(false);
+                break;
+            }
+            case 2:{
+                adapter.filterByAuthor(true);
+            }
+            case 3:{
+                adapter.filterByAuthor(false);
+            }
+            case 4:{
+                adapter.filterByDate(true);
+            }
+            case 5:{
+                adapter.filterByDate(false);
+            }
+        }
         topToolBarBook.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,7 +255,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
-                setSystemUiVisibilityMode(); // Needed to avoid exiting immersive_sticky when keyboard is displayed
+                setSystemUiVisibilityMode();
             }
         });
     }
@@ -241,8 +266,8 @@ public class bookList extends AppCompatActivity implements RecycleListener{
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN 
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
         decorView.setSystemUiVisibility(options);
