@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
@@ -13,7 +14,9 @@ import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 import com.xu.librarify.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
@@ -30,6 +33,8 @@ public class scheduleManager extends AppCompatActivity {
     private Button dateButton;
     private int BookPosition;
     private AlertDialog.Builder bobBuilder;
+    private TextView editTextDateFrom;
+    private TextView editTextDateTo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,20 +88,50 @@ public class scheduleManager extends AppCompatActivity {
 
             editTextPageEnd.setHint(""+BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getPageCount()
                     +" Pages In Total");
+            editTextDateFrom = dialogCustomView.findViewById(R.id.textViewDateFrom);
+            editTextDateTo = dialogCustomView.findViewById(R.id.textViewDateTo);
             dateButton = dialogCustomView.findViewById(R.id.dateButton);
             OnSelectDateListener listenerDates = new OnSelectDateListener() {
                 @Override
                 public void onSelect(List<Calendar> calendar) {
 
-                }
+                            Calendar firstDay = calendar.get(0);
+                            Calendar lastDay = calendar.get(calendar.size()-1);
+                            Date firstDate = firstDay.getTime();
+                            Date lastDate = lastDay.getTime();
+                            SimpleDateFormat formatter = new SimpleDateFormat("MMM, dd, yyyy");
+                            String dateFirst = formatter.format(firstDate);
+                            String dateLast = formatter.format(lastDate);
+                            editTextDateFrom.setText(dateFirst);
+                            editTextDateTo.setText(dateLast);
+
+                        }
+
+
             };
             dateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     DatePickerBuilder builderBob2 = new DatePickerBuilder(scheduleManager.this, listenerDates).pickerType(CalendarView.RANGE_PICKER);
                     DatePicker realDatePicker = builderBob2.build().show();
+                    /*OnSelectDateListener listenDatePick = new OnSelectDateListener() {
+                        @Override
+                        public void onSelect(List<Calendar> calendar) {
+                            Calendar firstDay = calendar.get(0);
+                            Calendar lastDay = calendar.get(calendar.size()-1);
+                            Date firstDate = firstDay.getTime();
+                            Date lastDate = lastDay.getTime();
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                            String dateFirst = formatter.format(firstDate);
+                            String dateLast = formatter.format(lastDate);
+                            editTextDateFrom.setText(dateFirst);
+                            editTextDateTo.setText(dateLast);
+
+                        }
+                    };*/
                 }
             });
+
                  bobBuilder.setPositiveButton("Create",
                     new DialogInterface.OnClickListener() {
                         @Override

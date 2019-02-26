@@ -6,6 +6,28 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/textViewDateTo"
+        android:layout_width="250dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="No Current Date"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewToDate"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDateFrom" />
+
+    <TextView
+        android:id="@+id/textViewToDate"
+        android:layout_width="103dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="To: "
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFromDate" />
+
+    <TextView
         android:id="@+id/textViewEndPage"
         android:layout_width="100dp"
         android:layout_height="29dp"
@@ -67,15 +89,15 @@
         android:id="@+id/editTextNotes"
         android:layout_width="0dp"
         android:layout_height="184dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Enter Notes"
         android:inputType="textPersonName"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateButton" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDateTo" />
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -112,4 +134,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPageEnd" />
+
+    <TextView
+        android:id="@+id/textViewFromDate"
+        android:layout_width="103dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="From: "
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateButton" />
+
+    <TextView
+        android:id="@+id/textViewDateFrom"
+        android:layout_width="250dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="No Current Date"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewFromDate"
+        app:layout_constraintTop_toBottomOf="@+id/dateButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
