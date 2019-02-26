@@ -3,24 +3,25 @@ package kevin.xu.roomDB;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import kevin.xu.gsonParsing.OuterURL;
 
 @Entity (tableName = "book_table")
 public class Book {
-
-    @PrimaryKey(autoGenerate = true)
-    private int Id;
-
-
-    @PrimaryKey
     private OuterURL bookList;
     private String dateTime;
     private String ISBN;
     private String title;
     private ArrayList<String> author;
     private String lastName;
+
+    @PrimaryKey(autoGenerate = true)
+    private int Id;
+
+
 
     public Book(){
 
