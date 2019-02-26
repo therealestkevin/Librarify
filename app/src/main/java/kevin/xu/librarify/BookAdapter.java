@@ -117,6 +117,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
         mBook = books;
 
         copyBook = books;
+
         notifyDataSetChanged();
     }
 
