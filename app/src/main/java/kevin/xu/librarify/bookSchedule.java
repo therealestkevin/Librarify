@@ -37,8 +37,6 @@ public class bookSchedule extends AppCompatActivity {
             Bundle bundle = getIntent().getExtras();
             if(bundle.getInt("BookPosition")>-1){
                 BookPosition= bundle.getInt("BookPosition");
-            }else if(bundle.getInt("BookPosition3")>-1){
-                BookPosition = bundle.getInt("BookPosition3");
             }
         }
         readingButton.setOnClickListener(new View.OnClickListener() {
