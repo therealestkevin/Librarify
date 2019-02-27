@@ -2,19 +2,24 @@ package kevin.xu.librarify;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.xu.librarify.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +40,9 @@ public class scheduleManager extends AppCompatActivity {
     private AlertDialog.Builder bobBuilder;
     private TextView editTextDateFrom;
     private TextView editTextDateTo;
+    private ListView currentEvents;
+    private scheduleAdapter adapter;
+    private ArrayList<simpleScheduleDisplay> completeData = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +51,11 @@ public class scheduleManager extends AppCompatActivity {
         scheduleManagerToolbar = findViewById(R.id.scheduleManagerToolBar);
         addBtnSchedule = findViewById(R.id.addBtnSchedule);
         deleteBtnSchedule = findViewById(R.id.deleteBtnSchedule);
+        currentEvents = findViewById(R.id.currentEvents);
+
+         adapter = new scheduleAdapter(this, completeData);
+
+        currentEvents.setAdapter(adapter);
         setSupportActionBar(scheduleManagerToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -136,7 +149,13 @@ public class scheduleManager extends AppCompatActivity {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                                String title = editTextTitle.getText().toString();
+                                String dates = "Dates: "+editTextDateFrom.getText().toString() + " — " + editTextDateTo.getText().toString();
+                                String pages = "Pages: "+editTextStartPage.getText().toString() + " — " + editTextPageEnd.getText().toString();
+                                simpleScheduleDisplay temp = new simpleScheduleDisplay(title,dates,pages);
+                                BookAdapter.mBook.get(BookPosition).addCompleteData(temp);
+                                adapter.add(temp);
+                                adapter.notifyDataSetChanged();
                         }
                     }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                 @Override
@@ -157,7 +176,6 @@ public class scheduleManager extends AppCompatActivity {
         }
     });
     }
-
     private void setupMainWindowDisplayMode() {
         View decorView = setSystemUiVisibilityMode();
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {

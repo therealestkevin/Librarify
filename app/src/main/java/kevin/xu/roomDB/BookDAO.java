@@ -13,6 +13,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.TypeConverter;
 import kevin.xu.gsonParsing.OuterURL;
+import kevin.xu.librarify.simpleScheduleDisplay;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
@@ -61,12 +62,35 @@ public interface BookDAO {
 
         @TypeConverter
         public static ArrayList<String>  fromString(String value){
+            if(value == null){
+                return null;
+            }
             Type listType = new TypeToken <ArrayList<String>>() {}.getType();
             return new Gson().fromJson(value, listType);
         }
         @TypeConverter
         public static String  fromArrayList(ArrayList<String> value){
-           return new Gson().toJson(value);
+            if(value == null){
+                return null;
+            }
+            return new Gson().toJson(value);
+        }
+
+        @TypeConverter
+         public static ArrayList<simpleScheduleDisplay> toSimpleSchedule(String value){
+            if(value == null){
+                return null;
+            }
+            Type listType = new TypeToken<ArrayList<simpleScheduleDisplay>>(){}.getType();
+            return new Gson().fromJson(value,listType);
+        }
+
+        @TypeConverter
+         public static String fromSimpleSchedule(ArrayList<simpleScheduleDisplay> simpleSchedule){
+            if(simpleSchedule== null){
+                return null;
+            }
+            return new Gson().toJson(simpleSchedule);
         }
     }
 }
