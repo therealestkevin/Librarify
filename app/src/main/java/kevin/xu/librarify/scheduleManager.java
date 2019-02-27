@@ -2,7 +2,6 @@ package kevin.xu.librarify;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +13,6 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.xu.librarify.R;
 
 import java.text.SimpleDateFormat;
@@ -27,8 +24,6 @@ import java.util.List;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import kevin.xu.roomDB.Book;
-import kevin.xu.roomDB.BookRepository;
 
 public class scheduleManager extends AppCompatActivity {
     private Toolbar scheduleManagerToolbar;
@@ -159,7 +154,7 @@ public class scheduleManager extends AppCompatActivity {
                                 ArrayList<simpleScheduleDisplay> updated = BookAdapter.mBook.get(BookPosition).getCompleteData();
                                 updated.add(temp);
                               bookList.bookModel.updateCompleteData(updated, BookAdapter.mBook.get(BookPosition).getId());
-
+                                
                         }
                     }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                 @Override

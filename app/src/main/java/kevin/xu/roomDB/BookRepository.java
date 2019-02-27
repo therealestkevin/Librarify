@@ -3,6 +3,8 @@ package kevin.xu.roomDB;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class BookRepository {
 
     public LiveData<List<Book>> getAllBooks(){
         return allBooks;
+    }
+    public void updateBaseCalendar(ArrayList<BaseCalendarEvent> newArr, int id){
+        new updateBaseCalendar(id, bookDAO).execute(newArr);
     }
     public void updateData(ArrayList<simpleScheduleDisplay> newArr, int id){
         new updateCompleteData(id,bookDAO).execute(newArr);
@@ -59,6 +64,19 @@ public class BookRepository {
         @Override
         protected Void doInBackground(ArrayList<simpleScheduleDisplay>... arrayLists) {
             AsyncUpdateDAO.update(arrayLists,id);
+            return null;
+        }
+    }
+    private static class updateBaseCalendar extends AsyncTask<ArrayList<BaseCalendarEvent>, Void, Void>{
+        private int id;
+        private BookDAO AsyncUpdateDAO;
+        public updateBaseCalendar(int id, BookDAO dao){
+            this.id=id;
+            this.AsyncUpdateDAO = dao;
+        }
+        @Override
+        protected Void doInBackground(ArrayList<BaseCalendarEvent>... arrayLists) {
+            AsyncUpdateDAO.updateSchedule(arrayLists,id);
             return null;
         }
     }

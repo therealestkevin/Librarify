@@ -1,10 +1,10 @@
 package kevin.xu.roomDB;
 
+import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
+
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import kevin.xu.gsonParsing.OuterURL;
@@ -19,7 +19,7 @@ public class Book {
     private ArrayList<String> author;
     private String lastName;
     private ArrayList<simpleScheduleDisplay> completeData;
-
+    private ArrayList<BaseCalendarEvent> scheduleData;
     @PrimaryKey(autoGenerate = true)
     private int Id;
 
@@ -38,6 +38,7 @@ public class Book {
         this.title = bookOne.getItems().get(0).getVolumeInfo().getTitle();
         this.author = bookOne.getItems().get(0).getVolumeInfo().getAuthors();
         completeData= new ArrayList<>();
+        scheduleData = new ArrayList<>();
         ArrayList<String> holdTokens = new ArrayList<>();
         StringTokenizer lastNm = new StringTokenizer(author.get(0));
         while(lastNm.hasMoreTokens()){
@@ -124,5 +125,13 @@ public class Book {
 
     public void setCompleteData(ArrayList<simpleScheduleDisplay> completeData) {
         this.completeData = completeData;
+    }
+
+    public ArrayList<BaseCalendarEvent> getScheduleData() {
+        return scheduleData;
+    }
+
+    public void setScheduleData(ArrayList<BaseCalendarEvent> scheduleData) {
+        this.scheduleData = scheduleData;
     }
 }

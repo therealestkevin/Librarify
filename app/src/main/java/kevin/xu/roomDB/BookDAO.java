@@ -1,5 +1,6 @@
 package kevin.xu.roomDB;
 
+import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -34,6 +35,10 @@ public interface BookDAO {
 
     @Query("UPDATE book_table SET completeData = :newArr WHERE Id = :id")
     void update(ArrayList<simpleScheduleDisplay> newArr[], int id);
+
+    @Query("UPDATE book_table SET scheduleData = :newSchedule WHERE Id = :id")
+    void updateSchedule(ArrayList<BaseCalendarEvent> newSchedule[], int id );
+
 
 
     @Query("SELECT title FROM book_table")
@@ -92,6 +97,24 @@ public interface BookDAO {
                 return null;
             }
             return new Gson().toJson(simpleSchedule);
+        }
+
+        @TypeConverter
+         public static ArrayList<BaseCalendarEvent> toBaseCalendar(String value){
+            if(value == null){
+                return null;
+            }
+
+            Type listType = new TypeToken<ArrayList<BaseCalendarEvent>>(){}.getType();
+            return new Gson().fromJson(value,listType);
+        }
+
+        @TypeConverter
+         public static String fromBaseCalendar(ArrayList<BaseCalendarEvent> baseCalendarArr){
+            if(baseCalendarArr == null){
+                return null;
+            }
+            return new Gson().toJson(baseCalendarArr);
         }
     }
 }
