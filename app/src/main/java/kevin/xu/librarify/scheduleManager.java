@@ -27,6 +27,8 @@ import java.util.List;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import kevin.xu.roomDB.Book;
+import kevin.xu.roomDB.BookRepository;
 
 public class scheduleManager extends AppCompatActivity {
     private Toolbar scheduleManagerToolbar;
@@ -42,7 +44,6 @@ public class scheduleManager extends AppCompatActivity {
     private TextView editTextDateTo;
     private ListView currentEvents;
     private scheduleAdapter adapter;
-    private ArrayList<simpleScheduleDisplay> completeData = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +54,9 @@ public class scheduleManager extends AppCompatActivity {
         deleteBtnSchedule = findViewById(R.id.deleteBtnSchedule);
         currentEvents = findViewById(R.id.currentEvents);
 
-         adapter = new scheduleAdapter(this, completeData);
 
-        currentEvents.setAdapter(adapter);
+
+
         setSupportActionBar(scheduleManagerToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -71,6 +72,8 @@ public class scheduleManager extends AppCompatActivity {
                 BookPosition = bundle.getInt("BookPositionFinal");
             }
         }
+        adapter = new scheduleAdapter(this, BookAdapter.mBook.get(BookPosition).getCompleteData());
+        currentEvents.setAdapter(adapter);
     addBtnSchedule.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -153,9 +156,10 @@ public class scheduleManager extends AppCompatActivity {
                                 String dates = "Dates: "+editTextDateFrom.getText().toString() + " — " + editTextDateTo.getText().toString();
                                 String pages = "Pages: "+editTextStartPage.getText().toString() + " — " + editTextPageEnd.getText().toString();
                                 simpleScheduleDisplay temp = new simpleScheduleDisplay(title,dates,pages);
-                                BookAdapter.mBook.get(BookPosition).addCompleteData(temp);
-                                adapter.add(temp);
-                                adapter.notifyDataSetChanged();
+                                ArrayList<simpleScheduleDisplay> updated = BookAdapter.mBook.get(BookPosition).getCompleteData();
+                                updated.add(temp);
+                              bookList.bookModel.updateCompleteData(updated, BookAdapter.mBook.get(BookPosition).getId());
+
                         }
                     }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                 @Override

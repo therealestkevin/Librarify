@@ -2,6 +2,7 @@ package kevin.xu.librarify;
 
 import android.app.Application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -30,5 +31,9 @@ public class BookViewModel extends AndroidViewModel {
 
     public void insert(Book book){
         bookRepo.insert(book);
+    }
+
+    public void updateCompleteData(ArrayList<simpleScheduleDisplay> newArr, int id){
+        bookRepo.updateData(newArr,id);
     }
 }

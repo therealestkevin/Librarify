@@ -1,6 +1,7 @@
 package kevin.xu.librarify;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,28 +21,55 @@ import androidx.annotation.NonNull;
 
 public class scheduleAdapter extends ArrayAdapter<simpleScheduleDisplay> {
     private ArrayList<simpleScheduleDisplay> holdData;
+    private Activity fromActivity;
+    private static LayoutInflater inflater =null;
 
-    public scheduleAdapter(@NonNull Context context,@NonNull List<simpleScheduleDisplay> objects) {
-        super(context, 0, objects);
+    public scheduleAdapter(Activity activity, ArrayList<simpleScheduleDisplay> objects) {
+        super(activity, 0, objects);
+        try{
+            this.holdData=objects;
+            this.fromActivity=activity;
+            inflater = (LayoutInflater) fromActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }catch(Exception e){
+
+        }
     }
 
+    public int getCount(){
+        return holdData.size();
+    }
+
+    public simpleScheduleDisplay getItem(int position){
+        return holdData.get(position);
+    }
+    public static class ViewHolderSchedule{
+        public TextView textViewTitleRow;
+        public TextView textViewDate;
+        public TextView textViewPages;
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         simpleScheduleDisplay cur = getItem(position);
-
+        View tempView = convertView;
+        final ViewHolderSchedule holder;
         if(convertView==null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.schedule_row, parent,false);
+            tempView= inflater.inflate(R.layout.schedule_row, parent,false);
+            holder = new ViewHolderSchedule();
+            holder.textViewTitleRow = tempView.findViewById(R.id.textViewTitleRow);
+            holder.textViewDate = tempView.findViewById(R.id.textViewDates);
+            holder.textViewPages = tempView.findViewById(R.id.textViewPages);
+            tempView.setTag(holder);
+        }else{
+            holder = (ViewHolderSchedule)tempView.getTag();
         }
 
-        TextView  textViewTitleRow =  convertView.findViewById(R.id.textViewTitleRow);
-        TextView  textViewDate =  convertView.findViewById(R.id.textViewDates);
-        TextView textViewPages = convertView.findViewById(R.id.textViewPages);
-        textViewTitleRow.setText(cur.getTitle());
-        textViewDate.setText(cur.getDateRange());
-        textViewPages.setText(cur.getPages());
 
-        return convertView;
+        holder.textViewTitleRow.setText(cur.getTitle());
+        holder.textViewDate.setText(cur.getDateRange());
+        holder.textViewPages.setText(cur.getPages());
+
+        return tempView;
     }
     public ArrayList<simpleScheduleDisplay> getList(){
         return holdData;

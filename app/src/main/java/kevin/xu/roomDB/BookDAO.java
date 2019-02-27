@@ -32,8 +32,9 @@ public interface BookDAO {
     @Query("SELECT ISBN FROM book_table")
     List<String> getISBN();
 
-    @Query("SELECT author FROM book_table")
-    List<String> getAuthors();
+    @Query("UPDATE book_table SET completeData = :newArr WHERE Id = :id")
+    void update(ArrayList<simpleScheduleDisplay> newArr[], int id);
+
 
     @Query("SELECT title FROM book_table")
     String getTitle();

@@ -29,7 +29,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
     private Toolbar topToolBarBook;
     private RecyclerView bookListView;
     private BookAdapter adapter;
-    private BookViewModel bookModel;
+    public static BookViewModel bookModel;
     private Menu menu;
     public static final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
     public static int sortMethod=-1;

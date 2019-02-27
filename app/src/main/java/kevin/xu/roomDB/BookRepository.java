@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import kevin.xu.librarify.simpleScheduleDisplay;
 
 public class BookRepository {
-    private BookDAO bookDAO;
+    public BookDAO bookDAO;
     private LiveData<List<Book>> allBooks;
     private ArrayList<String> allISBN;
     public BookRepository(Application app){
@@ -22,7 +23,9 @@ public class BookRepository {
     public LiveData<List<Book>> getAllBooks(){
         return allBooks;
     }
-
+    public void updateData(ArrayList<simpleScheduleDisplay> newArr, int id){
+        new updateCompleteData(id,bookDAO).execute(newArr);
+    }
     public void insert(Book book){
 
         new insertBookTask(bookDAO).execute(book);
@@ -39,6 +42,23 @@ public class BookRepository {
         @Override
         protected Void doInBackground(Book... books) {
             AsyncBookDAO.insertBook(books[0]);
+            return null;
+        }
+    }
+
+    private static class updateCompleteData extends AsyncTask<ArrayList<simpleScheduleDisplay>, Void, Void >{
+        private int id;
+        private BookDAO AsyncUpdateDAO;
+        public updateCompleteData(int id, BookDAO dao){
+            this.id=id;
+            AsyncUpdateDAO=dao;
+
+        }
+
+
+        @Override
+        protected Void doInBackground(ArrayList<simpleScheduleDisplay>... arrayLists) {
+            AsyncUpdateDAO.update(arrayLists,id);
             return null;
         }
     }
