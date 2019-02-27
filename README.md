@@ -2,7 +2,7 @@
 Android app designed upon the Google Firebase platform. It keeps track of books you are reading by scanning ISBN barcodes through the utilization of Google Vision API. 
 
 
-Tools: Google Books API, Google ML, SQLite Room Persistence Library, Android Camerakit
+Tools: Google Books API, Google ML, SQLite Room Persistence Library, Android Camerakit, Material CalendarView, AgendaCalendarView
 
 
 In Progress: Calender integrated Reading Scheduling
