@@ -1,7 +1,6 @@
 package kevin.xu.librarify;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,8 +59,6 @@ public class scheduleManager extends AppCompatActivity {
 
 
         setSupportActionBar(scheduleManagerToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (getIntent() != null && getIntent().getExtras() != null){
             Bundle bundle = getIntent().getExtras();
@@ -73,17 +70,10 @@ public class scheduleManager extends AppCompatActivity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-            }
-        });
-        scheduleManagerToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //onBackPressed();
-                startActivity(new Intent(scheduleManager.this,bookSchedule.class).putExtra("BookPosition",
-                        BookPosition));
-                return;
+                    if(onStartTrack!=BookAdapter.mBook.get(BookPosition).getScheduleData()){
+                        //setResults
+                        //Request Codes and all
+                    }
             }
         });
         adapter = new scheduleAdapter(this, BookAdapter.mBook.get(BookPosition).getCompleteData());

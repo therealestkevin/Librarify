@@ -49,7 +49,7 @@ public class bookSchedule extends AppCompatActivity {
                 Intent startManage = new Intent(getApplicationContext(),scheduleManager.class);
                 startManage.putExtra("BookPositionFinal",BookPosition);
                 finish();
-                startActivity(startManage);
+                startActivityForResult(startManage,1);
 
             }
         });
@@ -99,6 +99,10 @@ public class bookSchedule extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent dat){
+        super.onActivityResult(requestCode,resultCode,dat);
     }
     private void populateAgendaFromDB(List<CalendarEvent>eventList){
         ArrayList<BaseCalendarEvent> temp = BookAdapter.mBook.get(BookPosition).getScheduleData();
