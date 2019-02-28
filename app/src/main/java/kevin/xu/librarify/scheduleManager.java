@@ -14,6 +14,7 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
+import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.xu.librarify.R;
 
 import java.text.SimpleDateFormat;
@@ -43,6 +44,9 @@ public class scheduleManager extends AppCompatActivity {
     private scheduleAdapter adapter;
     private Calendar firstDay;
     private Calendar lastDay;
+    private Button finishButton;
+    private ArrayList<BaseCalendarEvent> onStartTrack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +56,7 @@ public class scheduleManager extends AppCompatActivity {
         addBtnSchedule = findViewById(R.id.addBtnSchedule);
         deleteBtnSchedule = findViewById(R.id.deleteBtnSchedule);
         currentEvents = findViewById(R.id.currentEvents);
-
-
+        finishButton = findViewById(R.id.finishedButton);
 
 
         setSupportActionBar(scheduleManagerToolbar);
@@ -66,6 +69,13 @@ public class scheduleManager extends AppCompatActivity {
                 BookPosition = bundle.getInt("BookPositionFinal");
             }
         }
+        onStartTrack = BookAdapter.mBook.get(BookPosition).getScheduleData();
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         scheduleManagerToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

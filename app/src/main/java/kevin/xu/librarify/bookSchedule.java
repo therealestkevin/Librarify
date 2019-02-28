@@ -55,7 +55,7 @@ public class bookSchedule extends AppCompatActivity {
         });
         
         bookSchedule = findViewById(R.id.agenda_calendar_view);
-         minDate = Calendar.getInstance();
+        minDate = Calendar.getInstance();
         maxDate = Calendar.getInstance();
 
         minDate.add(Calendar.MONTH, -2);
@@ -128,14 +128,12 @@ public class bookSchedule extends AppCompatActivity {
     }
     @Override
     public void onResume(){
-        if (getIntent() != null && getIntent().getExtras() != null) {
-            Bundle bundle = getIntent().getExtras();
-            if(bundle.getInt("BookPosition")>-1){
-                BookPosition= bundle.getInt("BookPosition");
-            }
-        }
-        populateAgendaFromDB(eventList);
         super.onResume();
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
 
     }
     private void setupMainWindowDisplayMode() {
