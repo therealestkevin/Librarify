@@ -37,6 +37,7 @@ public class BookRepository {
                     rd.nextInt(256),rd.nextInt(256)),i.getFirstDay(),i.getLastDay(),false);
             bookSchedule.add(temp);
         }
+
         new updateCompleteData(id,bookDAO,bookSchedule).execute(newArr);
     }
     public void insert(Book book){

@@ -69,7 +69,11 @@ public class scheduleManager extends AppCompatActivity {
         scheduleManagerToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              onBackPressed();
+
+                //onBackPressed();
+                startActivity(new Intent(scheduleManager.this,bookSchedule.class).putExtra("BookPosition",
+                        BookPosition));
+                return;
             }
         });
         adapter = new scheduleAdapter(this, BookAdapter.mBook.get(BookPosition).getCompleteData());
@@ -161,7 +165,6 @@ public class scheduleManager extends AppCompatActivity {
 
                                 ArrayList<simpleScheduleDisplay> updated = BookAdapter.mBook.get(BookPosition).getCompleteData();
                                 updated.add(temp);
-
                               bookList.bookModel.updateCompleteData(updated, BookAdapter.mBook.get(BookPosition).getId());
                                 
                         }

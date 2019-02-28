@@ -48,9 +48,9 @@ public class bookSchedule extends AppCompatActivity {
             public void onClick(View v) {
                 Intent startManage = new Intent(getApplicationContext(),scheduleManager.class);
                 startManage.putExtra("BookPositionFinal",BookPosition);
-
-                startActivity(startManage);
                 finish();
+                startActivity(startManage);
+
             }
         });
         
@@ -81,7 +81,7 @@ public class bookSchedule extends AppCompatActivity {
         };
 
 
-      populateAgendaFromDB(eventList);
+        populateAgendaFromDB(eventList);
         bookSchedule.init(eventList,minDate,maxDate, Locale.getDefault(),bob);
 
 
@@ -128,7 +128,12 @@ public class bookSchedule extends AppCompatActivity {
     }
     @Override
     public void onResume(){
-
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            Bundle bundle = getIntent().getExtras();
+            if(bundle.getInt("BookPosition")>-1){
+                BookPosition= bundle.getInt("BookPosition");
+            }
+        }
         populateAgendaFromDB(eventList);
         super.onResume();
 
