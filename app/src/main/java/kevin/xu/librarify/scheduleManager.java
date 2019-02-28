@@ -1,6 +1,7 @@
 package kevin.xu.librarify;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class scheduleManager extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextStartPage;
     private EditText editTextPageEnd;
+    private EditText editTextNotes;
     private Button dateButton;
     private int BookPosition;
     private AlertDialog.Builder bobBuilder;
@@ -39,6 +41,8 @@ public class scheduleManager extends AppCompatActivity {
     private TextView editTextDateTo;
     private ListView currentEvents;
     private scheduleAdapter adapter;
+    private Calendar firstDay;
+    private Calendar lastDay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,18 +59,19 @@ public class scheduleManager extends AppCompatActivity {
         setSupportActionBar(scheduleManagerToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        scheduleManagerToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+
         if (getIntent() != null && getIntent().getExtras() != null){
             Bundle bundle = getIntent().getExtras();
             if(bundle.getInt("BookPositionFinal")>-1){
                 BookPosition = bundle.getInt("BookPositionFinal");
             }
         }
+        scheduleManagerToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              onBackPressed();
+            }
+        });
         adapter = new scheduleAdapter(this, BookAdapter.mBook.get(BookPosition).getCompleteData());
         currentEvents.setAdapter(adapter);
     addBtnSchedule.setOnClickListener(new View.OnClickListener() {
@@ -102,12 +107,13 @@ public class scheduleManager extends AppCompatActivity {
             editTextDateFrom = dialogCustomView.findViewById(R.id.textViewDateFrom);
             editTextDateTo = dialogCustomView.findViewById(R.id.textViewDateTo);
             dateButton = dialogCustomView.findViewById(R.id.dateButton);
+            editTextNotes = dialogCustomView.findViewById(R.id.editTextNotes);
             OnSelectDateListener listenerDates = new OnSelectDateListener() {
                 @Override
                 public void onSelect(List<Calendar> calendar) {
 
-                            Calendar firstDay = calendar.get(0);
-                            Calendar lastDay = calendar.get(calendar.size()-1);
+                            firstDay = calendar.get(0);
+                            lastDay = calendar.get(calendar.size()-1);
                             Date firstDate = firstDay.getTime();
                             Date lastDate = lastDay.getTime();
                             SimpleDateFormat formatter = new SimpleDateFormat("MMM, dd, yyyy");
@@ -148,11 +154,14 @@ public class scheduleManager extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                                 String title = editTextTitle.getText().toString();
-                                String dates = "Dates: "+editTextDateFrom.getText().toString() + " — " + editTextDateTo.getText().toString();
-                                String pages = "Pages: "+editTextStartPage.getText().toString() + " — " + editTextPageEnd.getText().toString();
-                                simpleScheduleDisplay temp = new simpleScheduleDisplay(title,dates,pages);
+                                String dates = editTextDateFrom.getText().toString() + " — " + editTextDateTo.getText().toString();
+                                String pages = editTextStartPage.getText().toString() + " — " + editTextPageEnd.getText().toString();
+                                String description = editTextNotes.getText().toString();
+                                simpleScheduleDisplay temp = new simpleScheduleDisplay(title,dates,pages,firstDay,lastDay,description);
+
                                 ArrayList<simpleScheduleDisplay> updated = BookAdapter.mBook.get(BookPosition).getCompleteData();
                                 updated.add(temp);
+
                               bookList.bookModel.updateCompleteData(updated, BookAdapter.mBook.get(BookPosition).getId());
                                 
                         }
@@ -175,6 +184,7 @@ public class scheduleManager extends AppCompatActivity {
         }
     });
     }
+
     private void setupMainWindowDisplayMode() {
         View decorView = setSystemUiVisibilityMode();
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {

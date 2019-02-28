@@ -59,8 +59,8 @@ public class scheduleAdapter extends ArrayAdapter<simpleScheduleDisplay> {
 
 
         holder.textViewTitleRow.setText(cur.getTitle());
-        holder.textViewDate.setText(cur.getDateRange());
-        holder.textViewPages.setText(cur.getPages());
+        holder.textViewDate.setText("Dates: "+cur.getDateRange());
+        holder.textViewPages.setText("Pages: "+cur.getPages());
 
         return tempView;
     }

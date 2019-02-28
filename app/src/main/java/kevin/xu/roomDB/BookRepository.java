@@ -1,12 +1,14 @@
 package kevin.xu.roomDB;
 
 import android.app.Application;
+import android.graphics.Color;
 import android.os.AsyncTask;
 
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import androidx.lifecycle.LiveData;
 import kevin.xu.librarify.simpleScheduleDisplay;
@@ -25,11 +27,17 @@ public class BookRepository {
     public LiveData<List<Book>> getAllBooks(){
         return allBooks;
     }
-    public void updateBaseCalendar(ArrayList<BaseCalendarEvent> newArr, int id){
-        new updateBaseCalendar(id, bookDAO).execute(newArr);
-    }
+
     public void updateData(ArrayList<simpleScheduleDisplay> newArr, int id){
-        new updateCompleteData(id,bookDAO).execute(newArr);
+        ArrayList<BaseCalendarEvent> bookSchedule = new ArrayList<>();
+        Random rd = new Random();
+
+        for(simpleScheduleDisplay i : newArr){
+            BaseCalendarEvent temp = new BaseCalendarEvent(i.getTitle(),i.getDescription(),"Pages: "+i.getPages(), Color.argb(255,rd.nextInt(256),
+                    rd.nextInt(256),rd.nextInt(256)),i.getFirstDay(),i.getLastDay(),false);
+            bookSchedule.add(temp);
+        }
+        new updateCompleteData(id,bookDAO,bookSchedule).execute(newArr);
     }
     public void insert(Book book){
 
@@ -54,30 +62,20 @@ public class BookRepository {
     private static class updateCompleteData extends AsyncTask<ArrayList<simpleScheduleDisplay>, Void, Void >{
         private int id;
         private BookDAO AsyncUpdateDAO;
-        public updateCompleteData(int id, BookDAO dao){
+        private ArrayList<BaseCalendarEvent> scheduleData;
+        public updateCompleteData(int id, BookDAO dao, ArrayList<BaseCalendarEvent> scheduleData){
             this.id=id;
             AsyncUpdateDAO=dao;
+            this.scheduleData=scheduleData;
 
         }
 
 
         @Override
         protected Void doInBackground(ArrayList<simpleScheduleDisplay>... arrayLists) {
-            AsyncUpdateDAO.update(arrayLists,id);
+            AsyncUpdateDAO.update(arrayLists,id,scheduleData);
             return null;
         }
     }
-    private static class updateBaseCalendar extends AsyncTask<ArrayList<BaseCalendarEvent>, Void, Void>{
-        private int id;
-        private BookDAO AsyncUpdateDAO;
-        public updateBaseCalendar(int id, BookDAO dao){
-            this.id=id;
-            this.AsyncUpdateDAO = dao;
-        }
-        @Override
-        protected Void doInBackground(ArrayList<BaseCalendarEvent>... arrayLists) {
-            AsyncUpdateDAO.updateSchedule(arrayLists,id);
-            return null;
-        }
-    }
+
 }

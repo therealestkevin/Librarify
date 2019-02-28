@@ -44,31 +44,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         topToolBarBook.setTitle("Your Library");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        switch(bookList.sortMethod){
-            case -1:{
-                break;
-            }
-            case 0:{
-                adapter.filterByAlpha(true);
-                break;
-            }
-            case 1:{
-                adapter.filterByAlpha(false);
-                break;
-            }
-            case 2:{
-                adapter.filterByAuthor(true);
-            }
-            case 3:{
-                adapter.filterByAuthor(false);
-            }
-            case 4:{
-                adapter.filterByDate(true);
-            }
-            case 5:{
-                adapter.filterByDate(false);
-            }
-        }
+
         topToolBarBook.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +101,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         });
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
 
@@ -290,20 +267,34 @@ public class bookList extends AppCompatActivity implements RecycleListener{
     @Override
     public void onResume(){
         super.onResume();
-    }
-    public void onEntrySort(int code){
-        switch(code){
+        switch(bookList.sortMethod){
             case -1:{
                 break;
             }
             case 0:{
                 adapter.filterByAlpha(true);
+                break;
             }
             case 1:{
                 adapter.filterByAlpha(false);
+                break;
+            }
+            case 2:{
+                adapter.filterByAuthor(true);
+            }
+            case 3:{
+                adapter.filterByAuthor(false);
+            }
+            case 4:{
+                adapter.filterByDate(true);
+            }
+            case 5:{
+                adapter.filterByDate(false);
             }
         }
     }
+
+
 
 
 }

@@ -26,6 +26,10 @@ public class bookSchedule extends AppCompatActivity {
     private Toolbar scheduleToolBar;
     private Button readingButton;
     private int BookPosition;
+    private static List<CalendarEvent> eventList;
+    private Calendar minDate;
+    private Calendar maxDate;
+    private CalendarPickerController bob;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,19 +50,20 @@ public class bookSchedule extends AppCompatActivity {
                 startManage.putExtra("BookPositionFinal",BookPosition);
 
                 startActivity(startManage);
+                finish();
             }
         });
         
         bookSchedule = findViewById(R.id.agenda_calendar_view);
-        Calendar minDate = Calendar.getInstance();
-        Calendar maxDate = Calendar.getInstance();
+         minDate = Calendar.getInstance();
+        maxDate = Calendar.getInstance();
 
         minDate.add(Calendar.MONTH, -2);
         minDate.set(Calendar.DAY_OF_MONTH, 1);
         maxDate.add(Calendar.YEAR, 1);
 
-        List<CalendarEvent> eventList = new ArrayList<>();
-        CalendarPickerController bob = new CalendarPickerController() {
+        eventList = new ArrayList<>();
+         bob = new CalendarPickerController() {
             @Override
             public void onDaySelected(DayItem dayItem) {
 
@@ -76,7 +81,7 @@ public class bookSchedule extends AppCompatActivity {
         };
 
 
-       mockList(eventList);
+      populateAgendaFromDB(eventList);
         bookSchedule.init(eventList,minDate,maxDate, Locale.getDefault(),bob);
 
 
@@ -93,6 +98,14 @@ public class bookSchedule extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+    }
+    private void populateAgendaFromDB(List<CalendarEvent>eventList){
+        ArrayList<BaseCalendarEvent> temp = BookAdapter.mBook.get(BookPosition).getScheduleData();
+        eventList.clear();
+        for(BaseCalendarEvent i : temp){
+            eventList.add(i);
+        }
 
     }
     private void mockList(List<CalendarEvent> eventList) {
@@ -115,7 +128,10 @@ public class bookSchedule extends AppCompatActivity {
     }
     @Override
     public void onResume(){
+
+        populateAgendaFromDB(eventList);
         super.onResume();
+
     }
     private void setupMainWindowDisplayMode() {
         View decorView = setSystemUiVisibilityMode();
