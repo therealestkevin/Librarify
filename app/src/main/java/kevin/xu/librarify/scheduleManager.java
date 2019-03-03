@@ -55,7 +55,7 @@ public class scheduleManager extends AppCompatActivity {
         addBtnSchedule = findViewById(R.id.addBtnSchedule);
         deleteBtnSchedule = findViewById(R.id.deleteBtnSchedule);
         currentEvents = findViewById(R.id.currentEvents);
-        finishButton = findViewById(R.id.finishedButton);
+        finishButton = findViewById(R.id.finishBtn);
 
 
         setSupportActionBar(scheduleManagerToolbar);

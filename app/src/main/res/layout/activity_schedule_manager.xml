@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/currentEvents" />
 
     <Button
-        android:id="@+id/finishedButton"
+        android:id="@+id/finishBtn"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:text="SAVE AND EXIT"

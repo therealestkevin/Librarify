@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.CalendarPickerController;
@@ -30,6 +31,7 @@ public class bookSchedule extends AppCompatActivity {
     private Calendar minDate;
     private Calendar maxDate;
     private CalendarPickerController bob;
+    public static final int NEW_UPDATE_CALENDAREVENT = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +105,27 @@ public class bookSchedule extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent dat){
         super.onActivityResult(requestCode,resultCode,dat);
+
+        if(requestCode == NEW_UPDATE_CALENDAREVENT){
+            //String updateResult = dat.getStringExtra();
+            
+            //Gson.fromJson for the resulting string for the updated CalendarEvent Arraylist
+            //The scheduleManager class should pull the current CalendarEvent arralysit from the database
+            // Then dynamically add the additional values to the end of the existing arraylist
+            //Then, query the database to replace the old arraylist with the new, then setresult
+            // the new arraylist to fix any refresh problems for the agendacalendar in order
+            //to maintain the latest and most updated agenda
+            //If this is the main solution from now on, populatAgendaFromDB method
+            //will probably not be needed as updates are automatically being streamlined
+            //from the schedulemanager into this class instead of having to look at the
+            //the static arraylist of book entities each time to populate the local calendarevent
+            //database, I will see if this works through further implementations
+            //This seems to be a taxing solution but it has a high chance of working
+            //will implement this function when I have time in maybe a day or too
+
+        }else{
+            Toast.makeText(getApplicationContext(),"Entry Failed",Toast.LENGTH_LONG).show();
+        }
     }
     private void populateAgendaFromDB(List<CalendarEvent>eventList){
         ArrayList<BaseCalendarEvent> temp = BookAdapter.mBook.get(BookPosition).getScheduleData();
