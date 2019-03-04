@@ -108,7 +108,7 @@ public class bookSchedule extends AppCompatActivity {
 
         if(requestCode == NEW_UPDATE_CALENDAREVENT){
             //String updateResult = dat.getStringExtra();
-            
+
             //Gson.fromJson for the resulting string for the updated CalendarEvent Arraylist
             //The scheduleManager class should pull the current CalendarEvent arralysit from the database
             // Then dynamically add the additional values to the end of the existing arraylist
@@ -122,6 +122,18 @@ public class bookSchedule extends AppCompatActivity {
             //database, I will see if this works through further implementations
             //This seems to be a taxing solution but it has a high chance of working
             //will implement this function when I have time in maybe a day or too
+
+
+
+
+            //UPDATES:
+
+            //Will need to improve caching functions of DB in order to reduce wait time on entry query
+            //This is especially pertinent to right after book entities are added
+            //through the cameraCapture class, it seems to be involved with the Asynctask
+            //The solution may be to swap out the Asynctask for a more traditional
+            //runnable solution that will be faster and will function on a seperate thread
+            //This is the task to be completed after the first task above
 
         }else{
             Toast.makeText(getApplicationContext(),"Entry Failed",Toast.LENGTH_LONG).show();

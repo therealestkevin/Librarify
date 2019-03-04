@@ -12,7 +12,9 @@
         android:layout_height="49dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="52dp"
+        android:layout_marginBottom="8dp"
         android:text="DELETE"
+        app:layout_constraintBottom_toTopOf="@+id/finishBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentEvents" />
 
@@ -30,7 +32,7 @@
     <ListView
         android:id="@+id/currentEvents"
         android:layout_width="0dp"
-        android:layout_height="465dp"
+        android:layout_height="483dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="2dp"
@@ -43,7 +45,7 @@
     <TextView
         android:id="@+id/currentEventsText"
         android:layout_width="326dp"
-        android:layout_height="58dp"
+        android:layout_height="43dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
@@ -61,7 +63,9 @@
         android:layout_height="49dp"
         android:layout_marginStart="52dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="ADD"
+        app:layout_constraintBottom_toTopOf="@+id/finishBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentEvents" />
 
