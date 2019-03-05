@@ -29,8 +29,19 @@ public class BookRepository {
         return allBooks;
     }
 
-    public void updateData(ArrayList<simpleScheduleDisplay> newArr, int id){
+    public void resetScheduleData(Book resetBook){
+        new updateCompleteData(resetBook.getId(),bookDAO,resetBook.getScheduleData()).execute(resetBook.getCompleteData());
+    }
+
+    public void updateData(ArrayList<simpleScheduleDisplay> newArr, int id, int BookPosition){
         ArrayList<BaseCalendarEvent> bookSchedule = new ArrayList<>();
+        try {
+            bookSchedule.addAll(new getScheduleData(bookDAO,id).execute().get().getScheduleData());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Random rd = new Random();
 
         for(simpleScheduleDisplay i : newArr){

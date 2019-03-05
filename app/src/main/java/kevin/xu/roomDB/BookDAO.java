@@ -1,14 +1,11 @@
 package kevin.xu.roomDB;
 
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
-import com.google.android.gms.vision.L;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -16,7 +13,6 @@ import androidx.room.Query;
 import androidx.room.TypeConverter;
 import kevin.xu.gsonParsing.OuterURL;
 import kevin.xu.librarify.simpleScheduleDisplay;
-
 import static androidx.room.OnConflictStrategy.REPLACE;
 
 @Dao
@@ -37,11 +33,20 @@ public interface BookDAO {
     @Query("UPDATE book_table SET completeData = :newArr, scheduleData =:newSchedule WHERE Id = :id")
     void update(ArrayList<simpleScheduleDisplay> newArr[], int id,ArrayList<BaseCalendarEvent> newSchedule);
 
-   //@Query("SELECT scheduleData FROM book_table WHERE Id = :id")
+    @Query("UPDATE book_table SET title = :newTitle WHERE Id =:id")
+    void updateTitle(String newTitle, int id);
+
+    @Query("UPDATE book_table SET author =:newAuthors WHERE Id =:id")
+    void updateAuthors(String newAuthors, int id);
+
+    
+
+    //@Query("SELECT scheduleData FROM book_table WHERE Id = :id")
    // List<BaseCalendarEvent> getScheduleData(int id);
 
     @Query("SELECT * FROM book_table WHERE Id =:id")
     Book getCertainBook(int id);
+
 
     @Query("SELECT title FROM book_table")
     String getTitle();
