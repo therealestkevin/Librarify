@@ -9,6 +9,7 @@ import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import androidx.lifecycle.LiveData;
 import kevin.xu.librarify.simpleScheduleDisplay;
@@ -39,6 +40,28 @@ public class BookRepository {
         }
 
         new updateCompleteData(id,bookDAO,bookSchedule).execute(newArr);
+    }
+
+    /*public ArrayList<BaseCalendarEvent> getBaseCalendar(int id){
+        try {
+            return new getScheduleData(bookDAO,id).execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    */
+    public Book getCertainBook(int id) {
+        try {
+            return new getScheduleData(bookDAO,id).execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     public void insert(Book book){
 
@@ -80,5 +103,35 @@ public class BookRepository {
 
 
     }
+    private static class getScheduleData extends AsyncTask<Void,Void,Book>{
+        private int id;
+        private BookDAO AsyncBookDAO;
+
+        public getScheduleData(BookDAO dao, int id){
+            AsyncBookDAO=dao;
+            this.id=id;
+
+        }
+
+        @Override
+        protected Book doInBackground(Void... voids) {
+            return AsyncBookDAO.getCertainBook(id);
+        }
+    }
+    /*private static class getScheduleData extends AsyncTask<Void, Void, ArrayList<BaseCalendarEvent>>{
+        private BookDAO AsyncBookDAO;
+        private int id;
+        public getScheduleData(BookDAO dao, int id){
+            AsyncBookDAO=dao;
+            this.id=id;
+
+        }
+
+
+        @Override
+        protected ArrayList<BaseCalendarEvent> doInBackground(Void... voids) {
+            return AsyncBookDAO.getScheduleData(id);
+        }
+    }*/
 
 }

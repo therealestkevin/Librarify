@@ -169,7 +169,8 @@ public class bookSchedule extends AppCompatActivity {
         }
     }
     private void populateAgendaFromDB(List<CalendarEvent>eventList){
-        ArrayList<BaseCalendarEvent> temp = BookAdapter.mBook.get(BookPosition).getScheduleData();
+        ArrayList<BaseCalendarEvent> temp = bookList.bookModel.getCertainBook(BookAdapter.mBook.get(BookPosition).getId()).getScheduleData();
+                //BookAdapter.mBook.get(BookPosition).getScheduleData();
         eventList.clear();
         for(BaseCalendarEvent i : temp){
             eventList.add(i);

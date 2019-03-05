@@ -1,6 +1,7 @@
 package kevin.xu.roomDB;
 
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
+import com.google.android.gms.vision.L;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -36,7 +37,11 @@ public interface BookDAO {
     @Query("UPDATE book_table SET completeData = :newArr, scheduleData =:newSchedule WHERE Id = :id")
     void update(ArrayList<simpleScheduleDisplay> newArr[], int id,ArrayList<BaseCalendarEvent> newSchedule);
 
+   //@Query("SELECT scheduleData FROM book_table WHERE Id = :id")
+   // List<BaseCalendarEvent> getScheduleData(int id);
 
+    @Query("SELECT * FROM book_table WHERE Id =:id")
+    Book getCertainBook(int id);
 
     @Query("SELECT title FROM book_table")
     String getTitle();
