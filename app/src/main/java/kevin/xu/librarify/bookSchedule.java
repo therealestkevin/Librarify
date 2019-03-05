@@ -107,6 +107,7 @@ public class bookSchedule extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,dat);
 
         if(requestCode == NEW_UPDATE_CALENDAREVENT){
+
             //String updateResult = dat.getStringExtra();
 
             //Gson.fromJson for the resulting string for the updated CalendarEvent Arraylist

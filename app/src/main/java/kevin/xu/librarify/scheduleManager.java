@@ -14,6 +14,7 @@ import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.xu.librarify.R;
 
 import java.text.SimpleDateFormat;
@@ -29,7 +30,6 @@ import androidx.appcompat.widget.Toolbar;
 public class scheduleManager extends AppCompatActivity {
     private Toolbar scheduleManagerToolbar;
     private Button addBtnSchedule;
-    private Button deleteBtnSchedule;
     private EditText editTextTitle;
     private EditText editTextStartPage;
     private EditText editTextPageEnd;
@@ -43,8 +43,9 @@ public class scheduleManager extends AppCompatActivity {
     private scheduleAdapter adapter;
     private Calendar firstDay;
     private Calendar lastDay;
-    private Button finishButton;
     private ArrayList<BaseCalendarEvent> onStartTrack;
+    private FloatingActionButton finishFloatingBtn;
+    private FloatingActionButton exitFloatingBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +54,10 @@ public class scheduleManager extends AppCompatActivity {
         setupMainWindowDisplayMode();
         scheduleManagerToolbar = findViewById(R.id.scheduleManagerToolBar);
         addBtnSchedule = findViewById(R.id.addBtnSchedule);
-        deleteBtnSchedule = findViewById(R.id.deleteBtnSchedule);
-        currentEvents = findViewById(R.id.currentEvents);
-        finishButton = findViewById(R.id.finishBtn);
 
+        currentEvents = findViewById(R.id.currentEvents);
+        finishFloatingBtn = findViewById(R.id.finishFloatingBtn);
+        exitFloatingBtn = findViewById(R.id.exitFloatingBtn);
 
         setSupportActionBar(scheduleManagerToolbar);
 
@@ -67,13 +68,19 @@ public class scheduleManager extends AppCompatActivity {
             }
         }
         onStartTrack = BookAdapter.mBook.get(BookPosition).getScheduleData();
-        finishButton.setOnClickListener(new View.OnClickListener() {
+        finishFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                     if(onStartTrack!=BookAdapter.mBook.get(BookPosition).getScheduleData()){
                         //setResults
                         //Request Codes and all
                     }
+            }
+        });
+        exitFloatingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
         adapter = new scheduleAdapter(this, BookAdapter.mBook.get(BookPosition).getCompleteData());
@@ -180,12 +187,7 @@ public class scheduleManager extends AppCompatActivity {
 
         }
     });
-    deleteBtnSchedule.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
 
-        }
-    });
     }
 
     private void setupMainWindowDisplayMode() {
