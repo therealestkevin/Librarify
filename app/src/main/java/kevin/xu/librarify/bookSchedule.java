@@ -145,6 +145,25 @@ public class bookSchedule extends AppCompatActivity {
             //runnable solution that will be faster and will function on a seperate thread
             //This is the task to be completed after the first task above
 
+
+
+
+
+
+
+
+
+
+
+
+
+            //UPDATE 2:
+
+            //As of now, I have fixed a part of the first task, the issue
+            //now seems to be that if you do not add a scheduleevent
+            //when you edit your reading schedule, then your previous valeus are
+            //lost, I will have to fix this problem as well but
+            //progress has been made on the greater task
         }else{
             Toast.makeText(getApplicationContext(),"Entry Failed",Toast.LENGTH_LONG).show();
         }
