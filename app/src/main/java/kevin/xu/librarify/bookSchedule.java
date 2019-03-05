@@ -2,6 +2,7 @@ package kevin.xu.librarify;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -11,8 +12,11 @@ import com.github.tibolte.agendacalendarview.CalendarPickerController;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.DayItem;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.xu.librarify.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -50,8 +54,7 @@ public class bookSchedule extends AppCompatActivity {
             public void onClick(View v) {
                 Intent startManage = new Intent(getApplicationContext(),scheduleManager.class);
                 startManage.putExtra("BookPositionFinal",BookPosition);
-                finish();
-                startActivityForResult(startManage,1);
+                startActivityForResult(startManage,NEW_UPDATE_CALENDAREVENT);
 
             }
         });
@@ -106,8 +109,14 @@ public class bookSchedule extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent dat){
         super.onActivityResult(requestCode,resultCode,dat);
 
-        if(requestCode == NEW_UPDATE_CALENDAREVENT){
+        if(requestCode == NEW_UPDATE_CALENDAREVENT && resultCode ==RESULT_OK){
+               String jsonStringBaseCalendar = dat.getStringExtra("REPLY");
+               Log.i("simpleCal",jsonStringBaseCalendar);
 
+               ArrayList<BaseCalendarEvent> tempUpdate = new Gson().fromJson(jsonStringBaseCalendar,
+                       new TypeToken<ArrayList<BaseCalendarEvent>>(){
+                       }.getType());
+            populateAgendaFromResult(tempUpdate);
             //String updateResult = dat.getStringExtra();
 
             //Gson.fromJson for the resulting string for the updated CalendarEvent Arraylist
@@ -147,6 +156,13 @@ public class bookSchedule extends AppCompatActivity {
             eventList.add(i);
         }
 
+    }
+    private void populateAgendaFromResult(ArrayList<BaseCalendarEvent>newEventList){
+        eventList.clear();
+        for(BaseCalendarEvent i : newEventList){
+            eventList.add(i);
+        }
+        bookSchedule.init(eventList,minDate,maxDate,Locale.getDefault(),bob);
     }
     private void mockList(List<CalendarEvent> eventList) {
         Calendar startTime1 = Calendar.getInstance();

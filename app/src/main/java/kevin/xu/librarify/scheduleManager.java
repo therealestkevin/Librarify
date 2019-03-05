@@ -1,6 +1,8 @@
 package kevin.xu.librarify;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
@@ -15,17 +18,21 @@ import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 import com.xu.librarify.R;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import kevin.xu.roomDB.Book;
 
 public class scheduleManager extends AppCompatActivity {
     private Toolbar scheduleManagerToolbar;
@@ -44,6 +51,8 @@ public class scheduleManager extends AppCompatActivity {
     private Calendar firstDay;
     private Calendar lastDay;
     private ArrayList<BaseCalendarEvent> onStartTrack;
+    private ArrayList<simpleScheduleDisplay> onStartTrackSimple;
+    private ArrayList<simpleScheduleDisplay> curStack = new ArrayList<>();
     private FloatingActionButton finishFloatingBtn;
     private FloatingActionButton exitFloatingBtn;
 
@@ -68,18 +77,43 @@ public class scheduleManager extends AppCompatActivity {
             }
         }
         onStartTrack = BookAdapter.mBook.get(BookPosition).getScheduleData();
+        onStartTrackSimple = BookAdapter.mBook.get(BookPosition).getCompleteData();
         finishFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    if(onStartTrack!=BookAdapter.mBook.get(BookPosition).getScheduleData()){
-                        //setResults
-                        //Request Codes and all
+                //setResults
+                //Request Codes and all
+                        if(curStack.size()>0){
+                            ArrayList<BaseCalendarEvent> tempAdded = new ArrayList<>();
+                            tempAdded.addAll(onStartTrack);
+                            ArrayList<BaseCalendarEvent> bookSchedule = new ArrayList<>();
+                            Random rd = new Random();
+
+                            for(simpleScheduleDisplay i : curStack){
+                                BaseCalendarEvent temp = new BaseCalendarEvent(i.getTitle(),i.getDescription(),"Pages: "+i.getPages(), Color.argb(255,rd.nextInt(256),
+                                        rd.nextInt(256),rd.nextInt(256)),i.getFirstDay(),i.getLastDay(),false);
+                                bookSchedule.add(temp);
+                            }
+
+                            tempAdded.addAll(bookSchedule);
+                            Intent replyIntent = new Intent();
+                            replyIntent.putExtra("REPLY",new Gson().toJson(tempAdded));
+                            setResult(RESULT_OK,replyIntent);
+                            Toast.makeText(getApplicationContext(),"Schedule Saved", Toast.LENGTH_LONG);
+                            finish();
+                        } else{
+                        Intent returnIntent = new Intent(getApplicationContext(),bookSchedule.class);
+                        startActivity(returnIntent);
                     }
             }
         });
         exitFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                    bookList.bookModel.updateCompleteData(onStartTrackSimple,BookAdapter.mBook.get(BookPosition).getId());
+                    curStack.clear();
+                Intent returnIntent = new Intent(getApplicationContext(),bookSchedule.class);
+                startActivity(returnIntent);
 
             }
         });
@@ -169,7 +203,7 @@ public class scheduleManager extends AppCompatActivity {
                                 String pages = editTextStartPage.getText().toString() + " — " + editTextPageEnd.getText().toString();
                                 String description = editTextNotes.getText().toString();
                                 simpleScheduleDisplay temp = new simpleScheduleDisplay(title,dates,pages,firstDay,lastDay,description);
-
+                                curStack.add(temp);
                                 ArrayList<simpleScheduleDisplay> updated = BookAdapter.mBook.get(BookPosition).getCompleteData();
                                 updated.add(temp);
                               bookList.bookModel.updateCompleteData(updated, BookAdapter.mBook.get(BookPosition).getId());
