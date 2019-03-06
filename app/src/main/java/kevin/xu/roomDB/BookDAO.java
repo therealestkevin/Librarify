@@ -39,6 +39,12 @@ public interface BookDAO {
     @Query("UPDATE book_table SET author =:newAuthors WHERE Id =:id")
     void updateAuthors(String newAuthors, int id);
 
+    @Query("UPDATE book_table SET scheduleData = :newSchedule WHERE Id = :id")
+    void updateSchedule (ArrayList<simpleScheduleDisplay> newSchedule, int id);
+
+    @Query("UPDATE book_table SET completeData = :newCompleteData WHERE Id = :id")
+    void updateCompleteData(ArrayList<BaseCalendarEvent> newCompleteData, int id);
+
 
 
     //@Query("SELECT scheduleData FROM book_table WHERE Id = :id")
