@@ -193,6 +193,7 @@ public class scheduleManager extends AppCompatActivity {
                                 curStack.add(temp);
 
                               bookList.bookModel.updateCompleteData(curStack, BookAdapter.mBook.get(BookPosition).getId(),BookPosition);
+                              //adapter.add(temp);
                               adapter.notifyDataSetChanged();
                               curStack.clear();
                         }

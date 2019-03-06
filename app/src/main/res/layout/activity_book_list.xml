@@ -15,7 +15,7 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:srcCompat="@drawable/ic_action_add" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/topToolBarBook"

@@ -35,6 +35,13 @@ public class BookRepository {
 
     public void updateData(ArrayList<simpleScheduleDisplay> newArr, int id, int BookPosition){
         ArrayList<BaseCalendarEvent> bookSchedule = new ArrayList<>();
+        Random rd = new Random();
+        for(simpleScheduleDisplay i : newArr){
+            BaseCalendarEvent temp = new BaseCalendarEvent(i.getTitle(),i.getDescription(),"Pages: "+i.getPages(), Color.argb(255,rd.nextInt(256),
+                    rd.nextInt(256),rd.nextInt(256)),i.getFirstDay(),i.getLastDay(),false);
+            bookSchedule.add(temp);
+        }
+
         try {
             bookSchedule.addAll(new getScheduleData(bookDAO,id).execute().get().getScheduleData());
         } catch (ExecutionException e) {
@@ -42,13 +49,9 @@ public class BookRepository {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Random rd = new Random();
 
-        for(simpleScheduleDisplay i : newArr){
-            BaseCalendarEvent temp = new BaseCalendarEvent(i.getTitle(),i.getDescription(),"Pages: "+i.getPages(), Color.argb(255,rd.nextInt(256),
-                    rd.nextInt(256),rd.nextInt(256)),i.getFirstDay(),i.getLastDay(),false);
-            bookSchedule.add(temp);
-        }
+
+
 
         new updateCompleteData(id,bookDAO,bookSchedule).execute(newArr);
     }
