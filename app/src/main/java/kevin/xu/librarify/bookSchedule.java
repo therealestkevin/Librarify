@@ -100,7 +100,8 @@ public class bookSchedule extends AppCompatActivity {
         scheduleToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent backIntent = new Intent(getApplicationContext(),bookList.class);
+                startActivity(backIntent);
             }
         });
 
