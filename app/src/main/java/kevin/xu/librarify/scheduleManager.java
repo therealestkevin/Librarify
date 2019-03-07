@@ -51,7 +51,6 @@ public class scheduleManager extends AppCompatActivity {
     private FloatingActionButton finishFloatingBtn;
     private FloatingActionButton exitFloatingBtn;
     private Book resetBook;
-    private ArrayList<simpleScheduleDisplay> localData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

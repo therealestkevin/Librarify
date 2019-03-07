@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button scanBtn;
+    private Button tempScheduleButton;
     private Button viewBookBtn;
     private androidx.appcompat.widget.Toolbar mainToolBar;
     @Override
@@ -32,7 +32,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(scanIntent);
             }
         });*/
-
+        tempScheduleButton = findViewById(R.id.temporaryScheduleButton);
+        tempScheduleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent fullScheduleIntent = new Intent(getApplicationContext(), fullSchedule.class);
+                startActivity(fullScheduleIntent);
+            }
+        });
         viewBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

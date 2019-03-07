@@ -48,7 +48,10 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         topToolBarBook.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent returnIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(returnIntent);
+
+                //onBackPressed();
             }
         });
         bookListView = findViewById(R.id.bookListView);
