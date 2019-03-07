@@ -15,8 +15,8 @@ import androidx.lifecycle.LiveData;
 import kevin.xu.librarify.simpleScheduleDisplay;
 
 public class BookRepository {
-    public BookDAO bookDAO;
-    private LiveData<List<Book>> allBooks;
+    public static BookDAO bookDAO;
+    private static LiveData<List<Book>> allBooks;
     private ArrayList<String> allISBN;
     public BookRepository(Application app){
         BookDB db = BookDB.getDatabase(app);
@@ -30,7 +30,7 @@ public class BookRepository {
     }
 
     public void resetScheduleData(Book resetBook){
-        new updateCompleteData(resetBook.getId(),bookDAO,resetBook.getScheduleData()).execute(resetBook.getCompleteData());
+        new updateCompleteData(resetBook.getId(),bookDAO,resetBook.getScheduleData(),resetBook.getCompleteData()).execute();
     }
 
     public void updateData(ArrayList<simpleScheduleDisplay> newArr, int id, int BookPosition){
@@ -62,7 +62,7 @@ public class BookRepository {
 
         executeSchedule.addAll(newArr);
 
-                new updateCompleteData(id,bookDAO,bookSchedule).execute(executeSchedule);
+                new updateCompleteData(id,bookDAO,bookSchedule,executeSchedule).execute();
     }
 
     /*public ArrayList<BaseCalendarEvent> getBaseCalendar(int id){
@@ -106,26 +106,27 @@ public class BookRepository {
         }
     }
 
-    private static class updateCompleteData extends AsyncTask<ArrayList<simpleScheduleDisplay>, Void, Void >{
+    private static class updateCompleteData extends AsyncTask<Void, Void, Void >{
         private int id;
         private BookDAO AsyncUpdateDAO;
         private ArrayList<BaseCalendarEvent> scheduleData;
-        public updateCompleteData(int id, BookDAO dao, ArrayList<BaseCalendarEvent> scheduleData){
+        private ArrayList<simpleScheduleDisplay> completeData;
+        public updateCompleteData(int id, BookDAO dao, ArrayList<BaseCalendarEvent> scheduleData,ArrayList<simpleScheduleDisplay> completeData){
             this.id=id;
             AsyncUpdateDAO=dao;
             this.scheduleData=scheduleData;
+            this.completeData=completeData;
 
         }
 
 
         @Override
-        protected Void doInBackground(ArrayList<simpleScheduleDisplay>... arrayLists) {
-            AsyncUpdateDAO.update(arrayLists,id,scheduleData);
+        protected Void doInBackground(Void... voids) {
+            AsyncUpdateDAO.update(completeData,id,scheduleData);
             return null;
         }
-
-
     }
+
     private static class getScheduleData extends AsyncTask<Void,Void,Book>{
         private int id;
         private BookDAO AsyncBookDAO;

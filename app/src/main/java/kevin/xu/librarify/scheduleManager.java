@@ -51,6 +51,7 @@ public class scheduleManager extends AppCompatActivity {
     private FloatingActionButton finishFloatingBtn;
     private FloatingActionButton exitFloatingBtn;
     private Book resetBook;
+    private ArrayList<simpleScheduleDisplay> localData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,7 @@ public class scheduleManager extends AppCompatActivity {
 
             }
         });
+        //localData = BookAdapter.mBook.get(BookPosition).getCompleteData();
         adapter = new scheduleAdapter(this, BookAdapter.mBook.get(BookPosition).getCompleteData());
         currentEvents.setAdapter(adapter);
     addBtnSchedule.setOnClickListener(new View.OnClickListener() {
@@ -192,9 +194,13 @@ public class scheduleManager extends AppCompatActivity {
                                 simpleScheduleDisplay temp = new simpleScheduleDisplay(title,dates,pages,firstDay,lastDay,description);
                                 curStack.add(temp);
 
-                              bookList.bookModel.updateCompleteData(curStack, BookAdapter.mBook.get(BookPosition).getId(),BookPosition);
+                              bookList.bookModel.updateCompleteData(curStack, resetBook.getId(),BookPosition);
                               //adapter.add(temp);
-                              adapter.notifyDataSetChanged();
+
+                            //localData = BookAdapter.mBook.get(BookPosition).getCompleteData();
+                            adapter.add(temp);
+                            adapter.notifyDataSetChanged();
+
                               curStack.clear();
                         }
                     }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {

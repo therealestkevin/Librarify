@@ -31,7 +31,7 @@ public interface BookDAO {
     List<String> getISBN();
 
     @Query("UPDATE book_table SET completeData = :newArr, scheduleData =:newSchedule WHERE Id = :id")
-    void update(ArrayList<simpleScheduleDisplay> newArr[], int id,ArrayList<BaseCalendarEvent> newSchedule);
+    void update(ArrayList<simpleScheduleDisplay> newArr, int id,ArrayList<BaseCalendarEvent> newSchedule);
 
     @Query("UPDATE book_table SET title = :newTitle WHERE Id =:id")
     void updateTitle(String newTitle, int id);

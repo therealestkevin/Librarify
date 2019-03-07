@@ -28,7 +28,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
     private FloatingActionButton addBookButton;
     private Toolbar topToolBarBook;
     private RecyclerView bookListView;
-    private BookAdapter adapter;
+    public static BookAdapter adapter;
     public static BookViewModel bookModel;
     private Menu menu;
     public static final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
@@ -58,37 +58,37 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         bookListView.setAdapter(adapter);
         adapter.setRecycleListener(this);
         bookModel = ViewModelProviders.of(this).get(BookViewModel.class);
-        bookModel.getAllBooks().observe(this, new Observer<List<Book>>() {
-            @Override
-            public void onChanged(List<Book> books) {
-                adapter.setBooks(books);
-                switch(bookList.sortMethod){
-                    case -1:{
-                        break;
-                    }
-                    case 0:{
-                        adapter.filterByAlpha(true);
-                        break;
-                    }
-                    case 1:{
-                        adapter.filterByAlpha(false);
-                        break;
-                    }
-                    case 2:{
-                        adapter.filterByAuthor(true);
-                    }
-                    case 3:{
-                        adapter.filterByAuthor(false);
-                    }
-                    case 4:{
-                        adapter.filterByDate(true);
-                    }
-                    case 5:{
-                        adapter.filterByDate(false);
-                    }
-                }
-            }
-        });
+       bookModel.getAllBooks().observeForever(new Observer<List<Book>>() {
+           @Override
+           public void onChanged(List<Book> books) {
+               adapter.setBooks(books);
+               switch(bookList.sortMethod){
+                   case -1:{
+                       break;
+                   }
+                   case 0:{
+                       adapter.filterByAlpha(true);
+                       break;
+                   }
+                   case 1:{
+                       adapter.filterByAlpha(false);
+                       break;
+                   }
+                   case 2:{
+                       adapter.filterByAuthor(true);
+                   }
+                   case 3:{
+                       adapter.filterByAuthor(false);
+                   }
+                   case 4:{
+                       adapter.filterByDate(true);
+                   }
+                   case 5:{
+                       adapter.filterByDate(false);
+                   }
+               }
+           }
+       });
 
 
 
