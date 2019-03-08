@@ -3,12 +3,16 @@ package kevin.xu.librarify;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.navigation.NavigationView;
 import com.xu.librarify.R;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -16,15 +20,25 @@ public class MainActivity extends AppCompatActivity {
     private Button tempScheduleButton;
     private Button viewBookBtn;
     private androidx.appcompat.widget.Toolbar mainToolBar;
+    private DrawerLayout drawlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupMainWindowDisplayMode();
+        drawlayout = findViewById(R.id.draw_layout);
+        NavigationView navView = findViewById(R.id.nav_view);
         mainToolBar =  findViewById(R.id.mainToolBar);
         mainToolBar.setTitle("Librarify");
-        //scanBtn = (Button) findViewById(R.id.scanBtn);
+        //scanBtn5 = (Button) findViewById(R.id.scanBtn);
         viewBookBtn = (Button) findViewById(R.id.viewBookBtn);
+
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        });
         /*scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
