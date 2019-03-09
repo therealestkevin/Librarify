@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,9 +31,9 @@ public class BookViewActivity extends AppCompatActivity {
     //private Button sendJson;
     private Button toList;
     private int BookPosition2;
-    //private String jsonString;
     private OuterURL infoOutput;
     private Toolbar bookViewToolbar;
+
 
 
     @Override
@@ -44,9 +45,8 @@ public class BookViewActivity extends AppCompatActivity {
         bookDescription = (TextView) findViewById(R.id.bookDescription);
         bookRatingBar = (RatingBar) findViewById(R.id.bookRatingBar);
         starText = (TextView) findViewById(R.id.starDisplayText);
-        //sendJson = (Button) findViewById(R.id.sendJson);
         toList = (Button) findViewById(R.id.goToList);
-
+        bookDescription.setMovementMethod(new ScrollingMovementMethod());
         bookViewToolbar = (Toolbar) findViewById(R.id.BookViewToolbar);
         setSupportActionBar(bookViewToolbar);
        bookViewToolbar.setTitle("Book Info");
