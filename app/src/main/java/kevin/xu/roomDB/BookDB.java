@@ -25,8 +25,8 @@ public abstract class BookDB extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             BookDB.class, "book_DB")
-                            //.enableMultiInstanceInvalidation()
-                            .addCallback(sRoomDatabaseCallback)
+                            .enableMultiInstanceInvalidation()
+                            //.addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }

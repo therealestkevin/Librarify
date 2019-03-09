@@ -1,5 +1,6 @@
 package kevin.xu.librarify;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -42,7 +43,8 @@ public class fullSchedule extends AppCompatActivity {
         fullScheduleToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                Intent backIntent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(backIntent);
             }
         });
         minDate = Calendar.getInstance();
@@ -84,7 +86,7 @@ public class fullSchedule extends AppCompatActivity {
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
-                setSystemUiVisibilityMode(); // Needed to avoid exiting immersive_sticky when keyboard is displayed
+                setSystemUiVisibilityMode();
             }
         });
     }

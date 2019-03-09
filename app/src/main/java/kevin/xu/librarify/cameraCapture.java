@@ -35,6 +35,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import dmax.dialog.SpotsDialog;
 import kevin.xu.gsonParsing.OuterURL;
 import kevin.xu.roomDB.Book;
@@ -50,12 +51,14 @@ public class cameraCapture extends AppCompatActivity {
     private String ISBN;
     private androidx.appcompat.app.AlertDialog.Builder builder;
     private boolean execute;
+    private BookViewModel bookModel2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_capture);
         setupMainWindowDisplayMode();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        bookModel2 = ViewModelProviders.of(cameraCapture.this).get(BookViewModel.class);
         cameraView = (CameraKitView) findViewById(R.id.camera);
         btnDetect = (Button)findViewById(R.id.button5);
         waitingDialog = new SpotsDialog.Builder().setContext(this).setMessage("Please wait").setCancelable(false).build();
@@ -197,7 +200,7 @@ public class cameraCapture extends AppCompatActivity {
                                     } else {
                                        try{
                                            Book book = new Book(temp, java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),ISBN);
-                                           bookList.bookModel.insert(book);
+                                           bookModel2.insert(book);
                                            Toast.makeText(getApplicationContext(), "Entry Success", Toast.LENGTH_LONG).show();
                                            Intent goToLibrary = new Intent(getApplicationContext(), bookList.class);
                                            startActivity(goToLibrary);

@@ -15,17 +15,15 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
-import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.rits.cloning.Cloner;
 import com.xu.librarify.R;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -65,13 +63,16 @@ public class scheduleManager extends AppCompatActivity {
         exitFloatingBtn = findViewById(R.id.exitFloatingBtn);
 
         setSupportActionBar(scheduleManagerToolbar);
-        resetBook = bookList.bookModel.getCertainBook(BookAdapter.mBook.get(BookPosition).getId());
+
         if (getIntent() != null && getIntent().getExtras() != null){
             Bundle bundle = getIntent().getExtras();
             if(bundle.getInt("BookPositionFinal")>-1){
                 BookPosition = bundle.getInt("BookPositionFinal");
+                Cloner cloner = new Cloner();
+                    resetBook =  cloner.deepClone(BookAdapter.mBook.get(BookPosition));
+                }
             }
-        }
+
 
         finishFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,16 +80,17 @@ public class scheduleManager extends AppCompatActivity {
                 //setResults
                 //Request Codes and all
                         if(curStack.size()>0){
-                            ArrayList<BaseCalendarEvent> tempAdded = bookList.bookModel.getCertainBook(
-                                    BookAdapter.mBook.get(BookPosition).getId()
-                            ).getScheduleData();
-                            Intent replyIntent = new Intent();
-                            replyIntent.putExtra("REPLY",new Gson().toJson(tempAdded));
-                            setResult(RESULT_OK,replyIntent);
+                           // ArrayList<BaseCalendarEvent> tempAdded = bookList.bookModel.getCertainBook(
+                            //        BookAdapter.mBook.get(BookPosition).getId()
+                          //  ).getScheduleData();
+                           // Intent replyIntent = new Intent();
+                           // replyIntent.putExtra("REPLY",new Gson().toJson(tempAdded));
+                           // setResult(RESULT_OK,replyIntent);
                             Toast.makeText(getApplicationContext(),"Schedule Saved", Toast.LENGTH_LONG);
                             finish();
                         } else{
                         Intent returnIntent = new Intent(getApplicationContext(),bookSchedule.class);
+                        returnIntent.putExtra("BookPosition",BookPosition);
                         startActivity(returnIntent);
                     }
                     curStack.clear();
@@ -97,14 +99,21 @@ public class scheduleManager extends AppCompatActivity {
         exitFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                    Intent replyIntent = new Intent();
+                    replyIntent.putExtra("REPLY", new Gson().toJson(resetBook.getScheduleData()));
+                    setResult(RESULT_OK,replyIntent);
                     bookList.bookModel.resetScheduleData(resetBook);
                     curStack.clear();
-                Intent returnIntent = new Intent(getApplicationContext(),bookSchedule.class);
-                startActivity(returnIntent);
+                /*Intent returnIntent = new Intent(getApplicationContext(),bookSchedule.class);
+                returnIntent.putExtra("BookPosition", BookPosition);
+                startActivity(returnIntent);*/
+                finish();
+                adapter.clear();
 
             }
         });
         //localData = BookAdapter.mBook.get(BookPosition).getCompleteData();
+
         adapter = new scheduleAdapter(this, BookAdapter.mBook.get(BookPosition).getCompleteData());
         currentEvents.setAdapter(adapter);
     addBtnSchedule.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +202,7 @@ public class scheduleManager extends AppCompatActivity {
                                 simpleScheduleDisplay temp = new simpleScheduleDisplay(title,dates,pages,firstDay,lastDay,description);
                                 curStack.add(temp);
 
-                              bookList.bookModel.updateCompleteData(curStack, resetBook.getId(),BookPosition);
+                              bookList.bookModel.updateCompleteData(curStack, BookAdapter.mBook.get(BookPosition).getId());
                               //adapter.add(temp);
 
                             //localData = BookAdapter.mBook.get(BookPosition).getCompleteData();

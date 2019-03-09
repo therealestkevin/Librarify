@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/book_name"
-        android:layout_width="210dp"
-        android:layout_height="78dp"
+        android:layout_width="201dp"
+        android:layout_height="43dp"
         android:text="Title"
         android:textAlignment="center"
         android:textSize="16sp"
@@ -19,8 +19,9 @@
 
     <ImageView
         android:id="@+id/bookViewImg"
-        android:layout_width="193dp"
-        android:layout_height="235dp"
+        android:layout_width="150dp"
+        android:layout_height="197dp"
+        android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,45 +34,36 @@
 
     <TextView
         android:id="@+id/timeAdded"
-        android:layout_width="190dp"
+        android:layout_width="201dp"
         android:layout_height="27dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
         android:text="Time"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toEndOf="@+id/bookViewImg"
         app:layout_constraintTop_toBottomOf="@+id/authorView" />
 
     <TextView
         android:id="@+id/authorView"
-        android:layout_width="206dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="201dp"
+        android:layout_height="44dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:text="Authors"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/bookViewImg"
         app:layout_constraintTop_toBottomOf="@+id/book_name" />
 
     <Button
         android:id="@+id/startSchedule"
         android:layout_width="175dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="55dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:text="Start Schedule"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bookViewImg"
-        app:layout_constraintTop_toBottomOf="@+id/timeAdded" />
+        app:layout_constraintTop_toBottomOf="@+id/timeAdded"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

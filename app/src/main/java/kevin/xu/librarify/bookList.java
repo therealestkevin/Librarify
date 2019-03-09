@@ -30,6 +30,15 @@ public class bookList extends AppCompatActivity implements RecycleListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            Bundle bundle = getIntent().getExtras();
+            if(!bundle.getString("GoBack").isEmpty()){
+               moveTaskToBack(true);
+               startActivity(new Intent(getApplicationContext(),cameraCapture.class));
+            }
+        }
         setContentView(R.layout.activity_book_list);
         setupMainWindowDisplayMode();
         topToolBarBook = findViewById(R.id.topToolBarBook);
@@ -53,7 +62,10 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         adapter = new BookAdapter(this);
         bookListView.setAdapter(adapter);
         adapter.setRecycleListener(this);
+
+
         bookModel = ViewModelProviders.of(this).get(BookViewModel.class);
+
        bookModel.getAllBooks().observeForever(new Observer<List<Book>>() {
            @Override
            public void onChanged(List<Book> books) {

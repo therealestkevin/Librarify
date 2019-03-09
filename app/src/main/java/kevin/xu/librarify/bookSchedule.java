@@ -31,11 +31,12 @@ public class bookSchedule extends AppCompatActivity {
     private Toolbar scheduleToolBar;
     private Button readingButton;
     private int BookPosition;
-    private static List<CalendarEvent> eventList;
+    private List<CalendarEvent> eventList;
     private Calendar minDate;
     private Calendar maxDate;
     private CalendarPickerController bob;
-    public static final int NEW_UPDATE_CALENDAREVENT = 1;
+    public static final int NEW_RESET_CALENDAREVENT=1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,7 @@ public class bookSchedule extends AppCompatActivity {
             public void onClick(View v) {
                 Intent startManage = new Intent(getApplicationContext(),scheduleManager.class);
                 startManage.putExtra("BookPositionFinal",BookPosition);
-                startActivityForResult(startManage,NEW_UPDATE_CALENDAREVENT);
+                startActivityForResult(startManage,NEW_RESET_CALENDAREVENT);
 
             }
         });
@@ -110,7 +111,7 @@ public class bookSchedule extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent dat){
         super.onActivityResult(requestCode,resultCode,dat);
 
-        if(requestCode == NEW_UPDATE_CALENDAREVENT && resultCode ==RESULT_OK){
+        if(requestCode == NEW_RESET_CALENDAREVENT && resultCode ==RESULT_OK){
                String jsonStringBaseCalendar = dat.getStringExtra("REPLY");
                Log.i("simpleCal",jsonStringBaseCalendar);
 
@@ -170,8 +171,9 @@ public class bookSchedule extends AppCompatActivity {
         }
     }
     private void populateAgendaFromDB(List<CalendarEvent>eventList){
-        ArrayList<BaseCalendarEvent> temp = bookList.bookModel.getCertainBook(BookAdapter.mBook.get(BookPosition).getId()).getScheduleData();
-                //BookAdapter.mBook.get(BookPosition).getScheduleData();
+        ArrayList<BaseCalendarEvent> temp = BookAdapter.mBook.get(BookPosition).getScheduleData();
+                //bookList.bookModel.getCertainBook(BookAdapter.mBook.get(BookPosition).getId()).getScheduleData();
+
         eventList.clear();
         for(BaseCalendarEvent i : temp){
             eventList.add(i);
@@ -206,6 +208,7 @@ public class bookSchedule extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+
     }
 
     @Override

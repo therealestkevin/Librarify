@@ -15,8 +15,8 @@ import androidx.lifecycle.LiveData;
 import kevin.xu.librarify.simpleScheduleDisplay;
 
 public class BookRepository {
-    public static BookDAO bookDAO;
-    private static LiveData<List<Book>> allBooks;
+    public  BookDAO bookDAO;
+    private LiveData<List<Book>> allBooks;
     private ArrayList<String> allISBN;
     public BookRepository(Application app){
         BookDB db = BookDB.getDatabase(app);
@@ -30,10 +30,12 @@ public class BookRepository {
     }
 
     public void resetScheduleData(Book resetBook){
-        new updateCompleteData(resetBook.getId(),bookDAO,resetBook.getScheduleData(),resetBook.getCompleteData()).execute();
+
+             new updateCompleteData(resetBook.getId(),bookDAO,resetBook.getScheduleData(),resetBook.getCompleteData()).execute();
+
     }
 
-    public void updateData(ArrayList<simpleScheduleDisplay> newArr, int id, int BookPosition){
+    public void updateData(ArrayList<simpleScheduleDisplay> newArr, int id){
         ArrayList<BaseCalendarEvent> bookSchedule = new ArrayList<>();
         Random rd = new Random();
 
@@ -106,7 +108,7 @@ public class BookRepository {
         }
     }
 
-    private static class updateCompleteData extends AsyncTask<Void, Void, Void >{
+    private static class updateCompleteData extends AsyncTask<Void, Void, Void>{
         private int id;
         private BookDAO AsyncUpdateDAO;
         private ArrayList<BaseCalendarEvent> scheduleData;
@@ -125,6 +127,7 @@ public class BookRepository {
             AsyncUpdateDAO.update(completeData,id,scheduleData);
             return null;
         }
+
     }
 
     private static class getScheduleData extends AsyncTask<Void,Void,Book>{

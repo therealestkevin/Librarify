@@ -33,8 +33,8 @@ public class BookViewModel extends AndroidViewModel {
         bookRepo.insert(book);
     }
 
-    public void updateCompleteData(ArrayList<simpleScheduleDisplay> newArr, int id, int BookPosition){
-        bookRepo.updateData(newArr,id,BookPosition);
+    public void updateCompleteData(ArrayList<simpleScheduleDisplay> newArr, int id){
+        bookRepo.updateData(newArr,id);
     }
     //public ArrayList<BaseCalendarEvent> getBaseCalendar(int id){
     //    return bookRepo.getBaseCalendar(id);

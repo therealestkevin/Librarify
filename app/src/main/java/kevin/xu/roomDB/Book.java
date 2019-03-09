@@ -11,7 +11,7 @@ import kevin.xu.gsonParsing.OuterURL;
 import kevin.xu.librarify.simpleScheduleDisplay;
 
 @Entity (tableName = "book_table")
-public class Book {
+public class Book implements Cloneable{
     private OuterURL bookList;
     private String dateTime;
     private String ISBN;
@@ -28,8 +28,6 @@ public class Book {
     public Book(){
 
     }
-
-
 
     public Book(OuterURL bookOne, String dateTime, String ISBN){
         this.bookList=bookOne;
@@ -134,4 +132,5 @@ public class Book {
     public void setScheduleData(ArrayList<BaseCalendarEvent> scheduleData) {
         this.scheduleData = scheduleData;
     }
+
 }

@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProviders;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
                    }
                    case "New Book":{
-                       Intent cameraIntent = new Intent(getApplicationContext(), cameraCapture.class);
+                       Intent cameraIntent = new Intent(getApplicationContext(), bookList.class);
+                       cameraIntent.putExtra("GoBack", "yes");
                        startActivity(cameraIntent);
                        break;
                    }
