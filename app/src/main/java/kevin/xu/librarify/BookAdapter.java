@@ -30,7 +30,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
 
    // ArrayList<String> books;
 
-    public static List<Book> mBook;
+    public static List<Book> mBook = new ArrayList<>();
     public static List<Book> copyBook;
     private LayoutInflater inflate1;
     private Context context;

@@ -2,19 +2,13 @@ package kevin.xu.librarify;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.xu.librarify.R;
-
-import java.util.Calendar;
 import java.util.List;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -31,7 +25,6 @@ public class bookList extends AppCompatActivity implements RecycleListener{
     public static BookAdapter adapter;
     public static BookViewModel bookModel;
     private Menu menu;
-    public static final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
     public static int sortMethod=-1;
 
     @Override
@@ -99,7 +92,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(bookList.this,cameraCapture.class),NEW_BOOK_ACTIVITY_REQUEST_CODE);
+                startActivity(new Intent(bookList.this,cameraCapture.class));
             }
         });
 
@@ -201,7 +194,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
             }
         }
     }
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent dat){
         super.onActivityResult(requestCode,resultCode,dat);
 
@@ -218,7 +211,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         }else{
             Toast.makeText(getApplicationContext(),"Entry Failed",Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
     @Override
     public void onClick(View view, int position) {
          OuterURL book= BookAdapter.mBook.get(position).getBookList();

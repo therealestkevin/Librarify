@@ -30,12 +30,14 @@ import com.xu.librarify.R;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import dmax.dialog.SpotsDialog;
 import kevin.xu.gsonParsing.OuterURL;
+import kevin.xu.roomDB.Book;
 
 
 public class cameraCapture extends AppCompatActivity {
@@ -43,7 +45,6 @@ public class cameraCapture extends AppCompatActivity {
     private Button btnDetect;
     private AlertDialog waitingDialog;
     private String browserKey = "AIzaSyB4FziQm9LM2Nahb3SsKbME7_cTq60x2_Q";
-    private String jsonString;
     public static final String EXTRA_REPLY = "REPLY";
     public static final String EXTRA_REPLY2 = "ISBN";
     private String ISBN;
@@ -154,9 +155,6 @@ public class cameraCapture extends AppCompatActivity {
                         System.out.println(jsonReqText);
                         Gson gson = new Gson();
                         OuterURL temp = gson.fromJson(jsonReqText, OuterURL.class);
-                        jsonString = gson.toJson(temp);
-                        Log.i("author", temp.getItems().get(0)
-                                .getVolumeInfo().getAuthors().toString());
                        String authors= temp.getItems().get(0).getVolumeInfo().getAuthors()
                                 .toString().replace("[","").replace("]","");
                         execute=true;
@@ -194,15 +192,19 @@ public class cameraCapture extends AppCompatActivity {
                         builder.setNeutralButton("Add Book", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                    Intent replyIntent = new Intent();
-                                    if (TextUtils.isEmpty(jsonString)) {
-                                        setResult(RESULT_CANCELED, replyIntent);
+
+                                    if (temp==null) {
                                     } else {
-                                        replyIntent.putExtra(EXTRA_REPLY, jsonString);
-                                        replyIntent.putExtra(EXTRA_REPLY2, ISBN);
-                                        setResult(RESULT_OK, replyIntent);
-                                        Toast.makeText(getApplicationContext(), "Entry Success", Toast.LENGTH_LONG).show();
-                                        finish();
+                                       try{
+                                           Book book = new Book(temp, java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),ISBN);
+                                           bookList.bookModel.insert(book);
+                                           Toast.makeText(getApplicationContext(), "Entry Success", Toast.LENGTH_LONG).show();
+                                           Intent goToLibrary = new Intent(getApplicationContext(), bookList.class);
+                                           startActivity(goToLibrary);
+                                       }catch(Exception e){
+
+                                       }
+
                                     }
 
                                 }

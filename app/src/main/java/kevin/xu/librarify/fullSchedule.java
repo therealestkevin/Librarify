@@ -69,9 +69,13 @@ public class fullSchedule extends AppCompatActivity {
 
             }
         };
-        for(Book b : BookAdapter.mBook){
-            eventList.addAll(b.getScheduleData());
+        if(BookAdapter.mBook.size()>0) {
+            for (Book b : BookAdapter.mBook) {
+                eventList.addAll(b.getScheduleData());
+            }
         }
+
+
         fullScheduleAgenda.init(eventList,minDate,maxDate, Locale.getDefault(),bob);
     }
 
