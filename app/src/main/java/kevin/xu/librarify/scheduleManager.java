@@ -129,7 +129,6 @@ public class scheduleManager extends AppCompatActivity {
 
 
 
-
             bobBuilder = new AlertDialog.Builder(scheduleManager.this);
             View dialogCustomView = inflater.inflate(R.layout.custom_dialog,null);
             bobBuilder.setView(dialogCustomView);
@@ -195,29 +194,54 @@ public class scheduleManager extends AppCompatActivity {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                                String title = editTextTitle.getText().toString();
-                                String dates = editTextDateFrom.getText().toString() + " — " + editTextDateTo.getText().toString();
-                                String pages = editTextStartPage.getText().toString() + " — " + editTextPageEnd.getText().toString();
-                                String description = editTextNotes.getText().toString();
-                                simpleScheduleDisplay temp = new simpleScheduleDisplay(title,dates,pages,firstDay,lastDay,description);
-                                curStack.add(temp);
 
-                              bookList.bookModel.updateCompleteData(curStack, BookAdapter.mBook.get(BookPosition).getId());
-                              //adapter.add(temp);
 
-                            //localData = BookAdapter.mBook.get(BookPosition).getCompleteData();
-                            adapter.add(temp);
-                            adapter.notifyDataSetChanged();
-
-                              curStack.clear();
                         }
                     }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                 }
-            })
-            .create().show();
+            });
+                 AlertDialog dialog = bobBuilder.create();
+                 dialog.show();
+
+                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         Boolean closeDia = false;
+                         String title = editTextTitle.getText().toString();
+                         String dates = editTextDateFrom.getText().toString() + " — " + editTextDateTo.getText().toString();
+                         String pages = editTextStartPage.getText().toString() + " — " + editTextPageEnd.getText().toString();
+                         String description = editTextNotes.getText().toString();
+                         if(dates.equals("No Current Date — No Current Date")){
+                             AlertDialog.Builder  secondBuilder= new AlertDialog.Builder(scheduleManager.this);
+                             secondBuilder.setMessage("Please Enter A Date").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                 @Override
+                                 public void onClick(DialogInterface dialog, int which) {
+                                     dialog.dismiss();
+                                 }
+                             }).create().show();
+                         }else{
+                             simpleScheduleDisplay temp = new simpleScheduleDisplay(title,dates,pages,firstDay,lastDay,description);
+                             curStack.add(temp);
+
+                             bookList.bookModel.updateCompleteData(curStack, BookAdapter.mBook.get(BookPosition).getId());
+                             //adapter.add(temp);
+
+                             //localData = BookAdapter.mBook.get(BookPosition).getCompleteData();
+                             adapter.add(temp);
+                             adapter.notifyDataSetChanged();
+
+                             curStack.clear();
+                             closeDia=true;
+                         }
+
+                        if(closeDia){
+                            dialog.dismiss();
+                        }
+                     }
+                 });
 
 
 

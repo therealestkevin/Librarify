@@ -46,4 +46,8 @@ public class BookViewModel extends AndroidViewModel {
     public void resetScheduleData(Book resetBook){
         bookRepo.resetScheduleData(resetBook);
     }
+
+    public List<Book> getBooksNonLive(){
+        return bookRepo.getBooksNoneLive();
+    }
 }

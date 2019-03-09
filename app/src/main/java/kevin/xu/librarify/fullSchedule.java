@@ -6,17 +6,20 @@ import android.view.View;
 
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.CalendarPickerController;
+import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.DayItem;
 import com.xu.librarify.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import kevin.xu.roomDB.Book;
 
 public class fullSchedule extends AppCompatActivity {
@@ -26,6 +29,8 @@ public class fullSchedule extends AppCompatActivity {
     private Calendar minDate;
     private Calendar maxDate;
     private CalendarPickerController bob;
+    private BookViewModel fullModel;
+    private List<Book> localBooks = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +41,7 @@ public class fullSchedule extends AppCompatActivity {
         fullScheduleToolBar = findViewById(R.id.fullScheduleToolBar);
         setSupportActionBar(fullScheduleToolBar);
         fullScheduleToolBar.setTitle("Full Reading Schedule");
-
+        fullModel = ViewModelProviders.of(this).get(BookViewModel.class);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -71,12 +76,20 @@ public class fullSchedule extends AppCompatActivity {
 
             }
         };
-        if(BookAdapter.mBook.size()>0) {
-            for (Book b : BookAdapter.mBook) {
+        localBooks = fullModel.getBooksNonLive();
+        if(localBooks.size()>0) {
+            for (Book b : localBooks) {
                 eventList.addAll(b.getScheduleData());
             }
         }
+        Iterator<CalendarEvent> i = eventList.iterator();
 
+      while(i.hasNext()){
+          CalendarEvent temp = i.next();
+          if(temp.getStartTime()==null){
+              i.remove();
+          }
+      }
 
         fullScheduleAgenda.init(eventList,minDate,maxDate, Locale.getDefault(),bob);
     }

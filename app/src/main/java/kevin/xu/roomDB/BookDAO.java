@@ -24,6 +24,8 @@ public interface BookDAO {
     @Query("SELECT * FROM book_table")
     LiveData<List<Book>> getBooks();
 
+    @Query("SELECT * FROM book_table")
+    List<Book> getBooksNonLive();
     @Query("DELETE FROM book_table")
     void deleteAll();
 

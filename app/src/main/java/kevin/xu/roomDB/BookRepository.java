@@ -34,7 +34,16 @@ public class BookRepository {
              new updateCompleteData(resetBook.getId(),bookDAO,resetBook.getScheduleData(),resetBook.getCompleteData()).execute();
 
     }
-
+    public List<Book> getBooksNoneLive(){
+        try {
+            return new getBooksNonLive(bookDAO).execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public void updateData(ArrayList<simpleScheduleDisplay> newArr, int id){
         ArrayList<BaseCalendarEvent> bookSchedule = new ArrayList<>();
         Random rd = new Random();
@@ -92,7 +101,17 @@ public class BookRepository {
 
         new insertBookTask(bookDAO).execute(book);
     }
+    private static class getBooksNonLive extends AsyncTask<Void,Void,List<Book>>{
+        private BookDAO dao;
+        getBooksNonLive(BookDAO dao){
+            this.dao = dao;
+        }
+        @Override
+        protected List<Book> doInBackground(Void... voids) {
 
+            return dao.getBooksNonLive();
+        }
+    }
     private static class insertBookTask extends AsyncTask<Book,Void, Void>{
 
         private BookDAO AsyncBookDAO;

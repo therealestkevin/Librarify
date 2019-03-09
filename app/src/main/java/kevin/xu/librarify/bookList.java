@@ -34,7 +34,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
 
         if (getIntent() != null && getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
-            if(!bundle.getString("GoBack").isEmpty()){
+            if(bundle.getString("GoBack")!=null){
                moveTaskToBack(true);
                startActivity(new Intent(getApplicationContext(),cameraCapture.class));
             }

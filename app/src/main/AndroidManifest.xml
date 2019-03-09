@@ -48,7 +48,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="kevin.xu.librarify.cameraCapture"
-            android:parentActivityName="kevin.xu.librarify.bookList"
+            android:parentActivityName="kevin.xu.librarify.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
