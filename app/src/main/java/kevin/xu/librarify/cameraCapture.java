@@ -241,7 +241,7 @@ public class cameraCapture extends AppCompatActivity {
         }
         return 0;
     }
-
+    
    static class RetrieveJSONTask extends AsyncTask<String, Void, String> {
         String urlString;
 

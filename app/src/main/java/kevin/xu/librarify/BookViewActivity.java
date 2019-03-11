@@ -57,6 +57,22 @@ public class BookViewActivity extends AppCompatActivity {
        viewpager = (ViewPager) findViewById(R.id.view_pager);
        setViewPager(viewpager);
        tablayout = (TabLayout) findViewById(R.id.tab_layout);
+       tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+           @Override
+           public void onTabSelected(TabLayout.Tab tab) {
+
+           }
+
+           @Override
+           public void onTabUnselected(TabLayout.Tab tab) {
+
+           }
+
+           @Override
+           public void onTabReselected(TabLayout.Tab tab) {
+
+           }
+       });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         bookViewToolbar.setNavigationOnClickListener(new View.OnClickListener() {
