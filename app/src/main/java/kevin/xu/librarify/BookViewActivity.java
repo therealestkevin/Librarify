@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.xu.librarify.R;
 
@@ -21,6 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 import kevin.xu.gsonParsing.OuterURL;
 
 public class BookViewActivity extends AppCompatActivity {
@@ -33,6 +35,8 @@ public class BookViewActivity extends AppCompatActivity {
     private int BookPosition2;
     private OuterURL infoOutput;
     private Toolbar bookViewToolbar;
+    private TabLayout tablayout;
+    private ViewPager viewpager;
 
 
 
@@ -50,6 +54,9 @@ public class BookViewActivity extends AppCompatActivity {
         bookViewToolbar = (Toolbar) findViewById(R.id.BookViewToolbar);
         setSupportActionBar(bookViewToolbar);
        bookViewToolbar.setTitle("Book Info");
+       viewpager = (ViewPager) findViewById(R.id.view_pager);
+       setViewPager(viewpager);
+       tablayout = (TabLayout) findViewById(R.id.tab_layout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         bookViewToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -150,6 +157,11 @@ public class BookViewActivity extends AppCompatActivity {
 
 
     }
+
+    private void setViewPager(ViewPager viewpager) {
+
+    }
+
     private void setupMainWindowDisplayMode() {
         View decorView = setSystemUiVisibilityMode();
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
