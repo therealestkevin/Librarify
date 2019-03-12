@@ -101,6 +101,25 @@ public class BookRepository {
 
         new insertBookTask(bookDAO).execute(book);
     }
+
+    public void deleteCertain(int id){
+        new deleteCertainTask(id,bookDAO).execute();
+    }
+
+    private static class deleteCertainTask extends AsyncTask<Void,Void,Void>{
+        private BookDAO dao;
+        private int id;
+
+        public deleteCertainTask(int id, BookDAO dao){
+            this.dao=dao;
+            this.id=id;
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            dao.deleteSpecific(id);
+            return null;
+        }
+    }
     private static class getBooksNonLive extends AsyncTask<Void,Void,List<Book>>{
         private BookDAO dao;
         getBooksNonLive(BookDAO dao){

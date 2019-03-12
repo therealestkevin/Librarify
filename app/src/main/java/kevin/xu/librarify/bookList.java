@@ -1,22 +1,47 @@
 package kevin.xu.librarify;
 
+import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.xu.librarify.R;
+
+import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import kevin.xu.gsonParsing.OuterURL;
 import kevin.xu.roomDB.Book;
+
+import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
 
 public class bookList extends AppCompatActivity implements RecycleListener{
     private FloatingActionButton addBookButton;
@@ -25,7 +50,14 @@ public class bookList extends AppCompatActivity implements RecycleListener{
     public static BookAdapter adapter;
     public static BookViewModel bookModel;
     private Menu menu;
+    private ConstraintLayout constrainer;
     public static int sortMethod=-1;
+    private Paint painter;
+    private ColorDrawable mBackground;
+    private int backgroundColor;
+    private Drawable deleteDrawable;
+    private int intrinsicWidth;
+    private int intrinsicHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +71,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
                startActivity(new Intent(getApplicationContext(),cameraCapture.class));
             }
         }
+        constrainer = findViewById(R.id.constrainer);
         setContentView(R.layout.activity_book_list);
         setupMainWindowDisplayMode();
         topToolBarBook = findViewById(R.id.topToolBarBook);
@@ -46,7 +79,15 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         topToolBarBook.setTitle("Your Library");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        mBackground = new ColorDrawable();
+        backgroundColor = Color.parseColor("#b80f0a");
+        painter = new Paint();
+        painter.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        deleteDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.trash);
+        //ColorFilter whiteFilter = new LightingColorFilter(Color.WHITE,Color.WHITE);
+        //deleteDrawable.setColorFilter(whiteFilter);
+        intrinsicWidth = deleteDrawable.getIntrinsicWidth();
+        intrinsicHeight = deleteDrawable.getIntrinsicHeight();
         topToolBarBook.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,8 +138,78 @@ public class bookList extends AppCompatActivity implements RecycleListener{
                }
            }
        });
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT
+              ) {
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                View itemView = viewHolder.itemView;
+                int itemHeight = itemView.getHeight();
+
+                boolean isCancelled = dX == 0 && !isCurrentlyActive;
+
+                if (isCancelled) {
+                    clearDraw(c, itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                    return;
+                }
+
+                mBackground.setColor(backgroundColor);
+                mBackground.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                mBackground.draw(c);
+
+                int deleteIconTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
+                int deleteIconMargin = (itemHeight - intrinsicHeight) / 2;
+                int deleteIconLeft = itemView.getRight() - deleteIconMargin - intrinsicWidth;
+                int deleteIconRight = itemView.getRight() - deleteIconMargin;
+                int deleteIconBottom = deleteIconTop + intrinsicHeight;
 
 
+                deleteDrawable.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom);
+                deleteDrawable.draw(c);
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+            private void clearDraw(Canvas c, Float left, Float top, Float right, Float bottom) {
+                c.drawRect(left, top, right, bottom, painter);
+
+            }
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                return makeMovementFlags(0, ItemTouchHelper.LEFT);
+            }
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+
+                return false;
+            }
+            @Override
+            public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
+                return 0.7f;
+            }
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+
+                final int position = viewHolder.getAdapterPosition();
+                Book tempBook = BookAdapter.mBook.get(position);
+                bookModel.deleteCertain(BookAdapter.mBook.get(position).getId());
+                BookAdapter.mBook.remove(position);
+                adapter.notifyItemRemoved(position);
+
+                Snackbar snackUndo = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"A Book Was Removed.",Snackbar.LENGTH_LONG);
+                snackUndo.setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        adapter.restoreItem(tempBook,position);
+                        bookListView.scrollToPosition(position);
+                    }
+                });
+                snackUndo.setActionTextColor(Color.YELLOW);
+                snackUndo.show();
+            }
+        };
+        ItemTouchHelper helper = new ItemTouchHelper(simpleItemTouchCallback);
+
+        helper.attachToRecyclerView(bookListView);
 
         addBookButton = findViewById(R.id.addBookButton);
         addBookButton.setOnClickListener(new View.OnClickListener() {

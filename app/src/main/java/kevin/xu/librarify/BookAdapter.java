@@ -80,6 +80,14 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
 
        // holder.bookName.setText(books.get(position));
     }
+
+    public void restoreItem(Book book, int position){
+        bookList.bookModel.insert(book);
+        mBook.add(position,book);
+        notifyDataSetChanged();
+    }
+
+
     /*public void filter(String search){
         List<Book> tempBook = new ArrayList<>();
 

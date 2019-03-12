@@ -26,8 +26,12 @@ public interface BookDAO {
 
     @Query("SELECT * FROM book_table")
     List<Book> getBooksNonLive();
+
     @Query("DELETE FROM book_table")
     void deleteAll();
+
+    @Query("DELETE FROM book_table WHERE Id = :id")
+    void deleteSpecific(int id);
 
     @Query("SELECT ISBN FROM book_table")
     List<String> getISBN();

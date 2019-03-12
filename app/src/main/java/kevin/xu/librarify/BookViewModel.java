@@ -50,4 +50,8 @@ public class BookViewModel extends AndroidViewModel {
     public List<Book> getBooksNonLive(){
         return bookRepo.getBooksNoneLive();
     }
+
+    public void deleteCertain(int id){
+        bookRepo.deleteCertain(id);
+    }
 }
