@@ -111,7 +111,9 @@ public class BookViewActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                bookDescription.setText(infoOutput.getItems().get(0).getVolumeInfo().getDescription());
+                bookDescription.setText(BookAdapter.mBook.get(BookPosition2).getAdditionalInfo().get(1).replace(
+                        "<p>","").replace("<b>","").replace("</b>","")
+                        .replace("<br>","").replace("</p>",""));
                 bookRatingBar.setRating((float)infoOutput.getItems().get(0).getVolumeInfo().getAverageRating());
                 starText.setText(new StringBuilder("").append(infoOutput.getItems().get(0).getVolumeInfo().getAverageRating())
                         .append(" / 5.0 with ").append( infoOutput.getItems().get(0).getVolumeInfo().getRatingsCount())

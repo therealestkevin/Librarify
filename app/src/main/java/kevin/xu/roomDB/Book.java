@@ -16,6 +16,7 @@ public class Book implements Cloneable{
     private String dateTime;
     private String ISBN;
     private String title;
+    private ArrayList<String> additionalInfo;
     private ArrayList<String> author;
     private String lastName;
     private ArrayList<simpleScheduleDisplay> completeData;
@@ -30,12 +31,13 @@ public class Book implements Cloneable{
 
     }
 
-    public Book(OuterURL bookOne, String dateTime, String ISBN){
+    public Book(OuterURL bookOne, String dateTime, String ISBN, ArrayList<String> additionalInfo){
         this.bookList=bookOne;
         this.dateTime = dateTime;
         this.ISBN = ISBN;
         this.title = bookOne.getItems().get(0).getVolumeInfo().getTitle();
         this.author = bookOne.getItems().get(0).getVolumeInfo().getAuthors();
+        this.additionalInfo = additionalInfo;
         completeData= new ArrayList<>();
         scheduleData = new ArrayList<>();
         isStartSchedule=false;
@@ -141,5 +143,13 @@ public class Book implements Cloneable{
 
     public void setStartSchedule(boolean startSchedule) {
         isStartSchedule = startSchedule;
+    }
+
+    public ArrayList<String> getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(ArrayList<String> additionalInfo) {
+        this.additionalInfo = additionalInfo;
     }
 }

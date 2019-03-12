@@ -161,6 +161,7 @@ public class cameraCapture extends AppCompatActivity {
                         System.out.println(jsonReqText);
                         Gson gson = new Gson();
                         OuterURL temp = gson.fromJson(jsonReqText, OuterURL.class);
+                        ArrayList<String> infoBook = new RetrieveDescriptions(temp.getItems().get(0).getSelfLink()).execute().get();
                        String authors= temp.getItems().get(0).getVolumeInfo().getAuthors()
                                 .toString().replace("[","").replace("]","");
                         execute=true;
@@ -202,7 +203,8 @@ public class cameraCapture extends AppCompatActivity {
                                     if (temp==null) {
                                     } else {
                                        try{
-                                           Book book = new Book(temp, java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),ISBN);
+                                           Book book = new Book(temp, java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),ISBN,
+                                                   infoBook);
                                            bookModel2.insert(book);
                                            Toast.makeText(getApplicationContext(), "Entry Success", Toast.LENGTH_LONG).show();
                                            Intent goToLibrary = new Intent(getApplicationContext(), bookList.class);
