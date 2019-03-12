@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xu.librarify.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -50,6 +49,7 @@ public class bookSchedule extends AppCompatActivity {
                 BookPosition= bundle.getInt("BookPosition");
             }
         }
+        bookList.bookModel.updateScheduleBool(BookAdapter.mBook.get(BookPosition).getId());
         readingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

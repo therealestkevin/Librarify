@@ -34,6 +34,9 @@ public class BookRepository {
              new updateCompleteData(resetBook.getId(),bookDAO,resetBook.getScheduleData(),resetBook.getCompleteData()).execute();
 
     }
+    public void setScheduleTrue(int id){
+        new setScheduleUsedTask(bookDAO,id).execute();
+    }
     public List<Book> getBooksNoneLive(){
         try {
             return new getBooksNonLive(bookDAO).execute().get();
@@ -117,6 +120,20 @@ public class BookRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             dao.deleteSpecific(id);
+            return null;
+        }
+    }
+    private static class setScheduleUsedTask extends AsyncTask<Void,Void,Void>{
+        private BookDAO dao;
+        private int id;
+
+        public setScheduleUsedTask(BookDAO dao, int id){
+            this.dao=dao;
+            this.id=id;
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+           dao.updateScheduleBool(true,id);
             return null;
         }
     }

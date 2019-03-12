@@ -54,4 +54,8 @@ public class BookViewModel extends AndroidViewModel {
     public void deleteCertain(int id){
         bookRepo.deleteCertain(id);
     }
+
+    public void updateScheduleBool(int id){
+        bookRepo.setScheduleTrue(id);
+    }
 }

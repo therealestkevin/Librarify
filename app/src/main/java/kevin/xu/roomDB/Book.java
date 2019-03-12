@@ -20,6 +20,7 @@ public class Book implements Cloneable{
     private String lastName;
     private ArrayList<simpleScheduleDisplay> completeData;
     private ArrayList<BaseCalendarEvent> scheduleData;
+    private boolean isStartSchedule;
     @PrimaryKey(autoGenerate = true)
     private int Id;
 
@@ -37,6 +38,7 @@ public class Book implements Cloneable{
         this.author = bookOne.getItems().get(0).getVolumeInfo().getAuthors();
         completeData= new ArrayList<>();
         scheduleData = new ArrayList<>();
+        isStartSchedule=false;
         ArrayList<String> holdTokens = new ArrayList<>();
         StringTokenizer lastNm = new StringTokenizer(author.get(0));
         while(lastNm.hasMoreTokens()){
@@ -133,4 +135,11 @@ public class Book implements Cloneable{
         this.scheduleData = scheduleData;
     }
 
+    public boolean isStartSchedule() {
+        return isStartSchedule;
+    }
+
+    public void setStartSchedule(boolean startSchedule) {
+        isStartSchedule = startSchedule;
+    }
 }
