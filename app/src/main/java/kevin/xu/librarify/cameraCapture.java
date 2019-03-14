@@ -10,8 +10,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -25,11 +23,16 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.xu.librarify.R;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -158,6 +161,7 @@ public class cameraCapture extends AppCompatActivity {
                         System.out.println(jsonReqText);
                         Gson gson = new Gson();
                         OuterURL temp = gson.fromJson(jsonReqText, OuterURL.class);
+                        ArrayList<String> infoBook = new RetrieveDescriptions(temp.getItems().get(0).getSelfLink()).execute().get();
                        String authors= temp.getItems().get(0).getVolumeInfo().getAuthors()
                                 .toString().replace("[","").replace("]","");
                         execute=true;
@@ -199,7 +203,8 @@ public class cameraCapture extends AppCompatActivity {
                                     if (temp==null) {
                                     } else {
                                        try{
-                                           Book book = new Book(temp, java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),ISBN);
+                                           Book book = new Book(temp, java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),ISBN,
+                                                   infoBook);
                                            bookModel2.insert(book);
                                            Toast.makeText(getApplicationContext(), "Entry Success", Toast.LENGTH_LONG).show();
                                            Intent goToLibrary = new Intent(getApplicationContext(), bookList.class);
@@ -241,7 +246,50 @@ public class cameraCapture extends AppCompatActivity {
         }
         return 0;
     }
-    
+   static class RetrieveDescriptions extends AsyncTask<Void, Void, ArrayList<String>>{
+        private String urlString;
+        public RetrieveDescriptions(String urlString){
+            this.urlString=urlString;
+        }
+
+       @Override
+       protected ArrayList<String> doInBackground(Void... voids) {
+           String resultString2 = "";
+            ArrayList<String> returnInfo = new ArrayList<>();
+           try {
+               BufferedReader reader = null;
+               try {
+                   URL url = new URL(urlString);
+                   reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                   StringBuilder buffer = new StringBuilder();
+                   int read;
+                   char[] chars = new char[1024];
+                   while ((read = reader.read(chars)) != -1)
+                       buffer.append(chars, 0, read);
+
+                   resultString2 = buffer.toString();
+               } finally {
+                   if (reader != null)
+                       reader.close();
+               }
+
+
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+           JsonParser parser = new JsonParser();
+           JsonObject obj = parser.parse(resultString2).getAsJsonObject();
+           JsonObject obj2 = obj.get("volumeInfo").getAsJsonObject();
+           JsonElement subTitle = obj2.get("subtitle");
+           JsonElement descrip = obj2.get("description");
+           JsonElement categories = obj2.get("categories");
+           String[] elements = new Gson().fromJson(categories.toString(),String[].class);
+           returnInfo.add(subTitle.getAsString());
+           returnInfo.add(descrip.getAsString());
+           returnInfo.addAll(Arrays.asList(elements));
+            return returnInfo;
+       }
+   }
    static class RetrieveJSONTask extends AsyncTask<String, Void, String> {
         String urlString;
 

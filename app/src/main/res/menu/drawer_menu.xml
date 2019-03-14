@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/mybooks">
     <item android:id="@+id/persLibrary"
           android:title= "My Books"
           android:icon="@drawable/ic_library_books_black_24dp"/>
-    <item android:id ="@+id/newBook"
-          android:title="New Book"
-          android:icon = "@drawable/ic_camera_alt_black_24dp"/>
-    <item android:id = "@+id/mySchedule"
-          android:title = "My Schedule"
-          android:icon = "@drawable/ic_schedule_black_24dp"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/newbook">
+        <item android:id ="@+id/newBook"
+            android:title="New Book"
+            android:icon = "@drawable/ic_camera_alt_black_24dp"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/myschedule">
+        <item android:id = "@+id/mySchedule"
+            android:title = "My Schedule"
+            android:icon = "@drawable/ic_schedule_black_24dp"/>
     </group>
 </menu>

@@ -54,7 +54,9 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
        if(mBook!=null){
            final Book cur = mBook.get(position);
            holder.bookName.setText(cur.getBookList().getItems().get(0).getVolumeInfo().getTitle());
-
+            if(cur.isStartSchedule()){
+                holder.bookSchedule.setText("Resume Schedule");
+            }
            holder.authorView.setText(cur.getAuthor().toString()
                    .replace("[", "")
                    .replace("]", "")

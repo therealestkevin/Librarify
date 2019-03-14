@@ -33,6 +33,9 @@ public interface BookDAO {
     @Query("DELETE FROM book_table WHERE Id = :id")
     void deleteSpecific(int id);
 
+    @Query("UPDATE book_table SET isStartSchedule = :newStartTrue WHERE Id = :id")
+    void updateScheduleBool(boolean newStartTrue, int id);
+
     @Query("SELECT ISBN FROM book_table")
     List<String> getISBN();
 
