@@ -56,7 +56,9 @@ public class BookViewActivity extends AppCompatActivity {
        bookViewToolbar.setTitle("Book Info");
        viewpager = (ViewPager) findViewById(R.id.view_pager);
        setViewPager(viewpager);
+
        tablayout = (TabLayout) findViewById(R.id.tab_layout);
+       tablayout.setupWithViewPager(viewpager);
        tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
            @Override
            public void onTabSelected(TabLayout.Tab tab) {
@@ -111,9 +113,10 @@ public class BookViewActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                bookDescription.setText(BookAdapter.mBook.get(BookPosition2).getAdditionalInfo().get(1).replace(
-                        "<p>","").replace("<b>","").replace("</b>","")
-                        .replace("<br>","").replace("</p>",""));
+                bookDescription.setText(BookAdapter.mBook.get(BookPosition2).getBookList().getItems().get(0).getVolumeInfo().getDescription());
+               // bookDescription.setText(BookAdapter.mBook.get(BookPosition2).getAdditionalInfo().get(1).replace(
+                 //       "<p>","").replace("<b>","").replace("</b>","")
+                   //     .replace("<br>","").replace("</p>",""));
                 bookRatingBar.setRating((float)infoOutput.getItems().get(0).getVolumeInfo().getAverageRating());
                 starText.setText(new StringBuilder("").append(infoOutput.getItems().get(0).getVolumeInfo().getAverageRating())
                         .append(" / 5.0 with ").append( infoOutput.getItems().get(0).getVolumeInfo().getRatingsCount())
@@ -179,6 +182,7 @@ public class BookViewActivity extends AppCompatActivity {
     private void setViewPager(ViewPager viewpager) {
 
     }
+
 
     private void setupMainWindowDisplayMode() {
         View decorView = setSystemUiVisibilityMode();
