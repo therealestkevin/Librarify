@@ -61,7 +61,7 @@ public class summaryFrag extends androidx.fragment.app.Fragment {
             }
         });
         try {
-            bookImg.setImageDrawable(new RetrieveDrawableTask(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo()
+            bookImg.setImageDrawable(new BookViewActivity.RetrieveDrawableTask(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo()
                     .getImageLinks().getThumbnail()).execute().get());
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -75,26 +75,5 @@ public class summaryFrag extends androidx.fragment.app.Fragment {
                 .append(" Ratings").toString());
         return v;
     }
-    public static class RetrieveDrawableTask extends AsyncTask<String, Void, Drawable> {
-        String urlString;
-
-        public RetrieveDrawableTask(String urlString) {
-            this.urlString = urlString;
-        }
-
-        @Override
-        protected Drawable doInBackground(String... strings) {
-
-            try {
-                URL url = new URL(urlString);
-                InputStream content = (InputStream) url.getContent();
-                Drawable d = Drawable.createFromStream(content, "imageSrc");
-                return d;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
-
+   
 }
