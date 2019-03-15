@@ -4,6 +4,7 @@ package kevin.xu.librarify;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import org.w3c.dom.Text;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class detailedBook extends Fragment {
+public class detailedBook extends androidx.fragment.app.Fragment {
     private int BookPosition;
 
     public detailedBook() {
@@ -49,8 +50,10 @@ public class detailedBook extends Fragment {
         pageCountText.setText(""+BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getPageCount());
 
         TextView detailedDescription = v.findViewById(R.id.detailedDescription);
-
-        detailedDescription.setText(BookAdapter.mBook.get(BookPosition).getAdditionalInfo().get(1));
+        detailedDescription.setMovementMethod(new ScrollingMovementMethod());
+        detailedDescription.setText(BookAdapter.mBook.get(BookPosition).getAdditionalInfo().get(1).replace(
+                     "<p>","").replace("<b>","").replace("</b>","")
+                   .replace("<br>","").replace("</p>",""));
 
         TextView categories = v.findViewById(R.id.categories);
 
@@ -87,7 +90,7 @@ public class detailedBook extends Fragment {
 
         TextView hasEbookText = v.findViewById(R.id.hasEbookText);
 
-        //hasEbookText.setText(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).);
+        hasEbookText.setText(""+BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getAccessInfo().getEpub().isAvailable());
         return v;
     }
 

@@ -26,14 +26,7 @@ import androidx.viewpager.widget.ViewPager;
 import kevin.xu.gsonParsing.OuterURL;
 
 public class BookViewActivity extends AppCompatActivity {
-    private ImageView bookImg;
-    private TextView bookDescription;
-    private RatingBar bookRatingBar;
-    private TextView starText;
-    //private Button sendJson;
-    private Button toList;
     private int BookPosition2;
-    private OuterURL infoOutput;
     private Toolbar bookViewToolbar;
     private TabLayout tablayout;
     private ViewPager viewpager;
@@ -45,12 +38,7 @@ public class BookViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view);
         setupMainWindowDisplayMode();
-        bookImg = (ImageView) findViewById(R.id.bookImage);
-        bookDescription = (TextView) findViewById(R.id.bookDescription);
-        bookRatingBar = (RatingBar) findViewById(R.id.bookRatingBar);
-        starText = (TextView) findViewById(R.id.starDisplayText);
-        toList = (Button) findViewById(R.id.goToList);
-        bookDescription.setMovementMethod(new ScrollingMovementMethod());
+
         bookViewToolbar = (Toolbar) findViewById(R.id.BookViewToolbar);
         setSupportActionBar(bookViewToolbar);
        bookViewToolbar.setTitle("Book Info");
@@ -62,6 +50,8 @@ public class BookViewActivity extends AppCompatActivity {
        tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
            @Override
            public void onTabSelected(TabLayout.Tab tab) {
+                    viewpager.setCurrentItem(tab.getPosition());
+
 
            }
 
@@ -84,43 +74,17 @@ public class BookViewActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        bookRatingBar.setMax(5);
-        bookRatingBar.setStepSize(.1f);
 
 
 
-        toList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), bookList.class);
-                startActivity(intent);
-            }
-        });
+
+
         if (getIntent() != null && getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
             if(bundle.getInt("BookPosition2")>-1){
                 BookPosition2 = bundle.getInt("BookPosition2");
             }
-            if(!bundle.getString("jsonStuff").equals(null)){
 
-                infoOutput = new Gson().fromJson(bundle.getString("jsonStuff"), OuterURL.class);
-
-                try {
-                    bookImg.setImageDrawable(new RetrieveDrawableTask(infoOutput.getItems().get(0).getVolumeInfo()
-                    .getImageLinks().getThumbnail()).execute().get());
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                bookDescription.setText(BookAdapter.mBook.get(BookPosition2).getBookList().getItems().get(0).getVolumeInfo().getDescription());
-               // bookDescription.setText(BookAdapter.mBook.get(BookPosition2).getAdditionalInfo().get(1).replace(
-                 //       "<p>","").replace("<b>","").replace("</b>","")
-                   //     .replace("<br>","").replace("</p>",""));
-                bookRatingBar.setRating((float)infoOutput.getItems().get(0).getVolumeInfo().getAverageRating());
-                starText.setText(new StringBuilder("").append(infoOutput.getItems().get(0).getVolumeInfo().getAverageRating())
-                        .append(" / 5.0 with ").append( infoOutput.getItems().get(0).getVolumeInfo().getRatingsCount())
-                        .append(" Ratings").toString());
             }
 /*
         if (getIntent() != null && getIntent().getExtras() != null) {
@@ -174,13 +138,17 @@ public class BookViewActivity extends AppCompatActivity {
                 });*/
 
 
-        }
+
 
 
     }
 
     private void setViewPager(ViewPager viewpager) {
+        BookViewAdapter adapter = new BookViewAdapter(getSupportFragmentManager());
+        adapter.addFragment(new summaryFrag(BookPosition2),"Book Summary");
+        adapter.addFragment(new detailedBook(BookPosition2),"Detailed Info");
 
+        viewpager.setAdapter(adapter);
     }
 
 

@@ -10,7 +10,7 @@ import kevin.xu.roomDB.Book;
 
 public class BookViewAdapter extends FragmentPagerAdapter {
    private final List<Fragment> FragmentList = new ArrayList<>();
-   private Book holdBook;
+   private final List<String> titles = new ArrayList<>();
 
     public BookViewAdapter(FragmentManager fm) {
         super(fm);
@@ -27,9 +27,12 @@ public class BookViewAdapter extends FragmentPagerAdapter {
         return FragmentList.size();
     }
 
-
-    public void addFragment(Fragment frag,Book book){
-        holdBook=book;
+    @Override
+    public CharSequence getPageTitle(int position){
+        return titles.get(position);
+    }
+    public void addFragment(Fragment frag,String title){
+        titles.add(title);
         FragmentList.add(frag);
     }
 
