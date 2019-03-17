@@ -161,7 +161,7 @@ public class cameraCapture extends AppCompatActivity {
                         System.out.println(jsonReqText);
                         Gson gson = new Gson();
                         OuterURL temp = gson.fromJson(jsonReqText, OuterURL.class);
-                        ArrayList<String> infoBook = new RetrieveDescriptions(temp.getItems().get(0).getSelfLink()).execute().get();
+                        //ArrayList<String> infoBook = new RetrieveDescriptions(temp.getItems().get(0).getSelfLink()).execute().get();
                        String authors= temp.getItems().get(0).getVolumeInfo().getAuthors()
                                 .toString().replace("[","").replace("]","");
                         execute=true;
@@ -203,8 +203,8 @@ public class cameraCapture extends AppCompatActivity {
                                     if (temp==null) {
                                     } else {
                                        try{
-                                           Book book = new Book(temp, java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),ISBN,
-                                                   infoBook);
+                                           Book book = new Book(temp, java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),ISBN
+                                                  );
                                            bookModel2.insert(book);
                                            Toast.makeText(getApplicationContext(), "Entry Success", Toast.LENGTH_LONG).show();
                                            Intent goToLibrary = new Intent(getApplicationContext(), bookList.class);
@@ -246,7 +246,7 @@ public class cameraCapture extends AppCompatActivity {
         }
         return 0;
     }
-   static class RetrieveDescriptions extends AsyncTask<Void, Void, ArrayList<String>>{
+   /*static class RetrieveDescriptions extends AsyncTask<Void, Void, ArrayList<String>>{
         private String urlString;
         public RetrieveDescriptions(String urlString){
             this.urlString=urlString;
@@ -289,7 +289,7 @@ public class cameraCapture extends AppCompatActivity {
            returnInfo.addAll(Arrays.asList(elements));
             return returnInfo;
        }
-   }
+   }*/
    static class RetrieveJSONTask extends AsyncTask<String, Void, String> {
         String urlString;
 

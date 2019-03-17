@@ -51,15 +51,17 @@ public class detailedBook extends androidx.fragment.app.Fragment {
 
         TextView detailedDescription = v.findViewById(R.id.detailedDescription);
         detailedDescription.setMovementMethod(new ScrollingMovementMethod());
-        detailedDescription.setText(BookAdapter.mBook.get(BookPosition).getAdditionalInfo().get(1).replace(
-                     "<p>","").replace("<b>","").replace("</b>","")
-                   .replace("<br>","").replace("</p>",""));
+        detailedDescription.setText(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getDescription());
+
+                //.getAdditionalInfo().get(1).replace(
+                //     "<p>","").replace("<b>","").replace("</b>","")
+                //   .replace("<br>","").replace("</p>",""));
 
         TextView categories = v.findViewById(R.id.categories);
 
         StringBuilder sb = new StringBuilder("");
-        for(int i=2; i <BookAdapter.mBook.get(BookPosition).getAdditionalInfo().size();i++){
-            sb.append(BookAdapter.mBook.get(BookPosition).getAdditionalInfo().get(i));
+        for(int i=2; i <BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getCategories().size();i++){
+            sb.append(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getCategories().get(i));
         }
 
         categories.setText(sb.toString());

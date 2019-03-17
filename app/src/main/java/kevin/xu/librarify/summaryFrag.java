@@ -75,5 +75,5 @@ public class summaryFrag extends androidx.fragment.app.Fragment {
                 .append(" Ratings").toString());
         return v;
     }
-   
+
 }

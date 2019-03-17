@@ -36,11 +36,11 @@ public interface BookDAO {
     @Query("UPDATE book_table SET isStartSchedule = :newStartTrue WHERE Id = :id")
     void updateScheduleBool(boolean newStartTrue, int id);
 
-    @Query("SELECT ISBN FROM book_table")
-    List<String> getISBN();
-
     @Query("UPDATE book_table SET completeData = :newArr, scheduleData =:newSchedule WHERE Id = :id")
     void update(ArrayList<simpleScheduleDisplay> newArr, int id,ArrayList<BaseCalendarEvent> newSchedule);
+
+    @Query("SELECT ISBN FROM book_table")
+    List<String> getISBN();
 
     @Query("UPDATE book_table SET title = :newTitle WHERE Id =:id")
     void updateTitle(String newTitle, int id);
