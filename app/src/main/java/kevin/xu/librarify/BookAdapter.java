@@ -156,7 +156,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
             Collections.sort(mBook, new Comparator<Book>() {
                 @Override
                 public int compare(Book book, Book t1) {
-                    return book.getTitle().toLowerCase().compareTo(t1.getTitle().toLowerCase());
+                    return book.getTitle().compareToIgnoreCase(t1.getTitle());
                 }
             });
             notifyDataSetChanged();
@@ -179,7 +179,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
                 @Override
                 public int compare(Book book, Book t1) {
                     Log.i("last Names",book.getLastName()+t1.getLastName());
-                    return book.getLastName().toLowerCase().compareTo(t1.getLastName().toLowerCase());
+                    return book.getLastName().compareToIgnoreCase(t1.getLastName());
                 }
             });
             notifyDataSetChanged();
@@ -187,7 +187,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
             Collections.sort(mBook, new Comparator<Book>() {
                 @Override
                 public int compare(Book book, Book t1) {
-                    return t1.getLastName().toLowerCase().compareTo(book.getLastName().toLowerCase());
+                    return t1.getLastName().compareToIgnoreCase(book.getLastName());
                 }
             });
             notifyDataSetChanged();

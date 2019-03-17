@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.xu.librarify.R;
 
-import org.w3c.dom.Text;
 
 
 /**

@@ -1,29 +1,19 @@
 package kevin.xu.librarify;
 
-import android.content.Intent;
+
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
-
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
 import com.xu.librarify.R;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.concurrent.ExecutionException;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
-import kevin.xu.gsonParsing.OuterURL;
+
 
 public class BookViewActivity extends AppCompatActivity {
     private int BookPosition2;
