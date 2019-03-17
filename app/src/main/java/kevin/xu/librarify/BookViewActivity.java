@@ -38,7 +38,13 @@ public class BookViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view);
         setupMainWindowDisplayMode();
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            Bundle bundle = getIntent().getExtras();
+            if(bundle.getInt("BookPosition2")>-1){
+                BookPosition2 = bundle.getInt("BookPosition2");
+            }
 
+        }
         bookViewToolbar = (Toolbar) findViewById(R.id.BookViewToolbar);
         setSupportActionBar(bookViewToolbar);
        bookViewToolbar.setTitle("Book Info");
@@ -79,13 +85,7 @@ public class BookViewActivity extends AppCompatActivity {
 
 
 
-        if (getIntent() != null && getIntent().getExtras() != null) {
-            Bundle bundle = getIntent().getExtras();
-            if(bundle.getInt("BookPosition2")>-1){
-                BookPosition2 = bundle.getInt("BookPosition2");
-            }
 
-            }
 /*
         if (getIntent() != null && getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
