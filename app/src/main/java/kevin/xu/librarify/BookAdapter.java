@@ -90,29 +90,6 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     }
 
 
-    /*public void filter(String search){
-        List<Book> tempBook = new ArrayList<>();
-
-        tempBook=copyBook;
-        mBook.clear();
-        if(search.isEmpty()){
-            mBook.addAll(tempBook);
-        }else{
-            search = search.toLowerCase();
-            for(Book book : tempBook){
-                boolean isAuthor = false;
-                for(String author : book.getAuthor()){
-                    if(author.toLowerCase().contains(search)){
-                        isAuthor=true;
-                    }
-                }
-                if(book.getTitle().toLowerCase().contains(search)||isAuthor){
-                    mBook.add(book);
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }*/
     @Override
     public int getItemCount() {
         //return books.size();

@@ -3,7 +3,6 @@ package kevin.xu.librarify;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -198,7 +197,7 @@ public class bookSchedule extends AppCompatActivity {
     }
     private void populateAgendaFromDB(List<CalendarEvent>eventList){
         ArrayList<BaseCalendarEvent> temp = BookAdapter.mBook.get(BookPosition).getScheduleData();
-                //bookList.bookModel.getCertainBook(BookAdapter.mBook.get(BookPosition).getId()).getScheduleData();
+
 
         eventList.clear();
         for(BaseCalendarEvent i : temp){

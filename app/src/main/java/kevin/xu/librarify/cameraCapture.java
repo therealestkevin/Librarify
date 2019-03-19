@@ -173,15 +173,6 @@ public class cameraCapture extends AppCompatActivity {
                                     .getVolumeInfo().getTitle() + "\n\nAlready In Library. Are You Sure?");
                         }
 
-                                /*
-                                Intent viewBook = new Intent(getApplicationContext(),BookViewActivity.class);
-                                viewBook.putExtra("imageURLPassed",imageURLPassed);
-                                viewBook.putExtra("bookDescriptionPassed",bookDescriptionPassed);
-                                viewBook.putExtra("ratingStars", ratingStar);
-                                viewBook.putExtra("numberRatings",numRatings);
-                                viewBook.putExtra("jsonString",jsonString);
-                                startActivity(viewBook);
-                            */
                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -389,6 +380,10 @@ public class cameraCapture extends AppCompatActivity {
             case 32: {
                 return "EAN_13";
             }
+            case 64: {
+                return "EAN_8";
+            }
+
 
 
         }

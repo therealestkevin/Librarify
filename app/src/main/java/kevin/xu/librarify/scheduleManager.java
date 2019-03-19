@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -80,12 +81,6 @@ public class scheduleManager extends AppCompatActivity {
                 //setResults
                 //Request Codes and all
                         if(curStack.size()>0){
-                           // ArrayList<BaseCalendarEvent> tempAdded = bookList.bookModel.getCertainBook(
-                            //        BookAdapter.mBook.get(BookPosition).getId()
-                          //  ).getScheduleData();
-                           // Intent replyIntent = new Intent();
-                           // replyIntent.putExtra("REPLY",new Gson().toJson(tempAdded));
-                           // setResult(RESULT_OK,replyIntent);
                             Toast.makeText(getApplicationContext(),"Schedule Saved", Toast.LENGTH_LONG);
                             finish();
                         } else{
@@ -104,18 +99,22 @@ public class scheduleManager extends AppCompatActivity {
                     setResult(RESULT_OK,replyIntent);
                     bookList.bookModel.resetScheduleData(resetBook);
                     curStack.clear();
-                /*Intent returnIntent = new Intent(getApplicationContext(),bookSchedule.class);
-                returnIntent.putExtra("BookPosition", BookPosition);
-                startActivity(returnIntent);*/
+
                 finish();
                 adapter.clear();
 
             }
         });
-        //localData = BookAdapter.mBook.get(BookPosition).getCompleteData();
+
 
         adapter = new scheduleAdapter(this, BookAdapter.mBook.get(BookPosition).getCompleteData());
         currentEvents.setAdapter(adapter);
+        currentEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
     addBtnSchedule.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -172,21 +171,7 @@ public class scheduleManager extends AppCompatActivity {
                 public void onClick(View v) {
                     DatePickerBuilder builderBob2 = new DatePickerBuilder(scheduleManager.this, listenerDates).pickerType(CalendarView.RANGE_PICKER);
                     DatePicker realDatePicker = builderBob2.build().show();
-                    /*OnSelectDateListener listenDatePick = new OnSelectDateListener() {
-                        @Override
-                        public void onSelect(List<Calendar> calendar) {
-                            Calendar firstDay = calendar.get(0);
-                            Calendar lastDay = calendar.get(calendar.size()-1);
-                            Date firstDate = firstDay.getTime();
-                            Date lastDate = lastDay.getTime();
-                            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-                            String dateFirst = formatter.format(firstDate);
-                            String dateLast = formatter.format(lastDate);
-                            editTextDateFrom.setText(dateFirst);
-                            editTextDateTo.setText(dateLast);
 
-                        }
-                    };*/
                 }
             });
 
