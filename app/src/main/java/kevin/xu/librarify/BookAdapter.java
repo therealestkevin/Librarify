@@ -132,8 +132,6 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     }
 
     void filter(String text){
-
-
         List<Book> temp = new ArrayList<>();
         for(Book b : copyBook){
             boolean author = false;
@@ -142,7 +140,6 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
                     author=true;
                 }
             }
-
             if(b.getTitle().toLowerCase().contains(text)||author){
                 temp.add(b);
             }
@@ -164,7 +161,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
             Collections.sort(mBook,new Comparator<Book>() {
                 @Override
                 public int compare(Book book, Book t1) {
-                    return t1.getTitle().toLowerCase().compareTo(book.getTitle().toLowerCase());
+                    return t1.getTitle().compareToIgnoreCase(book.getTitle());
                 }
             });
             notifyDataSetChanged();

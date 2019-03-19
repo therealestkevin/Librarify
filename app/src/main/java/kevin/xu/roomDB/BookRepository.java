@@ -55,6 +55,7 @@ public class BookRepository {
             BaseCalendarEvent temp = new BaseCalendarEvent(i.getTitle(),i.getDescription(),"Pages: "+i.getPages(), Color.argb(255,rd.nextInt(256),
                     rd.nextInt(256),rd.nextInt(256)),i.getFirstDay(),i.getLastDay(),false);
             bookSchedule.add(temp);
+            i.setId(temp.getId());
         }
 
         try {

@@ -68,7 +68,6 @@ public class cameraCapture extends AppCompatActivity {
                 cameraView.captureImage(new  CameraKitView.ImageCallback() {
                     @Override
                     public void onImage(CameraKitView cameraKitView, final byte[] capturedImage) {
-
                         waitingDialog.show();
                         BitmapFactory.Options options = new BitmapFactory.Options();
                         options.inMutable = true;

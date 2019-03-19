@@ -9,6 +9,7 @@ public class simpleScheduleDisplay {
     private Calendar lastDay;
     private String pages;
     private String description;
+    private long id;
 
     public simpleScheduleDisplay(String title, String dateRange, String pages, Calendar firstDay, Calendar lastDay,String description){
         this.title=title;
@@ -65,5 +66,13 @@ public class simpleScheduleDisplay {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

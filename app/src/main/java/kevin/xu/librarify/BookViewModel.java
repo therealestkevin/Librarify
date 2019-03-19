@@ -13,8 +13,6 @@ import kevin.xu.roomDB.BookRepository;
 
 public class BookViewModel extends AndroidViewModel {
 
-
-
     private BookRepository bookRepo;
     private LiveData<List<Book>> allBooks;
 

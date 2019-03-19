@@ -1,8 +1,11 @@
 package kevin.xu.librarify;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.CalendarPickerController;
@@ -16,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -30,6 +34,7 @@ public class fullSchedule extends AppCompatActivity {
     private CalendarPickerController bob;
     private BookViewModel fullModel;
     private List<Book> localBooks = new ArrayList<>();
+    private TextView noteTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +72,29 @@ public class fullSchedule extends AppCompatActivity {
 
             @Override
             public void onEventSelected(CalendarEvent event) {
+                AlertDialog.Builder bobBuilder = new AlertDialog.Builder(fullSchedule.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View eventDialog = inflater.inflate(R.layout.event_dialog,null);
 
+
+                bobBuilder.setView(eventDialog);
+                noteTextView = eventDialog.findViewById(R.id.notesViewText);
+                for(Book i : localBooks){
+                    for( simpleScheduleDisplay b : i.getCompleteData()){
+                            if(b.getId() == event.getId()){
+                                noteTextView.setText(b.getDescription());
+                            }
+                    }
+                }
+
+                bobBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = bobBuilder.create();
+                dialog.show();
             }
 
             @Override

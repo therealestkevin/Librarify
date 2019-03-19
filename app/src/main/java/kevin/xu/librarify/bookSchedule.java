@@ -1,10 +1,14 @@
 package kevin.xu.librarify;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
@@ -21,6 +25,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -35,6 +40,7 @@ public class bookSchedule extends AppCompatActivity {
     private Calendar maxDate;
     private CalendarPickerController bob;
     public static final int NEW_RESET_CALENDAREVENT=1;
+    private TextView noteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,26 @@ public class bookSchedule extends AppCompatActivity {
 
             @Override
             public void onEventSelected(CalendarEvent event) {
+                    AlertDialog.Builder bobBuilder = new AlertDialog.Builder(bookSchedule.this);
+                LayoutInflater inflater = getLayoutInflater();
+                    View eventDialog = inflater.inflate(R.layout.event_dialog,null);
+
+                    bobBuilder.setView(eventDialog);
+                    noteTextView = eventDialog.findViewById(R.id.notesViewText);
+                    for(simpleScheduleDisplay i : BookAdapter.mBook.get(BookPosition).getCompleteData()){
+                        if(event.getId()==i.getId()){
+                            noteTextView.setText(i.getDescription());
+                        }
+                    }
+
+                    bobBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                   AlertDialog dialog = bobBuilder.create();
+                   dialog.show();
 
             }
 
