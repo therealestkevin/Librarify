@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 public class BookViewAdapter extends FragmentPagerAdapter {
    private final List<Fragment> FragmentList = new ArrayList<>();
    private final List<String> titles = new ArrayList<>();
-
+   //Manages Fragments information and Fragment Names
     public BookViewAdapter(FragmentManager fm) {
         super(fm);
     }

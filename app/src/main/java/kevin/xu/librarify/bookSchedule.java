@@ -55,12 +55,14 @@ public class bookSchedule extends AppCompatActivity {
             }
         }
         bookList.bookModel.updateScheduleBool(BookAdapter.mBook.get(BookPosition).getId());
+        //Marking the book as visited
         readingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startManage = new Intent(getApplicationContext(),scheduleManager.class);
                 startManage.putExtra("BookPositionFinal",BookPosition);
                 startActivityForResult(startManage,NEW_RESET_CALENDAREVENT);
+                //Starting for the result of the stack of simpleSchedules within the ScheduleManager
 
             }
         });
@@ -82,7 +84,8 @@ public class bookSchedule extends AppCompatActivity {
 
             @Override
             public void onEventSelected(CalendarEvent event) {
-                    AlertDialog.Builder bobBuilder = new AlertDialog.Builder(bookSchedule.this);
+                //Displaying the note upon the event being clicked
+                AlertDialog.Builder bobBuilder = new AlertDialog.Builder(bookSchedule.this);
                 LayoutInflater inflater = getLayoutInflater();
                     View eventDialog = inflater.inflate(R.layout.event_dialog,null);
 
@@ -135,6 +138,7 @@ public class bookSchedule extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent dat){
         super.onActivityResult(requestCode,resultCode,dat);
+        //Updates the schedule with the latest added as the AsyncTask will finish after going back to this activity
 
         if(requestCode == NEW_RESET_CALENDAREVENT && resultCode ==RESULT_OK){
                String jsonStringBaseCalendar = dat.getStringExtra("REPLY");
@@ -144,7 +148,6 @@ public class bookSchedule extends AppCompatActivity {
                        new TypeToken<ArrayList<BaseCalendarEvent>>(){
                        }.getType());
             populateAgendaFromResult(tempUpdate);
-            //String updateResult = dat.getStringExtra();
 
             //Gson.fromJson for the resulting string for the updated CalendarEvent Arraylist
             //The scheduleManager class should pull the current CalendarEvent arralysit from the database
@@ -160,9 +163,6 @@ public class bookSchedule extends AppCompatActivity {
             //This seems to be a taxing solution but it has a high chance of working
             //will implement this function when I have time in maybe a day or too
 
-
-
-
             //UPDATES:
 
             //Will need to improve caching functions of DB in order to reduce wait time on entry query
@@ -171,18 +171,6 @@ public class bookSchedule extends AppCompatActivity {
             //The solution may be to swap out the Asynctask for a more traditional
             //runnable solution that will be faster and will function on a seperate thread
             //This is the task to be completed after the first task above
-
-
-
-
-
-
-
-
-
-
-
-
 
             //UPDATE 2:
 
@@ -196,9 +184,8 @@ public class bookSchedule extends AppCompatActivity {
         }
     }
     private void populateAgendaFromDB(List<CalendarEvent>eventList){
+        //Querying data from database to update local calendar
         ArrayList<BaseCalendarEvent> temp = BookAdapter.mBook.get(BookPosition).getScheduleData();
-
-
         eventList.clear();
         for(BaseCalendarEvent i : temp){
             eventList.add(i);
@@ -206,6 +193,7 @@ public class bookSchedule extends AppCompatActivity {
 
     }
     private void populateAgendaFromResult(ArrayList<BaseCalendarEvent>newEventList){
+        //Used by onActivityResult
         eventList.clear();
         for(BaseCalendarEvent i : newEventList){
             eventList.add(i);
@@ -213,6 +201,7 @@ public class bookSchedule extends AppCompatActivity {
         bookSchedule.init(eventList,minDate,maxDate,Locale.getDefault(),bob);
     }
     private void mockList(List<CalendarEvent> eventList) {
+        //Test Code
         Calendar startTime1 = Calendar.getInstance();
         Calendar endTime1 = Calendar.getInstance();
         endTime1.add(Calendar.MONTH, 1);
@@ -242,6 +231,7 @@ public class bookSchedule extends AppCompatActivity {
 
     }
     private void setupMainWindowDisplayMode() {
+        //Maintain fullscreen
         View decorView = setSystemUiVisibilityMode();
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override

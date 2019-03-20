@@ -24,7 +24,7 @@ public class BookRepository {
         allBooks =bookDAO.getBooks();
 
     }
-
+    //Holds all AsyncTasks that fetch data from DB or update data
     public LiveData<List<Book>> getAllBooks(){
         return allBooks;
     }

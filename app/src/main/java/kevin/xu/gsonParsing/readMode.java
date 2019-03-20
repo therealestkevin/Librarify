@@ -1,6 +1,7 @@
 package kevin.xu.gsonParsing;
 
 public class readMode {
+    //Use for Gson Parsing
     private boolean text;
     private boolean image;
 

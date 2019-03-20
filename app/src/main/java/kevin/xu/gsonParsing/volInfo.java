@@ -3,6 +3,7 @@ package kevin.xu.gsonParsing;
 import java.util.ArrayList;
 
 public class volInfo {
+    //Use for Gson Parsing
     private String title;
     private ArrayList<String> authors;
     private String publisher;

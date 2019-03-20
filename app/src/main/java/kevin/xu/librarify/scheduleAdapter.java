@@ -43,6 +43,7 @@ public class scheduleAdapter extends ArrayAdapter<simpleScheduleDisplay> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
+        //Displaying information for the listview within the scheduleManager activity
         simpleScheduleDisplay cur = getItem(position);
         View tempView = convertView;
         final ViewHolderSchedule holder;

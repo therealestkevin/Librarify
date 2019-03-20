@@ -1,6 +1,7 @@
 package kevin.xu.gsonParsing;
 
 public class imgLinks {
+    //Use for Gson Parsing
     private String smallThumbnail;
     private String thumbnail;
 

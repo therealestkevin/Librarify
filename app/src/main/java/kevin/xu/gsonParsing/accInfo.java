@@ -2,6 +2,8 @@ package kevin.xu.gsonParsing;
 
 
 public class accInfo {
+
+    //Use for Gson Parsing
     private String country;
     private String viewability;
     private boolean embeddable;

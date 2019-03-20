@@ -17,7 +17,7 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface BookDAO {
-
+    //all Queries, used when necessary to update, insert, or delete items from the DB table
     @Insert(onConflict = REPLACE)
     void insertBook(Book book);
 

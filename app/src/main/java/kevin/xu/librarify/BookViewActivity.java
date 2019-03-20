@@ -43,6 +43,7 @@ public class BookViewActivity extends AppCompatActivity {
 
        tablayout = (TabLayout) findViewById(R.id.tab_layout);
        tablayout.setupWithViewPager(viewpager);
+       //Manages which fragment is displayed, auto displays the first
        tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
            @Override
            public void onTabSelected(TabLayout.Tab tab) {

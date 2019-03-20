@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 
 public class summaryFrag extends androidx.fragment.app.Fragment {
+    //Fragment that displays summarizing info about book, first tab in BookViewActivity
 
     private int BookPosition;
 

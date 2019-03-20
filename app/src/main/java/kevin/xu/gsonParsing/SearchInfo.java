@@ -1,6 +1,7 @@
 package kevin.xu.gsonParsing;
 
 public class SearchInfo {
+    //Use for Gson Parsing
     private String textSnippet;
 
     public SearchInfo(String textSnippet) {

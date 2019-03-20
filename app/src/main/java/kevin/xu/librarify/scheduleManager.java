@@ -70,6 +70,7 @@ public class scheduleManager extends AppCompatActivity {
             if(bundle.getInt("BookPositionFinal")>-1){
                 BookPosition = bundle.getInt("BookPositionFinal");
                 Cloner cloner = new Cloner();
+                    //Keeping copy of the book upon entering activity is the cancel button is clicked
                     resetBook =  cloner.deepClone(BookAdapter.mBook.get(BookPosition));
                 }
             }
@@ -127,7 +128,7 @@ public class scheduleManager extends AppCompatActivity {
 
 
 
-
+            //Setting up big dialog for add event dialog
             bobBuilder = new AlertDialog.Builder(scheduleManager.this);
             View dialogCustomView = inflater.inflate(R.layout.custom_dialog,null);
             bobBuilder.setView(dialogCustomView);
@@ -210,7 +211,8 @@ public class scheduleManager extends AppCompatActivity {
                          }else{
                              simpleScheduleDisplay temp = new simpleScheduleDisplay(title,dates,pages,firstDay,lastDay,description);
                              curStack.add(temp);
-
+                            //Adding an event each time the button is clicked seems to be best method
+                             //Other methods of doing this are a little clunky and this way still works
                              bookList.bookModel.updateCompleteData(curStack, BookAdapter.mBook.get(BookPosition).getId());
                              //adapter.add(temp);
 

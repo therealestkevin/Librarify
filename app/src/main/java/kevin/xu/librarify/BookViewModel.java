@@ -21,11 +21,12 @@ public class BookViewModel extends AndroidViewModel {
         bookRepo =  new BookRepository(application);
         allBooks = bookRepo.getAllBooks();
     }
+    //All methods that the Activities use to interact with the Repository and thus access the DB
 
-    LiveData<List<Book>> getAllBooks() {
+
+    public LiveData<List<Book>> getAllBooks() {
         return allBooks;
     }
-
 
     public void insert(Book book){
         bookRepo.insert(book);
@@ -34,9 +35,6 @@ public class BookViewModel extends AndroidViewModel {
     public void updateCompleteData(ArrayList<simpleScheduleDisplay> newArr, int id){
         bookRepo.updateData(newArr,id);
     }
-    //public ArrayList<BaseCalendarEvent> getBaseCalendar(int id){
-    //    return bookRepo.getBaseCalendar(id);
-    //}
     public Book getCertainBook(int id)  {
         return bookRepo.getCertainBook(id);
     }

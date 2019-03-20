@@ -1,6 +1,7 @@
 package kevin.xu.gsonParsing;
 
 public class InnerURL {
+    //Use for Gson Parsing
     private String kind;
     private String id;
     private String etag;

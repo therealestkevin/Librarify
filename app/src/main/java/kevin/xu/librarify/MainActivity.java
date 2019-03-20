@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            //Sets up Navigation to all corners of the app through navDrawer
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                menuItem.setChecked(true);

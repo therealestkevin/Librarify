@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProviders;
 import kevin.xu.roomDB.Book;
 
 public class fullSchedule extends AppCompatActivity {
+    //Displays all scheduled events from all books
     private Toolbar fullScheduleToolBar;
     private AgendaCalendarView fullScheduleAgenda;
     private static List<CalendarEvent> eventList;
@@ -79,6 +80,8 @@ public class fullSchedule extends AppCompatActivity {
 
                 bobBuilder.setView(eventDialog);
                 noteTextView = eventDialog.findViewById(R.id.notesViewText);
+                //Find out what event has been clicked and display the notification
+                //Better solution that n^2 should be worked out in future
                 for(Book i : localBooks){
                     for( simpleScheduleDisplay b : i.getCompleteData()){
                             if(b.getId() == event.getId()){
@@ -108,6 +111,7 @@ public class fullSchedule extends AppCompatActivity {
                 eventList.addAll(b.getScheduleData());
             }
         }
+        //Going through all books
         Iterator<CalendarEvent> i = eventList.iterator();
 
       while(i.hasNext()){

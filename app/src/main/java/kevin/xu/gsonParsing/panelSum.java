@@ -1,6 +1,7 @@
 package kevin.xu.gsonParsing;
 
 public class panelSum {
+    //Use for Gson Parsing
     private boolean containsEpubBubbles;
     private boolean containsImageBubbles;
 

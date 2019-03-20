@@ -1,6 +1,7 @@
 package kevin.xu.gsonParsing;
 
 public class ePub {
+    //Use for Gson Parsing
     private boolean isAvailable;
 
     public ePub(boolean isAvailable) {

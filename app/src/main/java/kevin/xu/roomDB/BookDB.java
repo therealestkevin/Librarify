@@ -25,7 +25,7 @@ public abstract class BookDB extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             BookDB.class, "book_DB")
-                            .fallbackToDestructiveMigration()
+                            //.fallbackToDestructiveMigration()
                             //.addCallback(sRoomDatabaseCallback)
                             .build();
                 }
@@ -33,6 +33,7 @@ public abstract class BookDB extends RoomDatabase {
         }
         return INSTANCE;
     }
+
     private static RoomDatabase.Callback sRoomDatabaseCallback =
             new RoomDatabase.Callback(){
 
@@ -44,7 +45,7 @@ public abstract class BookDB extends RoomDatabase {
             };
 
 
-
+    //Clears the DB for test purposes
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final BookDAO mDao;

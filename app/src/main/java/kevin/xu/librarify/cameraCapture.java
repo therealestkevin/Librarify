@@ -42,6 +42,7 @@ public class cameraCapture extends AppCompatActivity {
     private Button btnDetect;
     private AlertDialog waitingDialog;
     private String browserKey = "AIzaSyB4FziQm9LM2Nahb3SsKbME7_cTq60x2_Q";
+    //API Key
     public static final String EXTRA_REPLY = "REPLY";
     public static final String EXTRA_REPLY2 = "ISBN";
     private String ISBN;
@@ -71,9 +72,11 @@ public class cameraCapture extends AppCompatActivity {
                         waitingDialog.show();
                         BitmapFactory.Options options = new BitmapFactory.Options();
                         options.inMutable = true;
+                        //Making a Bitmap to be able to be used by Firebase ML
                         Bitmap bmp = BitmapFactory.decodeByteArray(capturedImage, 0, capturedImage.length, options);
                         bmp = Bitmap.createScaledBitmap(bmp,cameraView.getWidth(), cameraView.getHeight(),false);
                         runDetector(bmp,waitingDialog);
+                        //Runs Image Recognition
 
                     }
                 });
@@ -82,19 +85,10 @@ public class cameraCapture extends AppCompatActivity {
 
 
         });
-
-
-
-
-
-
-
-
-
-
     }
 
     private void runDetector(Bitmap bitmap,final AlertDialog bob)  {
+        //Detects image and relays informaiton to the process result method
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
         FirebaseVisionBarcodeDetectorOptions options =new FirebaseVisionBarcodeDetectorOptions.Builder()
                 .setBarcodeFormats(
@@ -133,16 +127,16 @@ public class cameraCapture extends AppCompatActivity {
     }
 
     private int processResult(List<FirebaseVisionBarcode> firebaseVisionBarcodes)  {
-
+        //evalutes what type of code the image is, then detects the text from it and allows you to fetch that number
         for(FirebaseVisionBarcode item : firebaseVisionBarcodes){
             int val_type = item.getValueType();
             switch(val_type){
-
+            // Only detecting ISBN because the app only wants books
                 case FirebaseVisionBarcode.TYPE_ISBN:{
 
                     try {
                         ISBN = item.getRawValue();
-
+                        //Setting up Google Books API call
                         String bookSearchString = "https://www.googleapis.com/books/v1/volumes?" +
                                 "q=isbn:" + item.getRawValue() + "&key=" + browserKey;
                         System.out.println(bookSearchString);
@@ -156,6 +150,7 @@ public class cameraCapture extends AppCompatActivity {
                         //ArrayList<String> infoBook = new RetrieveDescriptions(temp.getItems().get(0).getSelfLink()).execute().get();
                        String authors= temp.getItems().get(0).getVolumeInfo().getAuthors()
                                 .toString().replace("[","").replace("]","");
+                       //Setting up Dialog info
                         execute=true;
                         for (int b = 0; b < BookAdapter.mBook.size(); b++) {
                             if (BookAdapter.mBook.get(b).getISBN().equals(ISBN)) {
@@ -186,10 +181,11 @@ public class cameraCapture extends AppCompatActivity {
                                     if (temp==null) {
                                     } else {
                                        try{
-                                           Book book = new Book(temp, java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),ISBN
-                                                  );
+                                           Book book = new Book(temp, java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime()),ISBN);
+                                           //Adding to DB
                                            bookModel2.insert(book);
                                            Toast.makeText(getApplicationContext(), "Entry Success", Toast.LENGTH_LONG).show();
+
                                            Intent goToLibrary = new Intent(getApplicationContext(), bookList.class);
                                            startActivity(goToLibrary);
                                        }catch(Exception e){
@@ -275,7 +271,7 @@ public class cameraCapture extends AppCompatActivity {
    }*/
    static class RetrieveJSONTask extends AsyncTask<String, Void, String> {
         String urlString;
-
+        //Goes to API call and result, fetching the whole text JSON from the webpage
         private RetrieveJSONTask(String urlString) {
             super();
             this.urlString = urlString;
@@ -308,6 +304,7 @@ public class cameraCapture extends AppCompatActivity {
         }
     }
 
+    //All of these overrides handle camera functions upon the Activity lifecycle
 
     @Override
     protected void onResume(){

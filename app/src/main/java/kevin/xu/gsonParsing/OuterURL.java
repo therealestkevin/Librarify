@@ -3,6 +3,7 @@ package kevin.xu.gsonParsing;
 import java.util.ArrayList;
 
 public class OuterURL {
+    //Use for Gson Parsing
     private String kind;
     private int totalItems;
     private ArrayList<InnerURL> items;

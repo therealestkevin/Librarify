@@ -67,13 +67,12 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         topToolBarBook.setTitle("Your Library");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //Setting up paint functions to draw delete red rectangle behind card
         mBackground = new ColorDrawable();
         backgroundColor = Color.parseColor("#b80f0a");
         painter = new Paint();
         painter.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         deleteDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.trash);
-        //ColorFilter whiteFilter = new LightingColorFilter(Color.WHITE,Color.WHITE);
-        //deleteDrawable.setColorFilter(whiteFilter);
         intrinsicWidth = deleteDrawable.getIntrinsicWidth();
         intrinsicHeight = deleteDrawable.getIntrinsicHeight();
         topToolBarBook.setNavigationOnClickListener(new View.OnClickListener() {
@@ -81,8 +80,6 @@ public class bookList extends AppCompatActivity implements RecycleListener{
             public void onClick(View v) {
                 Intent returnIntent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(returnIntent);
-
-                //onBackPressed();
             }
         });
         bookListView = findViewById(R.id.bookListView);
@@ -96,10 +93,12 @@ public class bookList extends AppCompatActivity implements RecycleListener{
         bookModel = ViewModelProviders.of(this).get(BookViewModel.class);
 
        bookModel.getAllBooks().observeForever(new Observer<List<Book>>() {
+           //Listening for change in LiveData.
            @Override
            public void onChanged(List<Book> books) {
                adapter.setBooks(books);
                switch(bookList.sortMethod){
+                   //Checks current sort method and resorts upon insertion of new book
                    case -1:{
                        break;
                    }
@@ -128,6 +127,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
        });
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT
               ) {
+            //Handles Delete Swipe
             @Override
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 View itemView = viewHolder.itemView;
@@ -140,7 +140,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
                     super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
                     return;
                 }
-
+                //Obtaining the position of the cardview to draw underneath it
                 mBackground.setColor(backgroundColor);
                 mBackground.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
                 mBackground.draw(c);
@@ -182,7 +182,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
                 bookModel.deleteCertain(BookAdapter.mBook.get(position).getId());
                 BookAdapter.mBook.remove(position);
                 adapter.notifyItemRemoved(position);
-
+                //deleting the item from both database and adapter
                 Snackbar snackUndo = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"A Book Was Removed.",Snackbar.LENGTH_LONG);
                 snackUndo.setAction("UNDO", new View.OnClickListener() {
                     @Override
@@ -211,7 +211,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-
+        //setting up toolbar menu
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         this.menu=menu;
        android.widget.SearchView sview = (android.widget.SearchView) menu.findItem(R.id.action_search).getActionView();
@@ -325,8 +325,8 @@ public class bookList extends AppCompatActivity implements RecycleListener{
     }*/
     @Override
     public void onClick(View view, int position) {
-         OuterURL book= BookAdapter.mBook.get(position).getBookList();
-
+        //Interface method that works in junction with adapter's onClick
+        OuterURL book= BookAdapter.mBook.get(position).getBookList();
         Intent bookInfoIntent = new Intent(getApplicationContext(),BookViewActivity.class);
         bookInfoIntent.putExtra("jsonStuff", new Gson().toJson(book));
         bookInfoIntent.putExtra("BookPosition2",position);
@@ -335,6 +335,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
 
     }
     private void setupMainWindowDisplayMode() {
+        //Used to maintain fullscreen view without losing focus
         View decorView = setSystemUiVisibilityMode();
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
@@ -375,6 +376,7 @@ public class bookList extends AppCompatActivity implements RecycleListener{
     public void onResume(){
         super.onResume();
         switch(bookList.sortMethod){
+            //making sure the book is sorted all the time
             case -1:{
                 break;
             }

@@ -14,80 +14,199 @@
         <TextView
             android:id="@+id/spacing"
             android:layout_width="match_parent"
-            android:layout_height="31dp" />
+            android:layout_height="53dp" />
+
+        <TextView
+            android:id="@+id/titleDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="    Title: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/titleTextView"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:text="Title: "
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/authorDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="    Author(s): "
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/authorViewText"
             android:layout_width="match_parent"
             android:layout_height="76dp"
-            android:text="Author(s): " />
+            android:text="Author(s): "
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/pageDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="    Page Count:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/pageCountText"
             android:layout_width="match_parent"
             android:layout_height="78dp"
-            android:text="Page Count: " />
+            android:text="Page Count: "
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/descriptionDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="    Description: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/detailedDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="false"
-            android:text="Description:" />
+            android:text="Description:"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/categoryDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:text="    Categories: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/categories"
             android:layout_width="match_parent"
             android:layout_height="87dp"
-            android:text="Categories:" />
+            android:text="Categories:"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/publisherDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="    Publisher: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/publishTextView"
             android:layout_width="match_parent"
             android:layout_height="69dp"
-            android:text="Publisher: " />
+            android:text="Publisher: "
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/dateDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:text="    Publish Date:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/publishDateText"
             android:layout_width="match_parent"
             android:layout_height="65dp"
-            android:text="Publish Date: " />
+            android:text="Publish Date: "
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/isbnDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="    ISBN Code: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/isbnTextView"
             android:layout_width="match_parent"
             android:layout_height="74dp"
-            android:text="ISBN Code: " />
+            android:text="ISBN Code: "
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/maturityDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="    Maturity Rating: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/maturityText"
             android:layout_width="match_parent"
             android:layout_height="63dp"
-            android:text="Maturity Rating: " />
+            android:text="Maturity Rating: "
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/languageDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:text="    Language: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/languageText"
             android:layout_width="match_parent"
             android:layout_height="67dp"
-            android:text="Language:" />
+            android:text="Language:"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/infoDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:text="    Info Link: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/infoLinkText"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-            android:text="Info Link: " />
+            android:text="Info Link: "
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/ebookDisplay"
+            android:background="@drawable/bordertext"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:text="    Ebook Available:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/hasEbookText"
             android:layout_width="match_parent"
             android:layout_height="68dp"
-            android:text="Has Ebook: " />
+            android:text="Has Ebook: "
+            android:textAlignment="center" />
     </LinearLayout>
 </ScrollView>

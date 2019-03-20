@@ -1,6 +1,7 @@
 package kevin.xu.gsonParsing;
 
 public class sellInfo {
+    //Use for Gson Parsing
     private String country;
     private String saleability;
     private boolean isEbook;

@@ -1,6 +1,7 @@
 package kevin.xu.gsonParsing;
 
 public class indID {
+    //Use for Gson Parsing
     private String type;
     private String identifier;
 

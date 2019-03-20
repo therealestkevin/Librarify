@@ -3,6 +3,7 @@ package kevin.xu.librarify;
 import java.util.Calendar;
 
 public class simpleScheduleDisplay {
+    //holds ListView object model
     private String title;
     private String dateRange;
     private Calendar firstDay;

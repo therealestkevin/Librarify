@@ -32,6 +32,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
 
     public static List<Book> mBook = new ArrayList<>();
     public static List<Book> copyBook;
+    //copyBook used to facilitate searching mechanism
     private LayoutInflater inflate1;
     private Context context;
     private RecycleListener itemClicked;
@@ -52,6 +53,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull BookAdapter.ViewHolder holder, int position) {
        if(mBook!=null){
+           //Setting up the view for each cardview, setting all fields
            final Book cur = mBook.get(position);
            holder.bookName.setText(cur.getBookList().getItems().get(0).getVolumeInfo().getTitle());
             if(cur.isStartSchedule()){
@@ -84,6 +86,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     }
 
     public void restoreItem(Book book, int position){
+        //Used in junction with the undo snackbar
         bookList.bookModel.insert(book);
         mBook.add(position,book);
         notifyDataSetChanged();
@@ -101,6 +104,9 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     }
 
     void setBooks(List<Book> books){
+
+        //Updates Adapter's dataset upon LiveData change via Observer
+
         mBook = books;
 
         copyBook = books;
@@ -109,19 +115,23 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     }
 
     void filter(String text){
+        //Handles Search functionality withint toolbar
         List<Book> temp = new ArrayList<>();
         for(Book b : copyBook){
             boolean author = false;
             for(String authors : b.getAuthor()){
                 if(authors.toLowerCase().contains(text)){
                     author=true;
+                    //Checks if keyword is contained in authors
                 }
             }
             if(b.getTitle().toLowerCase().contains(text)||author){
                 temp.add(b);
+                //keyword either contained in title or author, then added to temp arraylist
             }
         }
         mBook = temp;
+        //setting recyclerview data to those that are searched
         notifyDataSetChanged();
 
     }
@@ -149,6 +159,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     }
     public void filterByAuthor(boolean direction){
         if(direction==true){
+            //Using comparator interface to compare author names
             Collections.sort(mBook, new Comparator<Book>() {
                 @Override
                 public int compare(Book book, Book t1) {
@@ -169,6 +180,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     }
     public void filterByDate(boolean direction){
         if(direction==true){
+            //Comparator is built into Date
             Collections.sort(mBook, new Comparator<Book>() {
                 @Override
                 public int compare(Book book, Book t1) {
@@ -199,6 +211,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     public void setRecycleListener(RecycleListener onClick){
         itemClicked = onClick;
     }
+    //Functions as the onClick listener for each card in RecyclerView, leading to BookViewActivity
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -217,6 +230,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        //Holds card info
         public TextView bookName;
         public ImageView bookViewImg;
         public TextView timeAdded;

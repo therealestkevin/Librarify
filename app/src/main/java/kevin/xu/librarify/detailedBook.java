@@ -16,6 +16,7 @@ import com.xu.librarify.R;
 /**
  * A simple {@link Fragment} subclass.
  */
+//Serves as the fragment that is viewed upon the detailed Tab being opened
 public class detailedBook extends androidx.fragment.app.Fragment {
     private int BookPosition;
 
@@ -31,7 +32,7 @@ public class detailedBook extends androidx.fragment.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        //Setting Up all the Text
         View v = inflater.inflate(R.layout.fragment_detailed_book,container,false);
         TextView titleTextView = v.findViewById(R.id.titleTextView);
 
