@@ -11,7 +11,9 @@ public class simpleScheduleDisplay {
     private String pages;
     private String description;
     private long id;
+    public simpleScheduleDisplay(){
 
+    }
     public simpleScheduleDisplay(String title, String dateRange, String pages, Calendar firstDay, Calendar lastDay,String description){
         this.title=title;
         this.dateRange=dateRange;

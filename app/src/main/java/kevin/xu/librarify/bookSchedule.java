@@ -1,8 +1,12 @@
 package kevin.xu.librarify;
 
+import android.app.usage.UsageEvents;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +44,7 @@ public class bookSchedule extends AppCompatActivity {
     private CalendarPickerController bob;
     public static final int NEW_RESET_CALENDAREVENT=1;
     private TextView noteTextView;
-
+    private simpleScheduleDisplay temp = new simpleScheduleDisplay();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +95,10 @@ public class bookSchedule extends AppCompatActivity {
 
                     bobBuilder.setView(eventDialog);
                     noteTextView = eventDialog.findViewById(R.id.notesViewText);
+
                     for(simpleScheduleDisplay i : BookAdapter.mBook.get(BookPosition).getCompleteData()){
                         if(event.getId()==i.getId()){
+                            temp = i;
                             noteTextView.setText(i.getDescription());
                         }
                     }
@@ -101,6 +107,17 @@ public class bookSchedule extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
+                        }
+                    });
+                    bobBuilder.setNeutralButton("Export", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ContentResolver cr = getContentResolver();
+                            ContentValues values = new ContentValues();
+                            values.put(CalendarContract.Events.DTSTART,temp.getFirstDay().getTimeInMillis());
+                            values.put(CalendarContract.Events.DTEND,temp.getLastDay().getTimeInMillis());
+
+
                         }
                     });
                    AlertDialog dialog = bobBuilder.create();
