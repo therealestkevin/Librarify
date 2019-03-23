@@ -4,6 +4,7 @@ package kevin.xu.librarify;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,17 +52,21 @@ public class detailedBook extends androidx.fragment.app.Fragment {
 
         TextView detailedDescription = v.findViewById(R.id.detailedDescription);
         detailedDescription.setMovementMethod(new ScrollingMovementMethod());
-        detailedDescription.setText(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getDescription());
+        detailedDescription.setText(BookAdapter.mBook.get(BookPosition).getAdditionalInfo().get(0).replace(
+                "<p>","").replace("<b>","").replace("</b>","")
+                .replace("<br>","").replace("</p>",""));
+                //setText(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getDescription());
 
-                //.getAdditionalInfo().get(1).replace(
-                //     "<p>","").replace("<b>","").replace("</b>","")
-                //   .replace("<br>","").replace("</p>",""));
+
 
         TextView categories = v.findViewById(R.id.categories);
 
         StringBuilder sb = new StringBuilder("");
-        for(int i=2; i <BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getCategories().size();i++){
-            sb.append(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getCategories().get(i));
+        //for(int i=2; i <BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getCategories().size();i++){
+        //    sb.append(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getCategories().get(i));
+       // }
+        for(int i=1; i <BookAdapter.mBook.get(BookPosition).getAdditionalInfo().size();i++){
+            sb.append(BookAdapter.mBook.get(BookPosition).getAdditionalInfo().get(i));
         }
 
         categories.setText(sb.toString());
@@ -90,9 +95,16 @@ public class detailedBook extends androidx.fragment.app.Fragment {
 
         infoLinkText.setText(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo().getInfoLink());
 
-        TextView hasEbookText = v.findViewById(R.id.hasEbookText);
+        //infoLinkText.setMovementMethod(LinkMovementMethod.getInstance());
 
-        hasEbookText.setText(""+BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getAccessInfo().getEpub().isAvailable());
+        TextView hasEbookText = v.findViewById(R.id.hasEbookText);
+        boolean status = BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getAccessInfo().getEpub().isAvailable();
+        if(status){
+            hasEbookText.setText("Yes");
+        }else{
+            hasEbookText.setText("No");
+        }
+
         return v;
     }
 

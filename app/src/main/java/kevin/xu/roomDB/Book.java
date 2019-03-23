@@ -16,7 +16,7 @@ public class Book implements Cloneable{
     private String dateTime;
     private String ISBN;
     private String title;
-   // private ArrayList<String> additionalInfo;
+    private ArrayList<String> additionalInfo;
     private ArrayList<String> author;
     private String lastName;
     private ArrayList<simpleScheduleDisplay> completeData;
@@ -30,14 +30,29 @@ public class Book implements Cloneable{
     public Book(){
 
     }
-
     public Book(OuterURL bookOne, String dateTime, String ISBN ){
         this.bookList=bookOne;
         this.dateTime = dateTime;
         this.ISBN = ISBN;
         this.title = bookOne.getItems().get(0).getVolumeInfo().getTitle();
         this.author = bookOne.getItems().get(0).getVolumeInfo().getAuthors();
-        //this.additionalInfo = additionalInfo;
+        completeData= new ArrayList<>();
+        scheduleData = new ArrayList<>();
+        isStartSchedule=false;
+        ArrayList<String> holdTokens = new ArrayList<>();
+        StringTokenizer lastNm = new StringTokenizer(author.get(0));
+        while(lastNm.hasMoreTokens()){
+            holdTokens.add(lastNm.nextToken());
+        }
+        lastName = holdTokens.get(holdTokens.size()-1);
+    }
+    public Book(OuterURL bookOne, String dateTime, String ISBN, ArrayList<String> additionalInfo ){
+        this.bookList=bookOne;
+        this.dateTime = dateTime;
+        this.ISBN = ISBN;
+        this.title = bookOne.getItems().get(0).getVolumeInfo().getTitle();
+        this.author = bookOne.getItems().get(0).getVolumeInfo().getAuthors();
+        this.additionalInfo = additionalInfo;
         completeData= new ArrayList<>();
         scheduleData = new ArrayList<>();
         isStartSchedule=false;
@@ -145,5 +160,11 @@ public class Book implements Cloneable{
         isStartSchedule = startSchedule;
     }
 
+    public ArrayList<String> getAdditionalInfo() {
+        return additionalInfo;
+    }
 
+    public void setAdditionalInfo(ArrayList<String> additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
 }

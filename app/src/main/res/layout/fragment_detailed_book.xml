@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:text="Title: "
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/authorDisplay"
@@ -46,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="76dp"
             android:text="Author(s): "
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/pageDisplay"
@@ -62,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="78dp"
             android:text="Page Count: "
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/descriptionDisplay"
@@ -79,7 +82,8 @@
             android:layout_height="wrap_content"
             android:singleLine="false"
             android:text="Description:"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/categoryDisplay"
@@ -95,7 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="87dp"
             android:text="Categories:"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/publisherDisplay"
@@ -111,7 +116,8 @@
             android:layout_width="match_parent"
             android:layout_height="69dp"
             android:text="Publisher: "
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/dateDisplay"
@@ -127,7 +133,8 @@
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:text="Publish Date: "
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/isbnDisplay"
@@ -143,7 +150,8 @@
             android:layout_width="match_parent"
             android:layout_height="74dp"
             android:text="ISBN Code: "
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/maturityDisplay"
@@ -188,9 +196,10 @@
 
         <TextView
             android:id="@+id/infoLinkText"
+            android:autoLink="web"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-            android:text="Info Link: "
+            android:text="Book Link: "
             android:textAlignment="center" />
 
         <TextView

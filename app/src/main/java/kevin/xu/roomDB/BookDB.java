@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database (entities = {Book.class},version=7,exportSchema=false)
+@Database (entities = {Book.class},version=8,exportSchema=false)
 @TypeConverters({BookDAO.Converters.class})
 public abstract class BookDB extends RoomDatabase {
 
@@ -25,7 +25,7 @@ public abstract class BookDB extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             BookDB.class, "book_DB")
-                            //.fallbackToDestructiveMigration()
+                            .fallbackToDestructiveMigration()
                             //.addCallback(sRoomDatabaseCallback)
                             .build();
                 }
