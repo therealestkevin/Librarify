@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actbar = getSupportActionBar();
         actbar.setDisplayHomeAsUpEnabled(true);
         actbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+        View headerView = navView.getHeaderView(0);
 
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

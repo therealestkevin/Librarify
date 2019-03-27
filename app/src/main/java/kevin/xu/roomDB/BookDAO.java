@@ -1,5 +1,7 @@
 package kevin.xu.roomDB;
 
+import android.graphics.drawable.Drawable;
+
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -38,6 +40,15 @@ public interface BookDAO {
 
     @Query("UPDATE book_table SET completeData = :newArr, scheduleData =:newSchedule WHERE Id = :id")
     void update(ArrayList<simpleScheduleDisplay> newArr, int id,ArrayList<BaseCalendarEvent> newSchedule);
+
+    @Insert(onConflict = REPLACE)
+    void insertGenInfo(genInfo GenInfo);
+
+    @Query("SELECT * FROM genInfo")
+    List<genInfo> getGenInfo();
+
+    @Query("UPDATE genInfo SET name = :newName, d =:newDraw")
+    void updateGen(String newName, Drawable newDraw);
 
     @Query("SELECT ISBN FROM book_table")
     List<String> getISBN();

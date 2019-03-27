@@ -2,6 +2,7 @@ package kevin.xu.roomDB;
 
 import android.app.Application;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
@@ -108,6 +109,51 @@ public class BookRepository {
 
     public void deleteCertain(int id){
         new deleteCertainTask(id,bookDAO).execute();
+    }
+
+    public genInfo getGenInfo(){
+        try {
+            return new getGenInfo(bookDAO).execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updateGenInfo(String name, Drawable d){
+            new updateGenInfo(bookDAO,name,d).execute();
+    }
+    private static class updateGenInfo extends AsyncTask<Void, Void, Void> {
+        private BookDAO dao;
+        private String name;
+        private Drawable d;
+
+        public updateGenInfo(BookDAO dao, String name, Drawable d){
+            this.dao=dao;
+            this.name=name;
+            this.d=d;
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            dao.updateGen(name,d);
+            return null;
+        }
+    }
+    private static class getGenInfo extends AsyncTask<Void, Void, genInfo>{
+        private BookDAO dao;
+
+        public getGenInfo(BookDAO dao){
+            this.dao=dao;
+        }
+
+        @Override
+        protected genInfo doInBackground(Void... voids) {
+            return dao.getGenInfo().get(0);
+        }
     }
 
     private static class deleteCertainTask extends AsyncTask<Void,Void,Void>{
