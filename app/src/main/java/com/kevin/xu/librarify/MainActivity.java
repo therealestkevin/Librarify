@@ -3,13 +3,21 @@ package com.kevin.xu.librarify;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import com.google.android.material.navigation.NavigationView;
 import com.xu.librarify.R;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -33,7 +41,26 @@ public class MainActivity extends AppCompatActivity {
         actbar.setDisplayHomeAsUpEnabled(true);
         actbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         View headerView = navView.getHeaderView(0);
+        LinearLayout headerLayout = headerView.findViewById(R.id.header_layout);
+        headerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = getLayoutInflater();
+                    AlertDialog.Builder userBuilder = new AlertDialog.Builder(MainActivity.this);
+                    View userDialog = inflater.inflate(R.layout.user_dialog,null);
+                    ImageView userImage= userDialog.findViewById(R.id.userImage);
+                    EditText userName = userDialog.findViewById(R.id.editTextName);
+                    Button browseImages = userDialog.findViewById(R.id.chooseImage);
 
+                    browseImages.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent pickImage = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(pickImage,1);
+                        }
+                    });
+            }
+        });
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             //Sets up Navigation to all corners of the app through navDrawer
@@ -72,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturn){
+        super.onActivityResult(requestCode,resultCode,imageReturn);
+        if(resultCode == RESULT_OK){
+
+        }
 
     }
 
