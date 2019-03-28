@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,7 +48,6 @@ public class cameraCapture extends AppCompatActivity {
     private CameraKitView cameraView;
     private Button btnDetect;
     private AlertDialog waitingDialog;
-    private String browserKey = "AIzaSyB4FziQm9LM2Nahb3SsKbME7_cTq60x2_Q";
     //API Key
     public static final String EXTRA_REPLY = "REPLY";
     public static final String EXTRA_REPLY2 = "ISBN";
@@ -92,6 +92,11 @@ public class cameraCapture extends AppCompatActivity {
 
         });
     }
+    static {
+        System.loadLibrary("keys");
+    }
+
+    public native String getNativeKey();
 
     private void runDetector(Bitmap bitmap,final AlertDialog bob)  {
         //Detects image and relays informaiton to the process result method
@@ -134,6 +139,7 @@ public class cameraCapture extends AppCompatActivity {
 
     private int processResult(List<FirebaseVisionBarcode> firebaseVisionBarcodes)  {
         //evalutes what type of code the image is, then detects the text from it and allows you to fetch that number
+
         for(FirebaseVisionBarcode item : firebaseVisionBarcodes){
             int val_type = item.getValueType();
             switch(val_type){
@@ -143,8 +149,10 @@ public class cameraCapture extends AppCompatActivity {
                     try {
                         ISBN = item.getRawValue();
                         //Setting up Google Books API call
+                        String key = new String(Base64.decode(getNativeKey(),Base64.DEFAULT));
+
                         String bookSearchString = "https://www.googleapis.com/books/v1/volumes?" +
-                                "q=isbn:" + item.getRawValue() + "&key=" + browserKey;
+                                "q=isbn:" + item.getRawValue() + "&key=" + key;
                         System.out.println(bookSearchString);
                         RetrieveJSONTask bob = new RetrieveJSONTask(bookSearchString);
 

@@ -15,9 +15,6 @@ public class genInfo {
     private int Id;
 
 
-    public genInfo(){
-
-    }
 
     public genInfo(String name, Drawable d){
         this.name = name;
@@ -38,5 +35,13 @@ public class genInfo {
 
     public void setD(Drawable d) {
         this.d = d;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }

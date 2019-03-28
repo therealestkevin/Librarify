@@ -79,6 +79,44 @@ public interface BookDAO {
 
      class Converters{
         @TypeConverter
+        public static Drawable toDrawable(String value){
+            if(value == null){
+                return null;
+            }
+            Gson gson = new Gson();
+            Type listType = new TypeToken <Drawable>() {}.getType();
+            return new Gson().fromJson(value, listType);
+        }
+        @TypeConverter
+        public static String fromDrawable(Drawable d){
+            if(d == null){
+                return null;
+            }
+            Gson gson = new Gson();
+            Type typeString = new TypeToken<Drawable>(){}.getType();
+            String json = gson.toJson(d, typeString);
+            return json;
+        }
+        @TypeConverter
+        public static ArrayList<genInfo> toGenInfo(String value){
+            if(value == null){
+                return null;
+            }
+            Gson gson = new Gson();
+            Type listType = new TypeToken <ArrayList<genInfo>>() {}.getType();
+            return new Gson().fromJson(value, listType);
+        }
+        @TypeConverter
+        public static String fromGenInfo(ArrayList<genInfo> GenInfo){
+            if(GenInfo == null){
+                return null;
+            }
+            Gson gson = new Gson();
+            Type typeString = new TypeToken<ArrayList<genInfo>>(){}.getType();
+            String json = gson.toJson(GenInfo, typeString);
+            return json;
+        }
+        @TypeConverter
         public static OuterURL toOuterURL(String value){
            if(value == null){
                return null;
