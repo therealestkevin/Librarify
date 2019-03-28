@@ -3,7 +3,7 @@
     android:id="@+id/scrollViewDetailed"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kevin.xu.librarify.detailedBook">
+    tools:context="com.kevin.xu.librarify.detailedBook">
 
     <LinearLayout
         android:id="@+id/linearDetailed"

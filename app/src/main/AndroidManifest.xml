@@ -18,39 +18,39 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="ExtraText">
-        <activity android:name="kevin.xu.librarify.fullSchedule"
+        <activity android:name="com.kevin.xu.librarify.fullSchedule"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName="kevin.xu.librarify.MainActivity"
+            android:parentActivityName="com.kevin.xu.librarify.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             ></activity>
         <activity
-            android:name="kevin.xu.librarify.scheduleManager"
+            android:name="com.kevin.xu.librarify.scheduleManager"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName="kevin.xu.librarify.bookSchedule"
+            android:parentActivityName="com.kevin.xu.librarify.bookSchedule"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="kevin.xu.librarify.bookSchedule"
+            android:name="com.kevin.xu.librarify.bookSchedule"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName="kevin.xu.librarify.bookList"
+            android:parentActivityName="com.kevin.xu.librarify.bookList"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="kevin.xu.librarify.bookList"
+            android:name="com.kevin.xu.librarify.bookList"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName="kevin.xu.librarify.MainActivity"
+            android:parentActivityName="com.kevin.xu.librarify.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="kevin.xu.librarify.BookViewActivity"
+            android:name="com.kevin.xu.librarify.BookViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName="kevin.xu.librarify.MainActivity"
+            android:parentActivityName="com.kevin.xu.librarify.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="kevin.xu.librarify.cameraCapture"
-            android:parentActivityName="kevin.xu.librarify.MainActivity"
+            android:name="com.kevin.xu.librarify.cameraCapture"
+            android:parentActivityName="com.kevin.xu.librarify.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
@@ -59,7 +59,7 @@
             android:value="barcode" />
 
         <activity
-            android:name="kevin.xu.librarify.MainActivity"
+            android:name="com.kevin.xu.librarify.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">

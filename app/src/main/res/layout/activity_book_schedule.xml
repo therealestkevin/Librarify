@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kevin.xu.librarify.bookSchedule">
+    tools:context="com.kevin.xu.librarify.bookSchedule">
 
 
     <androidx.appcompat.widget.Toolbar
