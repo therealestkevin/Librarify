@@ -1,4 +1,4 @@
-package kevin.xu.librarify;
+package com.kevin.xu.librarify;
 
 
 import android.content.Intent;
@@ -28,8 +28,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import kevin.xu.gsonParsing.OuterURL;
-import kevin.xu.roomDB.Book;
+import com.kevin.xu.gsonParsing.OuterURL;
+import com.kevin.xu.roomDB.Book;
 
 public class bookList extends AppCompatActivity implements RecycleListener{
     private FloatingActionButton addBookButton;

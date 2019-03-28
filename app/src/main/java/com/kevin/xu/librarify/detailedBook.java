@@ -1,10 +1,9 @@
-package kevin.xu.librarify;
+package com.kevin.xu.librarify;
 
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;

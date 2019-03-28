@@ -1,4 +1,4 @@
-package kevin.xu.gsonParsing;
+package com.kevin.xu.gsonParsing;
 
 public class indID {
     //Use for Gson Parsing

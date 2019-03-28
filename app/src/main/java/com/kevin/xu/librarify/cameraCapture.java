@@ -1,4 +1,4 @@
-package kevin.xu.librarify;
+package com.kevin.xu.librarify;
 
 
 import android.app.AlertDialog;
@@ -40,8 +40,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import dmax.dialog.SpotsDialog;
-import kevin.xu.gsonParsing.OuterURL;
-import kevin.xu.roomDB.Book;
+import com.kevin.xu.gsonParsing.OuterURL;
+import com.kevin.xu.roomDB.Book;
 
 
 public class cameraCapture extends AppCompatActivity {

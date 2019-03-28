@@ -1,6 +1,5 @@
-package kevin.xu.librarify;
+package com.kevin.xu.librarify;
 
-import android.app.usage.UsageEvents;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;

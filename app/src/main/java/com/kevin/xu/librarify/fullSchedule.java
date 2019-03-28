@@ -1,4 +1,4 @@
-package kevin.xu.librarify;
+package com.kevin.xu.librarify;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,7 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
-import kevin.xu.roomDB.Book;
+import com.kevin.xu.roomDB.Book;
 
 public class fullSchedule extends AppCompatActivity {
     //Displays all scheduled events from all books
