@@ -1,7 +1,10 @@
 package com.kevin.xu.librarify;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -48,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 LayoutInflater inflater = getLayoutInflater();
                     AlertDialog.Builder userBuilder = new AlertDialog.Builder(MainActivity.this);
                     View userDialog = inflater.inflate(R.layout.user_dialog,null);
+                    userBuilder.setView(userDialog);
                     ImageView userImage= userDialog.findViewById(R.id.userImage);
+                    userImage.setColorFilter(Color.WHITE);
                     EditText userName = userDialog.findViewById(R.id.editTextName);
                     Button browseImages = userDialog.findViewById(R.id.chooseImage);
 
@@ -59,6 +64,17 @@ public class MainActivity extends AppCompatActivity {
                             startActivityForResult(pickImage,1);
                         }
                     });
+
+                userBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            //Set Picture and Name, enter into genInfo DB
+                            dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialogFinal = userBuilder.create();
+                dialogFinal.show();
             }
         });
 

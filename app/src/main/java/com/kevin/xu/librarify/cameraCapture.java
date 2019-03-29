@@ -59,7 +59,7 @@ public class cameraCapture extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_capture);
-        setupMainWindowDisplayMode();
+        //setupMainWindowDisplayMode();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         bookModel2 = ViewModelProviders.of(cameraCapture.this).get(BookViewModel.class);
         cameraView = (CameraKitView) findViewById(R.id.camera);
@@ -349,6 +349,7 @@ public class cameraCapture extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         cameraView.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+    /*
     private void setupMainWindowDisplayMode() {
         View decorView = setSystemUiVisibilityMode();
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
@@ -384,7 +385,7 @@ public class cameraCapture extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
-    }
+    }*/
     private String getType(int n){
         switch(n){
             case 32: {
