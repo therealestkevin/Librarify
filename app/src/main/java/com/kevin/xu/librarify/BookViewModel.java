@@ -1,6 +1,7 @@
 package com.kevin.xu.librarify;
 
 import android.app.Application;
+import android.graphics.drawable.Drawable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import com.kevin.xu.roomDB.Book;
 import com.kevin.xu.roomDB.BookRepository;
+import com.kevin.xu.roomDB.genInfo;
 
 public class BookViewModel extends AndroidViewModel {
 
@@ -53,5 +55,16 @@ public class BookViewModel extends AndroidViewModel {
 
     public void updateScheduleBool(int id){
         bookRepo.setScheduleTrue(id);
+    }
+
+    public void updateGenInfo(String name, Drawable d){
+        bookRepo.updateGenInfo(name,d);
+    }
+
+    public genInfo getGenInfo(){
+        return bookRepo.getGenInfo();
+    }
+    public void insertGenInfo(genInfo gen){
+        bookRepo.insertGenInfo(gen);
     }
 }

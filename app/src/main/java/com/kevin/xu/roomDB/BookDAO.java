@@ -98,7 +98,7 @@ public interface BookDAO {
             return json;
         }
         @TypeConverter
-        public static ArrayList<genInfo> toGenInfo(String value){
+        public static List<genInfo> toGenInfo(String value){
             if(value == null){
                 return null;
             }

@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -15,21 +17,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.kevin.xu.roomDB.genInfo;
 import com.xu.librarify.R;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProviders;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private androidx.appcompat.widget.Toolbar mainToolBar;
     private DrawerLayout drawlayout;
+    private BookViewModel mainActivityModel;
+    private genInfo localGenInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +52,22 @@ public class MainActivity extends AppCompatActivity {
         actbar.setDisplayHomeAsUpEnabled(true);
         actbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         View headerView = navView.getHeaderView(0);
+
+        mainActivityModel = ViewModelProviders.of(this).get(BookViewModel.class);
         LinearLayout headerLayout = headerView.findViewById(R.id.header_layout);
+        localGenInfo = mainActivityModel.getGenInfo();
+        ImageView userImg = headerLayout.findViewById(R.id.profileImage);
+        TextView nameText = headerLayout.findViewById(R.id.nameTextView);
+        if(localGenInfo!=null){
+            userImg.setImageDrawable(localGenInfo.getD());
+            nameText.setText(localGenInfo.getName());
+        }else{
+            //insert genInfo
+          //  Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_person_add_black_24dp,null);
+          //  mainActivityModel.insertGenInfo(new genInfo("Your Name",d));
+           // userImg.setImageDrawable(d);
+            nameText.setText("Your Name");
+        }
         headerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 userBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                            genInfo newUpdateGen = new genInfo(userName.getText().toString(),userImage.getDrawable());
+                            userImg.setImageDrawable(userImage.getDrawable());
+                            nameText.setText(userName.getText().toString());
                             //Set Picture and Name, enter into genInfo DB
                             dialog.dismiss();
                     }
