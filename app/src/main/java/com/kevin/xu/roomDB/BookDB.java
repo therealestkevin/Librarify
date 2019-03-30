@@ -2,7 +2,15 @@ package com.kevin.xu.roomDB;
 
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+
+import com.xu.librarify.R;
+
+import java.io.ByteArrayOutputStream;
+import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -33,6 +41,14 @@ public abstract class BookDB extends RoomDatabase {
         }
         return INSTANCE;
     }
+    private static RoomDatabase.Callback startGenInfo = new RoomDatabase.Callback(){
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db){
+            super.onOpen(db);
+
+        }
+    };
+
 
     private static RoomDatabase.Callback sRoomDatabaseCallback =
             new RoomDatabase.Callback(){

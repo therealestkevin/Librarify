@@ -1,12 +1,18 @@
 package com.kevin.xu.librarify;
 
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -22,6 +28,11 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.kevin.xu.roomDB.genInfo;
 import com.xu.librarify.R;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -38,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawlayout;
     private BookViewModel mainActivityModel;
     private genInfo localGenInfo;
+    private ImageView userImage;
+
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,14 +73,9 @@ public class MainActivity extends AppCompatActivity {
         ImageView userImg = headerLayout.findViewById(R.id.profileImage);
         TextView nameText = headerLayout.findViewById(R.id.nameTextView);
         if(localGenInfo!=null){
-            userImg.setImageDrawable(localGenInfo.getD());
+            Bitmap bmp = BitmapFactory.decodeByteArray(localGenInfo.getImage(),0,localGenInfo.getImage().length);
+            userImg.setImageBitmap(bmp);
             nameText.setText(localGenInfo.getName());
-        }else{
-            //insert genInfo
-          //  Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_person_add_black_24dp,null);
-          //  mainActivityModel.insertGenInfo(new genInfo("Your Name",d));
-           // userImg.setImageDrawable(d);
-            nameText.setText("Your Name");
         }
         headerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog.Builder userBuilder = new AlertDialog.Builder(MainActivity.this);
                     View userDialog = inflater.inflate(R.layout.user_dialog,null);
                     userBuilder.setView(userDialog);
-                    ImageView userImage= userDialog.findViewById(R.id.userImage);
+                    userImage= userDialog.findViewById(R.id.userImage);
                     userImage.setColorFilter(Color.WHITE);
                     EditText userName = userDialog.findViewById(R.id.editTextName);
                     Button browseImages = userDialog.findViewById(R.id.chooseImage);
@@ -91,9 +100,14 @@ public class MainActivity extends AppCompatActivity {
                 userBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            genInfo newUpdateGen = new genInfo(userName.getText().toString(),userImage.getDrawable());
+                        Bitmap bmp = ((BitmapDrawable)userImage.getDrawable()).getBitmap();
+                        ByteArrayOutputStream streamer = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.PNG,100,streamer);
+                        byte[] image = streamer.toByteArray();
+                            genInfo newUpdateGen = new genInfo(userName.getText().toString(),image);
                             userImg.setImageDrawable(userImage.getDrawable());
                             nameText.setText(userName.getText().toString());
+                            mainActivityModel.insertGenInfo(newUpdateGen);
                             //Set Picture and Name, enter into genInfo DB
                             dialog.dismiss();
                     }
@@ -146,12 +160,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturn){
         super.onActivityResult(requestCode,resultCode,imageReturn);
+        userImage.clearColorFilter();
         if(resultCode == RESULT_OK){
+            Uri selectImg = imageReturn.getData();
+            try {
+                Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectImg);
+                bmp = getResizedBitmap(bmp,300,300);
+                userImage.setImageBitmap(bmp);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
         }
 
     }
+    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
 
+        // create a matrix for the manipulation
+        Matrix matrix = new Matrix();
+
+        // resize the bit map
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // recreate the new Bitmap
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+
+        return resizedBitmap;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

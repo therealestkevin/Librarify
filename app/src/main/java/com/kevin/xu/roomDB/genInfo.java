@@ -1,24 +1,33 @@
 package com.kevin.xu.roomDB;
 
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 
+import com.xu.librarify.R;
+
+import java.io.ByteArrayOutputStream;
+
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity (tableName = "genInfo")
 public class genInfo {
     private String name;
-    private Drawable d;
 
     @PrimaryKey(autoGenerate = true)
     private int Id;
 
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] image;
 
 
-    public genInfo(String name, Drawable d){
+    public genInfo(String name, byte[]image ){
         this.name = name;
-        this.d=d;
+        this.image = image;
     }
 
     public String getName() {
@@ -29,12 +38,12 @@ public class genInfo {
         this.name = name;
     }
 
-    public Drawable getD() {
-        return d;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setD(Drawable d) {
-        this.d = d;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public int getId() {
@@ -43,5 +52,14 @@ public class genInfo {
 
     public void setId(int id) {
         Id = id;
+    }
+
+    public static genInfo populateData(){
+        Bitmap bmp = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.ic_person_add_black_24dp);
+        ByteArrayOutputStream streamer = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG,100,streamer);
+        byte[] image = streamer.toByteArray();
+        genInfo temp = new genInfo("Your Name", image);
+        return temp;
     }
 }

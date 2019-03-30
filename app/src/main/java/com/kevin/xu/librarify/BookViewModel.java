@@ -57,10 +57,6 @@ public class BookViewModel extends AndroidViewModel {
         bookRepo.setScheduleTrue(id);
     }
 
-    public void updateGenInfo(String name, Drawable d){
-        bookRepo.updateGenInfo(name,d);
-    }
-
     public genInfo getGenInfo(){
         return bookRepo.getGenInfo();
     }

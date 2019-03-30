@@ -47,9 +47,6 @@ public interface BookDAO {
     @Query("SELECT * FROM genInfo")
     List<genInfo> getGenInfo();
 
-    @Query("UPDATE genInfo SET name = :newName, d =:newDraw")
-    void updateGen(String newName, Drawable newDraw);
-
     @Query("SELECT ISBN FROM book_table")
     List<String> getISBN();
 
@@ -79,22 +76,22 @@ public interface BookDAO {
 
      class Converters{
         @TypeConverter
-        public static Drawable toDrawable(String value){
+        public static byte[] toByte(String value){
             if(value == null){
                 return null;
             }
             Gson gson = new Gson();
-            Type listType = new TypeToken <Drawable>() {}.getType();
+            Type listType = new TypeToken <byte[]>() {}.getType();
             return new Gson().fromJson(value, listType);
         }
         @TypeConverter
-        public static String fromDrawable(Drawable d){
-            if(d == null){
+        public static String fromByte(byte[]image){
+            if(image == null){
                 return null;
             }
             Gson gson = new Gson();
-            Type typeString = new TypeToken<Drawable>(){}.getType();
-            String json = gson.toJson(d, typeString);
+            Type typeString = new TypeToken<byte[]>(){}.getType();
+            String json = gson.toJson(image, typeString);
             return json;
         }
         @TypeConverter

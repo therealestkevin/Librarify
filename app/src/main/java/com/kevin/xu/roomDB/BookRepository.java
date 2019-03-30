@@ -116,7 +116,7 @@ public class BookRepository {
 
             List<genInfo> temp = new getGenInfo(bookDAO).execute().get();
             if(temp.size()>0){
-                return temp.get(temp.size());
+                return temp.get(temp.size()-1);
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -126,9 +126,7 @@ public class BookRepository {
         return null;
     }
 
-    public void updateGenInfo(String name, Drawable d){
-            new updateGenInfo(bookDAO,name,d).execute();
-    }
+
     public void insertGenInfo(genInfo newGenInfo){
         new insertGenInfo(bookDAO,newGenInfo).execute();
     }
@@ -147,24 +145,7 @@ public class BookRepository {
             return null;
         }
     }
-    private static class updateGenInfo extends AsyncTask<Void, Void, Void> {
-        private BookDAO dao;
-        private String name;
-        private Drawable d;
 
-        public updateGenInfo(BookDAO dao, String name, Drawable d){
-            this.dao=dao;
-            this.name=name;
-            this.d=d;
-        }
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            dao.updateGen(name,d);
-            return null;
-        }
-    }
     private static class getGenInfo extends AsyncTask<Void, Void, List<genInfo>>{
         private BookDAO dao;
 
@@ -176,10 +157,11 @@ public class BookRepository {
         protected List<genInfo> doInBackground(Void... voids) {
            try{
                return dao.getGenInfo();
-           }catch(Exception e){
+           }catch(Exception ignored){
 
            }
-           return null;
+           List<genInfo> bob = new ArrayList<>();
+           return bob;
         }
     }
 
