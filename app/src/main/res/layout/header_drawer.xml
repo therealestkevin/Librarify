@@ -23,5 +23,6 @@
         android:layout_height="wrap_content"
         android:text="Your Name"
         android:textAlignment="center"
+        android:textSize="30sp"
         android:textStyle="bold" />
 </LinearLayout>

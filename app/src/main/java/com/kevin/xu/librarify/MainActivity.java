@@ -3,11 +3,13 @@ package com.kevin.xu.librarify;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Matrix;
@@ -43,6 +45,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private genInfo localGenInfo;
     private ImageView userImage;
     private Uri imageUri;
+    private int clicked;
 
     @SuppressLint("WrongThread")
     @Override
@@ -109,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         headerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clicked =0;
                 LayoutInflater inflater = getLayoutInflater();
                     AlertDialog.Builder userBuilder = new AlertDialog.Builder(MainActivity.this);
                     View userDialog = inflater.inflate(R.layout.user_dialog,null);
@@ -122,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Intent pickImage = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
                             startActivityForResult(pickImage,1);
                         }
                     });
@@ -129,25 +135,45 @@ public class MainActivity extends AppCompatActivity {
                 userBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Bitmap bmp = ((BitmapDrawable)userImage.getDrawable()).getBitmap();
 
-                            genInfo newUpdateGen = new genInfo(userName.getText().toString(),imageUri.toString());
-                        try {
-                            Bitmap tempMap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
-                            userImg.setImageBitmap(tempMap);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
 
-                            nameText.setText(userName.getText().toString());
-                            mainActivityModel.insertGenInfo(newUpdateGen);
-                            //Set Picture and Name, enter into genInfo DB
-                            dialog.dismiss();
                     }
                 });
 
                 AlertDialog dialogFinal = userBuilder.create();
                 dialogFinal.show();
+
+                dialogFinal.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bitmap bmp = getBitmapFromVectorDrawable(getApplicationContext(), userImage.getDrawable());
+
+                        if (clicked==0 ||  userName.getText().toString().equals("")) {
+                            AlertDialog.Builder errorBuilder = new AlertDialog.Builder(MainActivity.this);
+                            errorBuilder.setMessage("Please Enter Name and New Profile Picture").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).create().show();
+
+                        }else {
+
+                            genInfo newUpdateGen = new genInfo(userName.getText().toString(), imageUri.toString());
+                            try {
+                                Bitmap tempMap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                                userImg.setImageBitmap(tempMap);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            nameText.setText(userName.getText().toString());
+                            mainActivityModel.insertGenInfo(newUpdateGen);
+                            //Set Picture and Name, enter into genInfo DB
+                            dialogFinal.dismiss();
+                        }
+                    }
+                });
             }
         });
 
@@ -193,11 +219,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturn){
         super.onActivityResult(requestCode,resultCode,imageReturn);
+
         userImage.clearColorFilter();
         if(resultCode == RESULT_OK){
             Uri selectImg = imageReturn.getData();
             imageUri = selectImg;
             try {
+                clicked++;
                 Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectImg);
                 bmp = getResizedBitmap(bmp,300,300);
                 userImage.setImageBitmap(bmp);
@@ -208,6 +236,15 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+    public static Bitmap getBitmapFromVectorDrawable(Context context, Drawable drawable) {
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
     }
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
         int width = bm.getWidth();

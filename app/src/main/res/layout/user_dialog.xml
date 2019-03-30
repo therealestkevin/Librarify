@@ -7,8 +7,8 @@
     <ImageView
         android:id="@+id/userImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/gallery" />
+        android:layout_height="120dp"
+        app:srcCompat="@drawable/ic_person_add_black_24dp" />
 
     <Button
         android:id="@+id/chooseImage"
