@@ -1,6 +1,7 @@
 package com.kevin.xu.roomDB;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.google.gson.Gson;
@@ -76,21 +77,21 @@ public interface BookDAO {
 
      class Converters{
         @TypeConverter
-        public static byte[] toByte(String value){
+        public static Uri toByte(String value){
             if(value == null){
                 return null;
             }
             Gson gson = new Gson();
-            Type listType = new TypeToken <byte[]>() {}.getType();
+            Type listType = new TypeToken <Uri>() {}.getType();
             return new Gson().fromJson(value, listType);
         }
         @TypeConverter
-        public static String fromByte(byte[]image){
+        public static String fromByte(Uri image){
             if(image == null){
                 return null;
             }
             Gson gson = new Gson();
-            Type typeString = new TypeToken<byte[]>(){}.getType();
+            Type typeString = new TypeToken<Uri>(){}.getType();
             String json = gson.toJson(image, typeString);
             return json;
         }

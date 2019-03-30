@@ -1,9 +1,11 @@
 package com.kevin.xu.librarify;
 
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -37,6 +40,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private BookViewModel mainActivityModel;
     private genInfo localGenInfo;
     private ImageView userImage;
+    private Uri imageUri;
 
     @SuppressLint("WrongThread")
     @Override
@@ -66,16 +72,39 @@ public class MainActivity extends AppCompatActivity {
         actbar.setDisplayHomeAsUpEnabled(true);
         actbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         View headerView = navView.getHeaderView(0);
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
 
+            // Should we show an explanation?
+            if (shouldShowRequestPermissionRationale(
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Explain to the user why we need to read the contacts
+            }
+
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    42);
+
+            // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+            // app-defined int constant that should be quite unique
+
+        }
         mainActivityModel = ViewModelProviders.of(this).get(BookViewModel.class);
         LinearLayout headerLayout = headerView.findViewById(R.id.header_layout);
         localGenInfo = mainActivityModel.getGenInfo();
         ImageView userImg = headerLayout.findViewById(R.id.profileImage);
         TextView nameText = headerLayout.findViewById(R.id.nameTextView);
         if(localGenInfo!=null){
-            Bitmap bmp = BitmapFactory.decodeByteArray(localGenInfo.getImage(),0,localGenInfo.getImage().length);
-            userImg.setImageBitmap(bmp);
-            nameText.setText(localGenInfo.getName());
+            Bitmap bmp = null;
+            try {
+                Uri temp = Uri.parse(localGenInfo.getPathImage());
+                bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(),temp);
+                userImg.setImageBitmap(bmp);
+                nameText.setText(localGenInfo.getName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
         }
         headerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,11 +130,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Bitmap bmp = ((BitmapDrawable)userImage.getDrawable()).getBitmap();
-                        ByteArrayOutputStream streamer = new ByteArrayOutputStream();
-                        bmp.compress(Bitmap.CompressFormat.PNG,100,streamer);
-                        byte[] image = streamer.toByteArray();
-                            genInfo newUpdateGen = new genInfo(userName.getText().toString(),image);
-                            userImg.setImageDrawable(userImage.getDrawable());
+
+                            genInfo newUpdateGen = new genInfo(userName.getText().toString(),imageUri.toString());
+                        try {
+                            Bitmap tempMap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+                            userImg.setImageBitmap(tempMap);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                             nameText.setText(userName.getText().toString());
                             mainActivityModel.insertGenInfo(newUpdateGen);
                             //Set Picture and Name, enter into genInfo DB
@@ -163,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
         userImage.clearColorFilter();
         if(resultCode == RESULT_OK){
             Uri selectImg = imageReturn.getData();
+            imageUri = selectImg;
             try {
                 Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectImg);
                 bmp = getResizedBitmap(bmp,300,300);

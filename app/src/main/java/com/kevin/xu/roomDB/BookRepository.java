@@ -155,13 +155,7 @@ public class BookRepository {
 
         @Override
         protected List<genInfo> doInBackground(Void... voids) {
-           try{
                return dao.getGenInfo();
-           }catch(Exception ignored){
-
-           }
-           List<genInfo> bob = new ArrayList<>();
-           return bob;
         }
     }
 
