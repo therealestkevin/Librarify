@@ -7,16 +7,19 @@ import androidx.room.PrimaryKey;
 @Entity (tableName = "genInfo")
 public class genInfo {
     private String name;
-
+    private String userName;
+    private String passWord;
     @PrimaryKey(autoGenerate = true)
     private int Id;
 
     private String pathImage;
 
 
-    public genInfo(String name, String pathImage ){
+    public genInfo(String name, String pathImage, String userName, String passWord ){
         this.name = name;
         this.pathImage = pathImage;
+        this.userName = userName;
+        this.passWord=passWord;
     }
 
     public String getName() {
@@ -43,4 +46,19 @@ public class genInfo {
         Id = id;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
 }

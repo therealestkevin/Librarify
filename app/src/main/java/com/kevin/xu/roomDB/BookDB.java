@@ -2,15 +2,7 @@ package com.kevin.xu.roomDB;
 
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-
-import com.xu.librarify.R;
-
-import java.io.ByteArrayOutputStream;
-import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -19,7 +11,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database (entities = {Book.class, genInfo.class},version=11,exportSchema=false)
+@Database (entities = {Book.class, genInfo.class},version=12,exportSchema=false)
 @TypeConverters({BookDAO.Converters.class})
 public abstract class BookDB extends RoomDatabase {
 

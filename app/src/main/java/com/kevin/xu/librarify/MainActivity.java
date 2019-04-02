@@ -8,16 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -34,18 +29,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.kevin.xu.roomDB.genInfo;
 import com.xu.librarify.R;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
@@ -159,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }else {
 
-                            genInfo newUpdateGen = new genInfo(userName.getText().toString(), imageUri.toString());
+                            genInfo newUpdateGen = new genInfo(userName.getText().toString(), imageUri.toString(),localGenInfo.getUserName(),localGenInfo.getPassWord());
                             try {
                                 Bitmap tempMap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                                 userImg.setImageBitmap(tempMap);
