@@ -1,17 +1,6 @@
 package com.kevin.xu.roomDB;
 
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-
-import com.xu.librarify.R;
-
-import java.io.ByteArrayOutputStream;
-
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
