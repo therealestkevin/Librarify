@@ -19,13 +19,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="ExtraText,GoogleAppIndexingWarning">
-        <activity android:name="com.kevin.xu.librarify.loginActivity"></activity>
+        <activity android:name="com.kevin.xu.librarify.loginActivity" />
         <activity
             android:name="com.kevin.xu.librarify.fullSchedule"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName="com.kevin.xu.librarify.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="com.kevin.xu.librarify.scheduleManager"
             android:configChanges="keyboardHidden|orientation|screenSize"

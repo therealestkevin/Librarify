@@ -58,6 +58,7 @@ public class loginActivity extends AppCompatActivity {
                     //Insert New Login Info into the DB
                     //For now, ensure that this button is hidden after the first register
                     //Later, handle data for multiple users, research this
+                    
             }
         });
 

@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kevin.xu.librarify.loginActivity"
-    style="@style/Theme.AppCompat.NoActionBar">
+    tools:context="com.kevin.xu.librarify.registerFragment">
 
     <ImageView
-        android:id="@+id/backgroundLogin"
+        android:id="@+id/backgroundImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/backgroundstuff"
@@ -16,32 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/mainImageLogo"
-        android:layout_width="0dp"
-        android:layout_height="231dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/mainicon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/mainTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="serif"
-        android:text="Librarify"
-        android:textColor="@color/calendar_text_default"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainImageLogo" />
 
     <EditText
         android:id="@+id/userPassword"
@@ -65,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:drawableStart="@drawable/ic_email_black_24dp"
@@ -75,7 +48,7 @@
         android:textColor="@color/calendar_divider_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPreferredName" />
 
     <Button
         android:id="@+id/loginButton"
@@ -85,23 +58,26 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_button"
-        android:text="Login"
+        android:text="Register"
         android:textColor="@color/calendar_divider_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userPassword" />
 
-    <TextView
-        android:id="@+id/registerTextView"
+    <EditText
+        android:id="@+id/editTextPreferredName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="196dp"
         android:layout_marginEnd="8dp"
-        android:text="Register Here"
-        android:textColor="@color/calendar_text_default"
-        android:textStyle="bold"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:drawableStart="@drawable/ic_person_black_24dp"
+        android:ems="10"
+        android:hint="Account Name"
+        android:inputType="textPersonName"
+        android:textColor="@color/calendar_divider_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+        app:layout_constraintTop_toTopOf="@+id/backgroundImageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
