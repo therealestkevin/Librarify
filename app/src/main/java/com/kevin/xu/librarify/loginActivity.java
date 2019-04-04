@@ -1,6 +1,7 @@
 package com.kevin.xu.librarify;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import com.kevin.xu.roomDB.genInfo;
 import com.xu.librarify.R;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 public class loginActivity extends AppCompatActivity {
@@ -25,8 +28,8 @@ public class loginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setupMainWindowDisplayMode();
 
+        getWindow().setNavigationBarColor(Color.BLACK);
         userPassword = findViewById(R.id.userPassword);
         userNameEditText = findViewById(R.id.userNameEditText);
         logonButton = findViewById(R.id.loginButton);
@@ -55,6 +58,15 @@ public class loginActivity extends AppCompatActivity {
         registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Fragment fragLogin = registerFragment.newInstance();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                transaction.add(R.id.constraintLogin,fragLogin);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+
                     //Insert New Login Info into the DB
                     //For now, ensure that this button is hidden after the first register
                     //Later, handle data for multiple users, research this
@@ -66,40 +78,6 @@ public class loginActivity extends AppCompatActivity {
 
     }
 
-    private void setupMainWindowDisplayMode() {
-        View decorView = setSystemUiVisibilityMode();
-        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                setSystemUiVisibilityMode(); // Needed to avoid exiting immersive_sticky when keyboard is displayed
-            }
-        });
-    }
-    private View setSystemUiVisibilityMode() {
-        View decorView = getWindow().getDecorView();
-        int options;
-        options =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
-        decorView.setSystemUiVisibility(options);
-        return decorView;
-    }
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }
-    }
+
 }
