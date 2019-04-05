@@ -22,7 +22,7 @@ public class loginActivity extends AppCompatActivity {
     private EditText userNameEditText;
     private Button logonButton;
     private TextView registerTextView;
-    private BookViewModel loginModel;
+    public static BookViewModel loginModel;
     private genInfo localGenInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
