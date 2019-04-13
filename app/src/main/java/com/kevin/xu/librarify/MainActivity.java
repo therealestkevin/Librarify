@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }else {
 
-                            genInfo newUpdateGen = new genInfo(userName.getText().toString(), imageUri.toString(),localGenInfo.getUserName(),localGenInfo.getPassWord());
+                            genInfo newUpdateGen = new genInfo(userName.getText().toString(), imageUri.toString(),localGenInfo.getUserName(),localGenInfo.getPassWord(),localGenInfo.isAccount());
                             try {
                                 Bitmap tempMap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                                 userImg.setImageBitmap(tempMap);
