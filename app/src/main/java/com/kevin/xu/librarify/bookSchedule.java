@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -115,7 +117,13 @@ public class bookSchedule extends AppCompatActivity {
                             ContentValues values = new ContentValues();
                             values.put(CalendarContract.Events.DTSTART,temp.getFirstDay().getTimeInMillis());
                             values.put(CalendarContract.Events.DTEND,temp.getLastDay().getTimeInMillis());
+                            values.put(CalendarContract.Events.TITLE,temp.getTitle());
+                            values.put(CalendarContract.Events.DESCRIPTION,temp.getDescription());
+                            values.put(CalendarContract.Events.CALENDAR_ID,1);
+                            values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+                            Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI,values);
 
+                            
 
                         }
                     });

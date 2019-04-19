@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity (tableName = "genInfo")
 public class genInfo {
+    private boolean isAccount;
     private String name;
     private String userName;
     private String passWord;
@@ -15,11 +16,12 @@ public class genInfo {
     private String pathImage;
 
 
-    public genInfo(String name, String pathImage, String userName, String passWord ){
+    public genInfo(String name, String pathImage, String userName, String passWord, boolean isAccount ){
         this.name = name;
         this.pathImage = pathImage;
         this.userName = userName;
         this.passWord=passWord;
+        this.isAccount = isAccount;
     }
 
     public String getName() {
@@ -60,5 +62,13 @@ public class genInfo {
 
     public void setPassWord(String passWord) {
         this.passWord = passWord;
+    }
+
+    public boolean isAccount() {
+        return isAccount;
+    }
+
+    public void setAccount(boolean account) {
+        isAccount = account;
     }
 }

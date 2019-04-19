@@ -1,6 +1,9 @@
 package com.kevin.xu.librarify;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -48,7 +51,7 @@ public class registerFragment extends androidx.fragment.app.Fragment {
             public void onClick(View v) {
                 if(userPassword.getText().toString().length()>0&&userNameEditText.getText().toString().length()>0&&editTextPreferred.getText().toString().length()>0){
                     loginActivity.loginModel.insertGenInfo(new genInfo(editTextPreferred.getText().toString(),"",userNameEditText.getText().toString()
-                    ,userPassword.getText().toString()));
+                    ,userPassword.getText().toString(),true));
                     Intent mainIntent = new Intent(getContext(),MainActivity.class);
                     startActivity(mainIntent);
                 }else{

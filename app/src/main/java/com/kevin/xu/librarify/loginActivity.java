@@ -34,6 +34,10 @@ public class loginActivity extends AppCompatActivity {
         registerTextView = findViewById(R.id.registerTextView);
         loginModel = ViewModelProviders.of(this).get(BookViewModel.class);
         localGenInfo = loginModel.getGenInfo();
+        if(!localGenInfo.isAccount()){
+            registerTextView.setVisibility(View.INVISIBLE);
+        }
+        registerTextView.setVisibility(View.VISIBLE);
         logonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
