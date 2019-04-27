@@ -1,6 +1,7 @@
 # Librarify
 Android app designed upon the Google Firebase platform. It keeps track of books you are reading by scanning ISBN barcodes through the utilization of Google Vision API and then allows you to schedule reading events for each book, allowing users to maintain a steady reading schedule. 
 
+Play Store: https://play.google.com/store/apps/details?id=com.kevin.xu
 
 Tools: Google Books API, Google ML, SQLite Room Persistence Library, Android Camerakit, Material CalendarView, AgendaCalendarView
 
