@@ -64,9 +64,15 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
                    .replace("]", "")
                    .trim());
            try {
-               holder.bookViewImg.setImageDrawable(new BookViewActivity.RetrieveDrawableTask(cur.getBookList()
-               .getItems().get(0).getVolumeInfo().getImageLinks().getThumbnail()).execute().get());
-           } catch (ExecutionException e) {
+               if(cur.getBookList().getItems().get(0).getVolumeInfo().getImageLinks().getThumbnail()!=null
+                       && !"".equals(cur.getBookList().getItems().get(0).getVolumeInfo().getImageLinks().getThumbnail())){
+                   holder.bookViewImg.setImageDrawable(new BookViewActivity.RetrieveDrawableTask(cur.getBookList()
+                           .getItems().get(0).getVolumeInfo().getImageLinks().getThumbnail()).execute().get());
+               }
+
+           }catch (NullPointerException e){
+            e.printStackTrace();
+           }catch (ExecutionException e) {
                e.printStackTrace();
            } catch (InterruptedException e) {
                e.printStackTrace();

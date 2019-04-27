@@ -6,8 +6,17 @@ public class imgLinks {
     private String thumbnail;
 
     public imgLinks (String smallThumbnail, String thumbnail) {
-        this.smallThumbnail=smallThumbnail;
-        this.thumbnail=thumbnail;
+        if(smallThumbnail==null){
+        smallThumbnail ="";
+        }else{
+            this.smallThumbnail=smallThumbnail;
+        }
+        if(thumbnail.isEmpty()){
+            thumbnail="";
+        }else{
+            this.thumbnail=thumbnail;
+        }
+
     }
 
     public String getSmallThumbnail() {

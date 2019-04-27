@@ -34,10 +34,15 @@ public class loginActivity extends AppCompatActivity {
         registerTextView = findViewById(R.id.registerTextView);
         loginModel = ViewModelProviders.of(this).get(BookViewModel.class);
         localGenInfo = loginModel.getGenInfo();
-        if(!localGenInfo.isAccount()){
-            registerTextView.setVisibility(View.INVISIBLE);
+        if(localGenInfo ==null){
+            localGenInfo = new genInfo("","","","",false);
         }
-        registerTextView.setVisibility(View.VISIBLE);
+        if(localGenInfo.isAccount()){
+            registerTextView.setVisibility(View.INVISIBLE);
+        }else{
+            registerTextView.setVisibility(View.VISIBLE);
+        }
+
         logonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +51,7 @@ public class loginActivity extends AppCompatActivity {
                     String curUser = userNameEditText.getText().toString();
                     if(localGenInfo.getUserName().equals(curUser)&&localGenInfo.getPassWord().equals(curPass)){
                         Intent startMainActivity = new Intent(getApplicationContext(),MainActivity.class);
+                        startActivity(startMainActivity);
                     }
                 }else if(userPassword.getText().toString().length()>0 && userNameEditText.getText().toString().length()<1){
                     Toast.makeText(getApplicationContext(),"Please Enter a User Name ",Toast.LENGTH_LONG).show();

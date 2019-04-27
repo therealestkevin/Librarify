@@ -7,17 +7,6 @@
     tools:context="com.kevin.xu.librarify.cameraCapture">
 
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="427dp"
-        android:layout_height="49dp"
-        android:background="@color/colorAccent"
-        android:text="@string/recognizeButtonText"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <com.camerakit.CameraKitView
         android:id="@+id/camera"
         android:layout_width="0dp"
@@ -28,8 +17,43 @@
         app:camera_flash="auto"
         app:camera_focus="continuous"
         app:camera_permissions="camera"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.camerakit.CameraKitView>
+
+    <TextView
+        android:id="@+id/displayInstructionsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Scan A Barcode"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/camera"
+        app:layout_constraintTop_toTopOf="@+id/camera" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button5"
+        android:layout_width="60dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="177dp"
+        android:layout_marginEnd="178dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/blue_selected"
+        android:clickable="true"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:maxImageSize="@dimen/fab_size"
+        app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

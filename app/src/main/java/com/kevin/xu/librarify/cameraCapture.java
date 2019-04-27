@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.camerakit.CameraKitView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
@@ -46,7 +47,7 @@ import com.kevin.xu.roomDB.Book;
 
 public class cameraCapture extends AppCompatActivity {
     private CameraKitView cameraView;
-    private Button btnDetect;
+    private FloatingActionButton btnDetect;
     private AlertDialog waitingDialog;
     //API Key
     public static final String EXTRA_REPLY = "REPLY";
@@ -63,7 +64,7 @@ public class cameraCapture extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         bookModel2 = ViewModelProviders.of(cameraCapture.this).get(BookViewModel.class);
         cameraView = (CameraKitView) findViewById(R.id.camera);
-        btnDetect = (Button)findViewById(R.id.button5);
+        btnDetect = findViewById(R.id.button5);
         waitingDialog = new SpotsDialog.Builder().setContext(this).setMessage("Please wait").setCancelable(false).build();
 
 
@@ -161,7 +162,11 @@ public class cameraCapture extends AppCompatActivity {
                         System.out.println(jsonReqText);
                         Gson gson = new Gson();
                         OuterURL temp = gson.fromJson(jsonReqText, OuterURL.class);
+
                         ArrayList<String> infoBook = new RetrieveDescriptions(temp.getItems().get(0).getSelfLink()).execute().get();
+                        if(temp.getItems().get(0).getVolumeInfo().getDescription()==null){
+                            temp.getItems().get(0).getVolumeInfo().setDescription(infoBook.get(0));
+                        }
                         Log.i("infoBob", infoBook.toString());
                        String authors= temp.getItems().get(0).getVolumeInfo().getAuthors()
                                 .toString().replace("[","").replace("]","");
@@ -271,14 +276,31 @@ public class cameraCapture extends AppCompatActivity {
            } catch (Exception e) {
                e.printStackTrace();
            }
-           JsonParser parser = new JsonParser();
-           JsonObject obj = parser.parse(resultString2).getAsJsonObject();
-           JsonObject obj2 = obj.get("volumeInfo").getAsJsonObject();
-           JsonElement descrip = obj2.get("description");
-           JsonElement categories = obj2.get("categories");
-           String[] elements = new Gson().fromJson(categories.toString(),String[].class);
-           returnInfo.add(descrip.getAsString());
-           returnInfo.addAll(Arrays.asList(elements));
+           try{
+               JsonParser parser = new JsonParser();
+               JsonObject obj = parser.parse(resultString2).getAsJsonObject();
+               JsonObject obj2 = obj.get("volumeInfo").getAsJsonObject();
+               JsonElement descrip = obj2.get("description");
+               returnInfo.add(descrip.getAsString());
+               JsonElement categories = obj2.get("categories");
+               if(categories==null){
+
+               }else{
+                   String[] elements = new Gson().fromJson(categories.toString(),String[].class);
+
+                   returnInfo.addAll(Arrays.asList(elements));
+               }
+
+           }catch(Exception e){
+               Log.i("errorParse","There was no jsonelement");
+               e.printStackTrace();
+           }
+            if(returnInfo.size()<1){
+                returnInfo.add("");
+                returnInfo.add("");
+            }else if(returnInfo.size()<2){
+                returnInfo.add("");
+            }
             return returnInfo;
        }
    }

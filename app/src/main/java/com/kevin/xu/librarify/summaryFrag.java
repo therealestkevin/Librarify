@@ -57,7 +57,10 @@ public class summaryFrag extends androidx.fragment.app.Fragment {
         try {
             bookImg.setImageDrawable(new BookViewActivity.RetrieveDrawableTask(BookAdapter.mBook.get(BookPosition).getBookList().getItems().get(0).getVolumeInfo()
                     .getImageLinks().getThumbnail()).execute().get());
-        } catch (ExecutionException e) {
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+        catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity (tableName = "genInfo")
 public class genInfo {
-    private boolean isAccount;
+    private boolean isAccount = false;
     private String name;
     private String userName;
     private String passWord;

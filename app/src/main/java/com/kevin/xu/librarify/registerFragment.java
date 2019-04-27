@@ -1,9 +1,6 @@
 package com.kevin.xu.librarify;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
