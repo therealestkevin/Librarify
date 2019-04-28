@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     browseImages.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent pickImage = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            Intent pickImage = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                             startActivityForResult(pickImage,1);
                         }
@@ -148,15 +148,23 @@ public class MainActivity extends AppCompatActivity {
 
                         }else {
 
-                            genInfo newUpdateGen = new genInfo(userName.getText().toString(), imageUri.toString(),localGenInfo.getUserName(),localGenInfo.getPassWord(),localGenInfo.isAccount());
+                            genInfo newUpdateGen;
+                            newUpdateGen= new genInfo(userName.getText().toString(), imageUri.toString(),"","",false);
+
+                            //Temprorary Solution to NullPointerException while the login functionality is not being utilized, will need to change this later to handle faulty username and pass
                             try {
+
                                 Bitmap tempMap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                                 userImg.setImageBitmap(tempMap);
-                            } catch (IOException e) {
+                            } catch(NullPointerException e){
+                                e.printStackTrace();
+                            }
+                            catch (IOException e) {
                                 e.printStackTrace();
                             }
 
                             nameText.setText(userName.getText().toString());
+
                             mainActivityModel.insertGenInfo(newUpdateGen);
                             //Set Picture and Name, enter into genInfo DB
                             dialogFinal.dismiss();

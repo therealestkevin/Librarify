@@ -113,6 +113,7 @@ public class bookSchedule extends AppCompatActivity {
                     bobBuilder.setNeutralButton("Export", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            /*
                             ContentResolver cr = getContentResolver();
                             ContentValues values = new ContentValues();
                             values.put(CalendarContract.Events.DTSTART,temp.getFirstDay().getTimeInMillis());
@@ -122,8 +123,8 @@ public class bookSchedule extends AppCompatActivity {
                             values.put(CalendarContract.Events.CALENDAR_ID,1);
                             values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
                             Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI,values);
-
-                            
+                            */
+                            Toast.makeText(getApplicationContext(),"Google Calendar Exporting Coming Soon",Toast.LENGTH_LONG).show();
 
                         }
                     });
